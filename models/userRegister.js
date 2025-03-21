@@ -7,14 +7,14 @@ class UserRegisterModel {
   try {
     const result = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
     
-    console.log('Resultado de la consulta:', result); // 👀 Depuración
+    console.log('Resultado de la consulta:', result); // Depuración
 
-    const rows = result[0]; // ✅ Tomar solo la parte relevante
+    const rows = result[0]; // Tomar solo la parte relevante
     if (!rows || rows.length === 0) {
       return null;
     }
     console.log('retorno:', rows);
-    return rows; // ✅ Retornar el usuario correctamente
+    return rows; // Retornar el usuario correctamente
   } catch (error) {
     console.error('Error en findByEmail:', error);
     throw error;
@@ -26,7 +26,7 @@ class UserRegisterModel {
     try {
       const [users] = await db.query('SELECT * FROM usuarios');
       console.log('users:', users);
-      return users;
+      return Array.isArray(users) ? users : [users];
     } catch (error) {
       throw error;
     }
