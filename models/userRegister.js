@@ -1,4 +1,5 @@
-const db = require('../config/database');
+const DbService = require('../config/database');
+const db = DbService.getDbServiceInstance();
 
 class UserRegisterModel {
   async registerUser(user) {
