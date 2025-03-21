@@ -80,12 +80,12 @@ const registerProfesor = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    console.log('Body:', req.body); // 👀 Verificar datos
+    console.log('Body:', req.body); // Verificar datos
     const { email, password } = req.body;
 
     const user = await UserRegisterModel.findByEmail(email);
 
-    console.log('Usuario encontrado:', user); // 👀 Verificar datos
+    console.log('Usuario encontrado:', user); // Verificar datos
 
     if (!user) {
       return res.status(404).json({
@@ -107,7 +107,7 @@ const loginUser = async (req, res) => {
       success: true,
       message: 'Login exitoso',
       data: {
-        id: user.usuario_id, // ✅ Cambiar id por usuario_id
+        id: user.usuario_id, // Cambiar id por usuario_id
         nombre: user.nombre,
         apellido: user.apellido,
         email: user.email,
