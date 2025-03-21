@@ -47,6 +47,36 @@ const registerEstudiante = async (req, res) => {
     });
   }
 };
+const registerProfesor = async (req, res) => {
+  try {
+    const { nombre, apellido, email, password, universidad_id, pais_id, whatsapp} = req.body;
+
+
+    const hashedPassword = await bcryptjs.hash(password, 10);
+
+    const result = await UserRegisterModel.registerProfesor({
+      nombre,
+      apellido,
+      email,
+      password: hashedPassword,
+      universidad_id,
+      pais_id,
+      whatsapp
+    });
+    
+    return res.status(201).json({
+      success: true,
+      message: 'Profesor registrado correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al registrar profesor:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al registrar estudiante'
+    });
+  }
+};
 
 const loginUser = async (req, res) => {
   try {
@@ -95,5 +125,6 @@ const loginUser = async (req, res) => {
 module.exports = {
   registerEstudiante,
   loginUser,
-  getAllUsers
+  getAllUsers,
+  registerProfesor
 };

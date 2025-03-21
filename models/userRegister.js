@@ -41,11 +41,11 @@ class UserRegisterModel {
     try {
       const result = await db.query(
         'CALL sp_insertar_profesor(?, ?, ?, ?, ?, ?, ?)',
-        [nombre, apellido, email, password, universidad_id, carrera_id]
+        [nombre, apellido, email, password, universidad_id, pais_id, whatsapp]
       );
       return result;
     }catch (error) {
-      console.error('Error in registerEstudiante:', error);
+      console.error('Error in registerProfesor:', error);
       throw error;
 
     }
