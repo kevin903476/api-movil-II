@@ -82,17 +82,17 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Buscar usuario por email
     const user = await UserRegisterModel.findByEmail(email);
 
-    if (!user) { // Ahora `findByEmail` retorna null si no existe
+    console.log('Usuario encontrado:', user); // 👀 Verificar datos
+
+    if (!user) {
       return res.status(404).json({
         success: false,
         message: 'Usuario no encontrado'
       });
     }
 
-    // Comparar contraseña
     const isMatch = await bcryptjs.compare(password, user.password);
 
     if (!isMatch) {
@@ -106,7 +106,7 @@ const loginUser = async (req, res) => {
       success: true,
       message: 'Login exitoso',
       data: {
-        id: user.id,
+        id: user.usuario_id, // ✅ Cambiar id por usuario_id
         nombre: user.nombre,
         apellido: user.apellido,
         email: user.email,
@@ -121,6 +121,7 @@ const loginUser = async (req, res) => {
     });
   }
 };
+
 
 
 const updateProfesor = async (req, res) => {
