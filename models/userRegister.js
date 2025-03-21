@@ -6,17 +6,20 @@ class UserRegisterModel {
   async findByEmail(email) {
     try {
       const [rows] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
-      
-      if (rows.length === 0) {
-        return null; // Retornamos null si no hay usuario
+  
+      console.log('Resultados de findByEmail:', rows); // 👀 Depuración
+  
+      if (!rows || rows.length === 0) {
+        return null; // Si no encuentra el usuario, retornamos null
       }
-      
-      return rows[0]; // Devolvemos el primer usuario encontrado
+  
+      return rows[0]; // Retornamos el primer usuario encontrado
     } catch (error) {
-      console.error('Error finding user by email:', error);
+      console.error('Error en findByEmail:', error);
       throw error;
     }
   }
+  
   
 
   async getAll() {
