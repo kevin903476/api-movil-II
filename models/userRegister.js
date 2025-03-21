@@ -23,10 +23,24 @@ class UserRegisterModel {
     }
   }
   async registerEstudiante(estudiante){
-    const {nombre, apellido, email, password, universidad_id, carrera_id} = estudiante;
+    const {nombre, apellido, email, password, universidad_id, pais_id} = estudiante;
     try {
       const result = await db.query(
         'CALL sp_insertar_estudiante(?, ?, ?, ?, ?, ?)',
+        [nombre, apellido, email, password, universidad_id, pais_id]
+      );
+      return result;
+    }catch (error) {
+      console.error('Error in registerEstudiante:', error);
+      throw error;
+
+    }
+  }
+  async registerProfesor(profesor){
+    const {nombre, apellido, email, password, universidad_id, pais_id, whatsapp} = profesor;
+    try {
+      const result = await db.query(
+        'CALL sp_insertar_profesor(?, ?, ?, ?, ?, ?, ?)',
         [nombre, apellido, email, password, universidad_id, carrera_id]
       );
       return result;
@@ -35,7 +49,7 @@ class UserRegisterModel {
       throw error;
 
     }
-}
+  }
 }
 
 module.exports = new UserRegisterModel();
