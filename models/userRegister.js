@@ -4,23 +4,23 @@ const db = DbService.getDbServiceInstance();
 class UserRegisterModel {
 
   async findByEmail(email) {
-    try {
-      const [rows] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
-  
-      console.log('Resultados de findByEmail:', rows); // 👀 Depuración
-  
-      if (!rows || rows.length === 0) {
-        return null; // Si no encuentra el usuario, retornamos null
-      }
-  
-      return rows[0]; // Retornamos el primer usuario encontrado
-    } catch (error) {
-      console.error('Error en findByEmail:', error);
-      throw error;
+  try {
+    const result = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
+    
+    console.log('Resultado de la consulta:', result); // 👀 Depuración
+
+    const rows = result[0]; // ✅ Tomar solo la parte relevante
+    if (!rows || rows.length === 0) {
+      return null;
     }
+
+    return rows[0]; // ✅ Retornar el usuario correctamente
+  } catch (error) {
+    console.error('Error en findByEmail:', error);
+    throw error;
   }
-  
-  
+}
+
 
   async getAll() {
     try {
