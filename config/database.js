@@ -11,19 +11,23 @@ const pool = mysql.createPool({
     port: process.env.DB_PORT,
     connectionLimit: 20,
     queueLimit: 0,
-    acquireTimeout: 10000
+    acquireTimeout: 10000  // Puedes eliminar esta opción si no es compatible
 });
 
+// Usar el pool en modo promesa
 const poolPromise = pool.promise();
 
+// Declarar una variable para mantener la instancia única
+let instance = null;
+
 class DbService {
-    // Singleton: patrón para asegurar una única instancia de DbService en toda la aplicación
+    // Método estático para obtener la instancia única
     static getDbServiceInstance() {
-        return instance ? instance : new DbService();
+        return instance ? instance : (instance = new DbService());
     }
 
     constructor() {
-        this.pool = poolPromise; // Asignación del pool de conexiones a la instancia de la clase
+        this.pool = poolPromise;
     }
 
     async query(query, params = []) {
@@ -36,4 +40,5 @@ class DbService {
         }
     }
 }
+
 module.exports = DbService;
