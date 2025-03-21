@@ -5,7 +5,7 @@ const registerUser = async (req, res, next) => {
   try {
     const { nombre, apellido, email, password, rol_id, universidad_id, carrera_id } = req.body;
     
-    const hashedPassword = await bcryptjs.hash(password, 25);
+    const hashedPassword = await bcryptjs.hash(password, 10);
     
     const result = await UserRegisterModel.registerUser({
       nombre,
