@@ -28,7 +28,7 @@ async getAll() {
 
     console.log('Resultado de getAll:', result); // 👀 Depuración
 
-    const users = result[0]; // ✅ Tomar solo el array de usuarios
+    const users = result; // ✅ Tomar solo el array de usuarios
 
     return users; // ✅ Devolver todos los usuarios
   } catch (error) {
