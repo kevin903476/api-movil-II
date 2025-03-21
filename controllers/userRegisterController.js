@@ -85,7 +85,7 @@ const loginUser = async (req, res) => {
     // Buscar usuario por email
     const user = await UserRegisterModel.findByEmail(email);
 
-    if (!user) {
+    if (!user) { // Ahora `findByEmail` retorna null si no existe
       return res.status(404).json({
         success: false,
         message: 'Usuario no encontrado'
@@ -121,6 +121,7 @@ const loginUser = async (req, res) => {
     });
   }
 };
+
 
 const updateProfesor = async (req, res) => {
   try {
