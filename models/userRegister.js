@@ -23,11 +23,11 @@ class UserRegisterModel {
     }
   }
   async registerEstudiante(estudiante){
-    const {nombre, apellido, email, password, rol_id, universidad_id, carrera_id} = estudiante;
+    const {nombre, apellido, email, password, universidad_id, carrera_id} = estudiante;
     try {
       const result = await db.query(
-        'CALL sp_crear_usuario(?, ?, ?, ?, ?, ?, ?)',
-        [nombre, apellido, email, password, rol_id, universidad_id, carrera_id]
+        'CALL sp_insertar_estudiante(?, ?, ?, ?, ?, ?)',
+        [nombre, apellido, email, password, universidad_id, carrera_id]
       );
       return result;
     }catch (error) {
