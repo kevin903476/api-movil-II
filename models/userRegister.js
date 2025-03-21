@@ -24,6 +24,16 @@ class UserRegisterModel {
       throw error;
     }
   }
+  
+  async getAll() {
+    try {
+      const [users] = await db.query('SELECT * FROM usuarios');
+      return users;
+    } catch (error) {
+      console.error('Error finding user by email:', error);
+      throw error;
+    }
+  }
 
 }
 

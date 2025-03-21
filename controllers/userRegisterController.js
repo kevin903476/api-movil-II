@@ -31,6 +31,23 @@ const registerUser = async (req, res, next) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await UserRegisterModel.getAll();
+    return res.status(200).json({
+      success: true,
+      message: 'Usuarios obtenidos correctamente',
+      data: users
+    });
+  } catch (error) {
+    console.error('Error al obtener los usuarios:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al obtener los usuarios'
+    });
+  }
+};
+
 
 const loginUser = async (req, res) => {
  console.log("Prueba");
@@ -44,5 +61,6 @@ const getUserProfile = async (req, res) => {
 module.exports = { 
   registerUser,
   loginUser,
-  getUserProfile
+  getUserProfile,
+  getAllUsers
 };
