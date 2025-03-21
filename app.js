@@ -1,4 +1,3 @@
-// filepath: c:\Users\wendy\OneDrive - Universidad Técnica Nacional\ProjectMobilesII\api-movil-II\app.js
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
