@@ -85,7 +85,7 @@ const loginUser = async (req, res) => {
     // Buscar usuario por email
     const user = await UserRegisterModel.findByEmail(email);
 
-    if (!user || user.length === 0) {
+    if (!user) {
       return res.status(404).json({
         success: false,
         message: 'Usuario no encontrado'
@@ -93,7 +93,7 @@ const loginUser = async (req, res) => {
     }
 
     // Comparar contraseña
-    const isMatch = await bcryptjs.compare(password, user[0].password);
+    const isMatch = await bcryptjs.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).json({
@@ -106,11 +106,11 @@ const loginUser = async (req, res) => {
       success: true,
       message: 'Login exitoso',
       data: {
-        id: user[0].id,
-        nombre: user[0].nombre,
-        apellido: user[0].apellido,
-        email: user[0].email,
-        rol_id: user[0].rol_id
+        id: user.id,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        email: user.email,
+        rol_id: user.rol_id
       }
     });
   } catch (error) {

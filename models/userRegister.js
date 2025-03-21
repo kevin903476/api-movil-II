@@ -6,7 +6,7 @@ class UserRegisterModel {
   async findByEmail(email) {
     try {
       const [user] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]); //
-      return user;
+      return user && user.length > 0 ? user[0] : null; //esto es para 
     } catch (error) {
       console.error('Error finding user by email:', error);
       throw error;
