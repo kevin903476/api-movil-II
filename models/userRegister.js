@@ -2,20 +2,7 @@ const DbService = require('../config/database');
 const db = DbService.getDbServiceInstance();
 
 class UserRegisterModel {
-  async registerUser(user) {
-    const { nombre, apellido, email, password, rol_id, universidad_id, carrera_id } = user;
-    try {
-      const [rows] = await db.query(
-        'CALL sp_crear_usuario(?, ?, ?, ?, ?, ?, ?)',
-        [nombre, apellido, email, password, rol_id, universidad_id, carrera_id]
-      );
-      return rows;
-    } catch (error) {
-      console.error('Error in registerUser:', error);
-      throw error;
-    }
-  }
-
+  
   async findByEmail(email) {
     try {
       const [user] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
@@ -35,7 +22,20 @@ class UserRegisterModel {
       throw error;
     }
   }
+  async registerEstudiante(estudiante){
+    const {nombre, apellido, email, password, rol_id, universidad_id, carrera_id} = estudiante;
+    try {
+      const result = await db.query(
+        'CALL sp_crear_usuario(?, ?, ?, ?, ?, ?, ?)',
+        [nombre, apellido, email, password, rol_id, universidad_id, carrera_id]
+      );
+      return result;
+    }catch (error) {
+      console.error('Error in registerEstudiante:', error);
+      throw error;
 
+    }
+}
 }
 
 module.exports = new UserRegisterModel();
