@@ -33,7 +33,7 @@ const registerEstudiante = async (req, res) => {
       universidad_id,
       pais_id
     });
-    
+
     return res.status(201).json({
       success: true,
       message: 'Estudiante registrado correctamente',
@@ -49,7 +49,7 @@ const registerEstudiante = async (req, res) => {
 };
 const registerProfesor = async (req, res) => {
   try {
-    const { nombre, apellido, email, password, universidad_id, pais_id, whatsapp} = req.body;
+    const { nombre, apellido, email, password, universidad_id, pais_id, whatsapp } = req.body;
 
 
     const hashedPassword = await bcryptjs.hash(password, 10);
@@ -63,7 +63,7 @@ const registerProfesor = async (req, res) => {
       pais_id,
       whatsapp
     });
-    
+
     return res.status(201).json({
       success: true,
       message: 'Profesor registrado correctamente',
@@ -122,9 +122,59 @@ const loginUser = async (req, res) => {
   }
 };
 
+const updateProfesor = async (req, res) => {
+  try {
+    const { usuario_id, carrera_id, whatsapp, foto, descripcion } = req.body;
+
+    const result = await UserRegisterModel.updateProfesor({
+      usuario_id,
+      carrera_id,
+      whatsapp,
+      foto,
+      descripcion
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: 'Profesor actualizado correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al actualizado profesor:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al actualizado estudiante'
+    });
+  }
+};
+
+const updateStudent = async (req, res) => {
+  try {
+    const { usuario_id, carnet, carrera_id } = req.body;
+    const result = await UserRegisterModel.updateEstudiante({
+      usuario_id,
+      carnet,
+      carrera_id
+    });
+    return res.status(201).json({
+      success: true,
+      message: 'Estudiante actualizado correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al actualizar estudiante:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al actualizar estudiante'
+    });
+  }
+}
+
 module.exports = {
   registerEstudiante,
   loginUser,
   getAllUsers,
-  registerProfesor
+  registerProfesor,
+  updateProfesor,
+  updateStudent
 };
