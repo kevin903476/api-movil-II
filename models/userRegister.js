@@ -13,8 +13,8 @@ class UserRegisterModel {
     if (!rows || rows.length === 0) {
       return null;
     }
-
-    return rows[0]; // ✅ Retornar el usuario correctamente
+    console.log('retorno:', rows[0].email);
+    return rows[0].email; // ✅ Retornar el usuario correctamente
   } catch (error) {
     console.error('Error en findByEmail:', error);
     throw error;

@@ -85,7 +85,7 @@ const loginUser = async (req, res) => {
     const user = await UserRegisterModel.findByEmail(email);
 
     console.log('Usuario encontrado:', user); // 👀 Verificar datos
-
+    
     if (!user) {
       return res.status(404).json({
         success: false,
