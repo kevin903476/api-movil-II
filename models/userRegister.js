@@ -22,15 +22,21 @@ class UserRegisterModel {
 }
 
 
-  async getAll() {
-    try {
-      const [users] = await db.query('SELECT * FROM usuarios');
-      console.log('users:', users);
-      return Array.isArray(users) ? users : [users];
-    } catch (error) {
-      throw error;
-    }
+async getAll() {
+  try {
+    const result = await db.query('SELECT * FROM usuarios');
+
+    console.log('Resultado de getAll:', result); // 👀 Depuración
+
+    const users = result[0]; // ✅ Tomar solo el array de usuarios
+
+    return users; // ✅ Devolver todos los usuarios
+  } catch (error) {
+    console.error('Error en getAll:', error);
+    throw error;
   }
+}
+
   async registerEstudiante(estudiante) {
     const { nombre, apellido, email, password, universidad_id, pais_id } = estudiante;
     try {
