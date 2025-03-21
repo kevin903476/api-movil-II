@@ -93,7 +93,6 @@ const loginUser = async (req, res) => {
 };
 
 module.exports = {
-  registerUser,
   registerEstudiante,
   loginUser,
   getUserProfile,
