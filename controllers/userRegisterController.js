@@ -87,6 +87,7 @@ const loginUser = async (req, res) => {
     const user = await UserRegisterModel.findByEmail(email);
 
     console.log('Usuario encontrado:', user);
+    console.log('Rol del usuario:', user.rol_id);
 
     if (!user) {
       return res.status(404).json({
