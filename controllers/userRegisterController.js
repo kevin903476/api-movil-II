@@ -1,5 +1,6 @@
 const UserRegisterModel = require('../models/userRegister');
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const getAllUsers = async (req, res) => {
   try {
@@ -80,12 +81,12 @@ const registerProfesor = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    console.log('Body:', req.body); // Verificar datos
+    console.log('Body:', req.body);
     const { email, password } = req.body;
 
     const user = await UserRegisterModel.findByEmail(email);
 
-    console.log('Usuario encontrado:', user); // Verificar datos
+    console.log('Usuario encontrado:', user);
 
     if (!user) {
       return res.status(404).json({
@@ -103,16 +104,28 @@ const loginUser = async (req, res) => {
       });
     }
 
+    // Generar token JWT
+    const token = jwt.sign(
+      {
+        id: user.usuario_id,
+        email: user.email,
+        rol_id: user.rol_id
+      },
+      process.env.SECRET_KEY,
+      { expiresIn: '24h' }
+    );
+
     return res.status(200).json({
       success: true,
       message: 'Login exitoso',
       data: {
-        id: user.usuario_id, // Cambiar id por usuario_id
+        id: user.usuario_id,
         nombre: user.nombre,
         apellido: user.apellido,
         email: user.email,
         rol_id: user.rol_id
-      }
+      },
+      token: token
     });
   } catch (error) {
     console.error('Error en login:', error);
@@ -122,7 +135,6 @@ const loginUser = async (req, res) => {
     });
   }
 };
-
 
 
 const updateProfesor = async (req, res) => {
