@@ -7,7 +7,9 @@ const checkRole = (allowedRoles) => {
             });
         }
         const userRole = req.user.role_id;
+        console.log(`User role: ${userRole}, Allowed roles: ${allowedRoles}`);
         if(Array.isArray(allowedRoles) ? allowedRoles.includes(userRole) : userRole === allowedRoles){
+            console.log('User authorized');
             next();
         }else{
             return res.status(403).json({
