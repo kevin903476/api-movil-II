@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const UserRegisterModel = require('../models/userRegister');
 
 class UserService {
@@ -6,7 +6,7 @@ class UserService {
         return await UserRegisterModel.getAll();
     }
     async registerEstudiante(estudiante) {
-       estudiante.password = await bcrypt.hash(estudiante.password, 10);
+       estudiante.password = await bcryptjs.hash(estudiante.password, 10);
         return await UserRegisterModel.registerEstudiante(estudiante);
     }
 }
