@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userRegisterController');
 const auth = require('../middleware/auth');
 const checkRole = require('../middleware/checkRole');
-const  validateRegisterEstudiante = require('../middleware/validator');
+const  { validateRegisterEstudiante } = require('../middleware/validator');
 
 router.get('/getAllUsers', userController.getAllUsers);
 router.post('/registerEstudiante',validateRegisterEstudiante, userController.registerEstudiante);
