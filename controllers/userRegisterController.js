@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await UserService.getAllUsers();
+    const users = await UserService.getAll();
     console.log('Usuarios obtenidos:', users);
     return res.status(200).json({
       success: true,
