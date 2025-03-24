@@ -1,10 +1,11 @@
 const UserRegisterModel = require('../models/userRegister');
+const UserService = require('../services/userService');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await UserRegisterModel.getAll();
+    const users = await UserService.getAllUsers();
     return res.status(200).json({
       success: true,
       message: 'Usuarios obtenidos correctamente',
@@ -23,10 +24,7 @@ const registerEstudiante = async (req, res) => {
   try {
     const { nombre, apellido, email, password, universidad_id, pais_id } = req.body;
 
-
-    const hashedPassword = await bcryptjs.hash(password, 10);
-
-    const result = await UserRegisterModel.registerEstudiante({
+    const result = await UserService.registerEstudiante({
       nombre,
       apellido,
       email,
