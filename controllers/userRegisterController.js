@@ -28,7 +28,7 @@ const registerEstudiante = async (req, res) => {
       nombre,
       apellido,
       email,
-      password: hashedPassword,
+      password,
       universidad_id,
       pais_id
     });
