@@ -7,14 +7,14 @@ class UserRegisterModel {
   try {
     const result = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
     
-    console.log('Resultado de la consulta:', result); // Depuración
+    console.log('Resultado de la consulta:', result); 
 
-    const rows = result[0]; // Tomar solo la parte relevante
+    const rows = result[0];
     if (!rows || rows.length === 0) {
       return null;
     }
     console.log('retorno:', rows);
-    return rows; // Retornar el usuario correctamente
+    return rows; 
   } catch (error) {
     console.error('Error en findByEmail:', error);
     throw error;
@@ -26,11 +26,11 @@ async getAll() {
   try {
     const result = await db.query('SELECT * FROM usuarios');
 
-    console.log('Resultado de getAll:', result); // 👀 Depuración
+    console.log('Resultado de getAll:', result); 
 
-    const users = result; // ✅ Tomar solo el array de usuarios
+    const users = result; 
 
-    return users; // ✅ Devolver todos los usuarios
+    return users; 
   } catch (error) {
     console.error('Error en getAll:', error);
     throw error;
@@ -94,7 +94,15 @@ async getAll() {
       throw error;
     }
   }
-
+  async getProfileStudent(usuario_id) {
+    try {
+      const result = await db.query('CALL sp_obtener_perfil_estudiante(?)', [usuario_id]);
+      return result;
+    } catch (error) {
+      console.error('Error in getProfileStudent(Model):', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new UserRegisterModel();

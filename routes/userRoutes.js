@@ -10,5 +10,6 @@ router.post('/registerEstudiante',validateRegisterEstudiante, userController.reg
 router.post('/registerProfesor', userController.registerProfesor);
 router.put('/updateProfesor', userController.updateProfesor);
 router.put('/updateStudent', auth, checkRole([1, 2]), userController.updateStudent);
+router.get('/getProfileStudent', auth, checkRole([1, 2]), userController.getProfileStudent);
 router.post('/login', userController.loginUser);
 module.exports = router;
