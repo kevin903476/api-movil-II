@@ -97,7 +97,8 @@ async getAll() {
   async getProfileStudent(usuario_id) {
     try {
       const result = await db.query('CALL sp_obtener_perfil_estudiante(?)', [usuario_id]);
-      return result;
+      const profileData = result[0];
+      return profileData;
     } catch (error) {
       console.error('Error in getProfileStudent(Model):', error);
       throw error;
