@@ -97,6 +97,7 @@ class UserRegisterModel {
   async getProfileStudent(usuario_id) {
     try {
       const result = await db.query('CALL sp_obtener_perfil_estudiante(?)', [usuario_id]);
+      console.log('Resultado de getProfileStudent(Model):', result);
       if (result[0] && result[0].length > 0) {
         return result[0][0]; // Devuelve el primer registro
       }
