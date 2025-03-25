@@ -4,38 +4,38 @@ const db = DbService.getDbServiceInstance();
 class UserRegisterModel {
 
   async findByEmail(email) {
-  try {
-    const result = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
-    
-    console.log('Resultado de la consulta:', result); 
+    try {
+      const result = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
 
-    const rows = result[0];
-    if (!rows || rows.length === 0) {
-      return null;
+      console.log('Resultado de la consulta:', result);
+
+      const rows = result[0];
+      if (!rows || rows.length === 0) {
+        return null;
+      }
+      console.log('retorno:', rows);
+      return rows;
+    } catch (error) {
+      console.error('Error en findByEmail:', error);
+      throw error;
     }
-    console.log('retorno:', rows);
-    return rows; 
-  } catch (error) {
-    console.error('Error en findByEmail:', error);
-    throw error;
   }
-}
 
 
-async getAll() {
-  try {
-    const result = await db.query('SELECT * FROM usuarios');
+  async getAll() {
+    try {
+      const result = await db.query('SELECT * FROM usuarios');
 
-    console.log('Resultado de getAll:', result); 
+      console.log('Resultado de getAll:', result);
 
-    const users = result; 
+      const users = result;
 
-    return users; 
-  } catch (error) {
-    console.error('Error en getAll:', error);
-    throw error;
+      return users;
+    } catch (error) {
+      console.error('Error en getAll:', error);
+      throw error;
+    }
   }
-}
 
   async registerEstudiante(estudiante) {
     const { nombre, apellido, email, password, universidad_id, pais_id } = estudiante;
@@ -88,7 +88,7 @@ async getAll() {
         [usuario_id, carnet, carrera_id]
       );
       return result;
-      
+
     } catch (error) {
       console.error('Error in updateEstudiante:', error);
       throw error;
@@ -97,8 +97,10 @@ async getAll() {
   async getProfileStudent(usuario_id) {
     try {
       const result = await db.query('CALL sp_obtener_perfil_estudiante(?)', [usuario_id]);
-      const profileData = result
-      return profileData;
+      if (result[0] && result[0].length > 0) {
+        return result[0][0]; // Devuelve el primer registro
+      }
+      return null; // No se encontró información
     } catch (error) {
       console.error('Error in getProfileStudent(Model):', error);
       throw error;
