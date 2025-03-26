@@ -187,7 +187,8 @@ const updateStudent = async (req, res) => {
 const getProfileStudent = async (req, res) => {
   try {
     const { usuario_id } = req.body;
-    const result = await UserRegisterModel.getProfileStudent(usuario_id);
+    const result = await UserService.getProfileStudent(usuario_id);
+    console.log('Perfil de estudiante obtenido:', result);
     return res.status(200).json({
       success: true,
       message: 'Perfil de estudiante obtenido correctamente',
