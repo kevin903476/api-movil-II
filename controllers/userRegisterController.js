@@ -75,7 +75,7 @@ const registerProfesor = async (req, res) => {
     console.error('Error al registrar profesor:', error);
     return res.status(500).json({
       success: false,
-      message: 'Error al registrar estudiante'
+      message: 'Error al registrar profesor'
     });
   }
 };

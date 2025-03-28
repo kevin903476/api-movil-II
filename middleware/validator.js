@@ -6,6 +6,7 @@ exports.validateRegisterEstudiante = [
     body('email').isEmail().withMessage('Correo electrónico no válido'),
     body('password').isString().isLength({ min: 6, max: 50 }).withMessage('La contraseña debe tener entre 6 y 50 caracteres'),
     body('universidad_id').isInt().withMessage('Universidad ID debe ser un número entero'),
+    body('carrera_id').isInt().withMessage('Carrera ID debe ser un número entero'),
     body('pais_id').isInt().withMessage('País ID debe ser un número entero'),
     
     (req, res, next) => {
