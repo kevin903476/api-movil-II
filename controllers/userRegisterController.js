@@ -189,7 +189,7 @@ const updateStudent = async (req, res) => {
 }
 const getProfileStudent = async (req, res) => {
   try {
-    const { usuario_id } = req.query;
+    const usuario_id = req.user.id;
     const result = await UserService.getProfileStudent(usuario_id);
     console.log('Perfil de estudiante obtenido:', result);
     return res.status(200).json({
