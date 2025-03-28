@@ -66,11 +66,11 @@ class UserRegisterModel {
     }
   }
   async updateProfesor(profesor) {
-    const { usuario_id, carrera_id, whatsapp, foto, descripcion } = profesor;
+    const { usuario_id, whatsapp, foto, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id } = profesor;
     try {
       const result = await db.query(
-        'CALL sp_actualizar_profesor(?, ?, ?, ?, ?)',
-        [usuario_id, carrera_id, whatsapp, foto, descripcion]
+        'CALL sp_actualizar_profesor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [usuario_id, whatsapp, foto, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id]
       );
       return result;
     } catch (error) {

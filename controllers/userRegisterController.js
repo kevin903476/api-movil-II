@@ -143,14 +143,19 @@ const loginUser = async (req, res) => {
 
 const updateProfesor = async (req, res) => {
   try {
-    const { usuario_id, carrera_id, whatsapp, foto, descripcion } = req.body;
+    const { usuario_id, whatsapp, foto, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
 
-    const result = await UserRegisterModel.updateProfesor({
+    const result = await UserService.updateProfesor({
       usuario_id,
-      carrera_id,
       whatsapp,
       foto,
-      descripcion
+      descripcion,
+      nombre,
+      apellido,
+      universidad_id,
+      sede_id,
+      recinto_id,
+      carrera_id
     });
 
     return res.status(201).json({
