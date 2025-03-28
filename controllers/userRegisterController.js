@@ -25,7 +25,7 @@ const registerEstudiante = async (req, res) => {
   console.log("Datoss recibidos del estudiante", req.body);
   try {
 
-    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id  } = req.body;
+    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id } = req.body;
 
     const result = await UserService.registerEstudiante({
       nombre,
@@ -169,9 +169,11 @@ const updateProfesor = async (req, res) => {
 
 const updateStudent = async (req, res) => {
   try {
-    const { usuario_id, carnet, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
+    const { usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
     const result = await UserService.updateStudent({
-      usuario_id,
+     usuario_id,
+      nombre,
+      apellido,
       carnet,
       universidad_id,
       sede_id,
