@@ -12,5 +12,8 @@ class UserService {
     async getProfileStudent(usuario_id) {
         return await UserRegisterModel.getProfileStudent(usuario_id);
     }
+    async updateStudent(student) {
+        return await UserRegisterModel.updateEstudiante(student);
+    }
 }
 module.exports = new UserService();

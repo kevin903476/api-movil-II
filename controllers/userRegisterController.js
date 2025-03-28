@@ -169,10 +169,13 @@ const updateProfesor = async (req, res) => {
 
 const updateStudent = async (req, res) => {
   try {
-    const { usuario_id, carnet, carrera_id } = req.body;
-    const result = await UserRegisterModel.updateEstudiante({
+    const { usuario_id, carnet, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
+    const result = await UserService.updateStudent({
       usuario_id,
       carnet,
+      universidad_id,
+      sede_id,
+      recinto_id,
       carrera_id
     });
     return res.status(201).json({
