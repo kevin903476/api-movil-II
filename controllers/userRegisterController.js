@@ -22,6 +22,7 @@ const getAllUsers = async (req, res) => {
 };
 
 const registerEstudiante = async (req, res) => {
+  console.log("Datoss recibidos del estudiante", req.body);
   try {
     const { nombre, apellido, email, password, universidad_id, pais_id } = req.body;
 
