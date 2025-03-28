@@ -52,11 +52,11 @@ class UserRegisterModel {
     }
   }
   async registerProfesor(profesor) {
-    const { nombre, apellido, email, password, universidad_id, pais_id, whatsapp } = profesor;
+    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id, whatsapp } = profesor;
     try {
       const result = await db.query(
-        'CALL sp_insertar_profesor(?, ?, ?, ?, ?, ?, ?)',
-        [nombre, apellido, email, password, universidad_id, pais_id, whatsapp]
+        'CALL sp_insertar_profesor(?, ?, ?, ?, ?, ?, ?, ?)',
+        [nombre, apellido, email, password, universidad_id, carrera_id, pais_id, whatsapp]
       );
       return result;
     } catch (error) {
