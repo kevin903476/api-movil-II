@@ -24,6 +24,7 @@ const getAllUsers = async (req, res) => {
 const registerEstudiante = async (req, res) => {
   console.log("Datoss recibidos del estudiante", req.body);
   try {
+
     const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id  } = req.body;
 
     const result = await UserService.registerEstudiante({
@@ -32,8 +33,8 @@ const registerEstudiante = async (req, res) => {
       email,
       password,
       universidad_id,
-      pais_id,
-      carrera_id
+      carrera_id,
+      pais_id
     });
 
     return res.status(201).json({
@@ -76,7 +77,7 @@ const registerProfesor = async (req, res) => {
     console.error('Error al registrar profesor:', error);
     return res.status(500).json({
       success: false,
-      message: 'Error al registrar estudiante'
+      message: 'Error al registrar profesor'
     });
   }
 };
