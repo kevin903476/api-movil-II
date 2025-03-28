@@ -49,7 +49,7 @@ const registerEstudiante = async (req, res) => {
 };
 const registerProfesor = async (req, res) => {
   try {
-    const { nombre, apellido, email, password, universidad_id, pais_id, whatsapp } = req.body;
+    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id, whatsapp } = req.body;
 
 
     const hashedPassword = await bcryptjs.hash(password, 10);
@@ -60,6 +60,7 @@ const registerProfesor = async (req, res) => {
       email,
       password: hashedPassword,
       universidad_id,
+      carrera_id,
       pais_id,
       whatsapp
     });
