@@ -42,7 +42,7 @@ class UserRegisterModel {
     try {
       const result = await db.query(
         'CALL sp_insertar_estudiante(?, ?, ?, ?, ?, ?, ?)',
-        [nombre, apellido, email, password, universidad_id,carrera_id, pais_id]
+        [nombre, apellido, email, password, universidad_id, carrera_id, pais_id]
       );
       return result;
     } catch (error) {
