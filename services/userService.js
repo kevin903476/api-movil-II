@@ -2,6 +2,7 @@ const bcryptjs = require('bcryptjs');
 const UserRegisterModel = require('../models/userModel');
 
 class UserService {
+
     async getAll() {
         return await UserRegisterModel.getAll();
     }
@@ -17,6 +18,10 @@ class UserService {
     }
     async updateProfesor(profesor) {
         return await UserRegisterModel.updateProfesor(profesor);
+    }
+    async registerProfesor(profesor) {
+        profesor.password = await bcryptjs.hash(profesor.password, 10);
+        return await UserRegisterModel.registerProfesor(profesor);
     }
 }
 module.exports = new UserService();

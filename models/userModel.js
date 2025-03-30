@@ -65,6 +65,7 @@ class UserRegisterModel {
 
     }
   }
+  //Actualizar stored procedure para que acepte reseñas
   async updateProfesor(profesor) {
     const { usuario_id, whatsapp, foto, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id } = profesor;
     try {
@@ -107,6 +108,7 @@ class UserRegisterModel {
       throw error;
     }
   }
+
 }
 
 module.exports = new UserRegisterModel();

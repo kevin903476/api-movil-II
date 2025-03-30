@@ -55,13 +55,11 @@ const registerProfesor = async (req, res) => {
     const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id, whatsapp } = req.body;
 
 
-    const hashedPassword = await bcryptjs.hash(password, 10);
-
-    const result = await UserRegisterModel.registerProfesor({
+    const result = await UserService.registerProfesor({
       nombre,
       apellido,
       email,
-      password: hashedPassword,
+      password,
       universidad_id,
       carrera_id,
       pais_id,
