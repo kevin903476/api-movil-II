@@ -1,4 +1,4 @@
-const NotificationService = require('../services/notificationService');
+const NotificationService = require('../services/notificationsService');
 
 const registerPushToken = async (req, res) => {
   try {
