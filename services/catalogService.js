@@ -16,5 +16,8 @@ class CatalogService {
     async rolesCatalog() {
         return await CatalogModel.catalogRoles();
     }
+    async enclosureCatalog() {
+        return await CatalogModel.catalogEnclosure();
+    }
 }
 module.exports = new CatalogService();

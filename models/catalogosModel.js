@@ -57,6 +57,17 @@ class CatalogModel {
             throw error;
         }
     }
+    async catalogEnclosure(){
+        try {
+            const result = await db.query('SELECT * FROM vista_catalogo_recintos');
+            const recintos = result;
+            console.log('Resultado de la consulta:', recintos);
+            return recintos;
+        } catch (error) {
+            console.error('Error al obtener catalogo:', error);
+            throw error;
+        }
+    }
 
 }
 module.exports = new CatalogModel();

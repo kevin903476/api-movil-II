@@ -85,10 +85,29 @@ const getCatalogRoles = async (req, res) => {
         });
     }
 }
+
+const getCatalogEnclosure = async (req, res) => {
+    try {
+        const enclosures = await CatalogService.enclosureCatalog();
+        console.log('Recintos obtenidos:', enclosures);
+        return res.status(200).json({
+            success: true,
+            message: 'Recintos obtenidos correctamente',
+            data: enclosures
+        });
+    } catch (error) {
+        console.error('Error al obtener recintos:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener recintos'
+        });
+    }
+}
 module.exports = {
     getCatalogUniversity,
     getCatalogCourse,
     getCatalogCareer,
     getCatalogHeadquarters,
-    getCatalogRoles
+    getCatalogRoles,
+    getCatalogEnclosure
 }
