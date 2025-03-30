@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 
 const itemRoutes = require('./routes/itemRoutes');
 const userRoutes = require('./routes/userRoutes');
+const notificationRoutes = require('./routes/notificationsRoutes');
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 // Usar rutas
 app.use('/items', itemRoutes);
 app.use('/users', userRoutes);
+app.use('/notifications', notificationRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

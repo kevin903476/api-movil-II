@@ -24,7 +24,7 @@ class UserRegisterModel {
 
   async getAll() {
     try {
-      const result = await db.query('SELECT * FROM usuarios');
+      const result = await db.query('SELECT * FROM vista_usuarios_completa');
 
       console.log('Resultado de getAll:', result);
 
