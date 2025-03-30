@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const itemRoutes = require('./routes/itemRoutes');
 const userRoutes = require('./routes/userRoutes');
 const notificationRoutes = require('./routes/notificationsRoutes');
+const catalogRoutes = require('./routes/catalogRoutes');
 
 dotenv.config();
 const app = express();
@@ -23,7 +24,7 @@ app.get('/', (req, res) => {
 app.use('/items', itemRoutes);
 app.use('/users', userRoutes);
 app.use('/notifications', notificationRoutes);
-app.use('/catalogs', require('./routes/catalogRoutes'));
+app.use('/catalogs', catalogRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -6,3 +6,5 @@ router.get('/universities', catalogController.getCatalogUniversity);
 router.get('/courses', catalogController.getCatalogCourse);
 router.get('/headquarters', catalogController.getCatalogHeadquarters);
 router.get('/careers', catalogController.getCatalogCareer);
+
+module.exports = router;
