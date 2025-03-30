@@ -12,11 +12,18 @@ exports.validateRegisterEstudiante = [
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            const errorsFormatted = {};
+            
+            errors.array().forEach(error => {
+                errorsFormatted[error.path] = error.msg;
+            });
+            
             return res.status(400).json({
                 success: false,
-                errors: errors.array()
+                message: 'Error de validación en los datos enviados',
+                errors: errorsFormatted
             });
         }
-        next(); 
+        next();
     }
 ];

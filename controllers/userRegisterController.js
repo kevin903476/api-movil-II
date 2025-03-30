@@ -2,6 +2,9 @@ const UserRegisterModel = require('../models/userModel');
 const UserService = require('../services/userService');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+const process = require('process');
+dotenv.config();
 
 const getAllUsers = async (req, res) => {
   try {
@@ -110,7 +113,7 @@ const loginUser = async (req, res) => {
         email: user.email,
         rol_id: user.rol_id
       },
-      process.env.SECRET_KEY,
+      process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
 

@@ -1,3 +1,4 @@
+//@ts-check
 const CatalogService = require('../services/catalogService');
 
 const getCatalogUniversity = async (req, res) => {
