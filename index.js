@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
 app.use('/items', itemRoutes);
 app.use('/users', userRoutes);
 app.use('/notifications', notificationRoutes);
+app.use('/catalogs', require('./routes/catalogRoutes'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
