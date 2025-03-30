@@ -46,6 +46,17 @@ class CatalogModel {
             throw error;
         }
     }
+    async catalogRoles(){
+        try {
+            const result = await db.query('SELECT * FROM vista_catalogo_roles');
+            const roles = result;
+            console.log('Resultado de la consulta:', roles);
+            return roles;
+        } catch (error) {
+            console.error('Error al obtener catalogo:', error);
+            throw error;
+        }
+    }
 
 }
 module.exports = new CatalogModel();

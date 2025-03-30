@@ -13,5 +13,8 @@ class CatalogService {
     async headquartersCatalog() {
         return await CatalogModel.catalogHeadquarters();
     }
+    async rolesCatalog() {
+        return await CatalogModel.catalogRoles();
+    }
 }
 module.exports = new CatalogService();

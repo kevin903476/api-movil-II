@@ -68,9 +68,27 @@ const getCatalogHeadquarters = async (req, res) => {
         });
     }
 }
+const getCatalogRoles = async (req, res) => {
+    try {
+        const roles = await CatalogService.rolesCatalog();
+        console.log('Roles obtenidos:', roles);
+        return res.status(200).json({
+            success: true,
+            message: 'Roles obtenidos correctamente',
+            data: roles
+        });
+    } catch (error) {
+        console.error('Error al obtener roles:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener roles'
+        });
+    }
+}
 module.exports = {
     getCatalogUniversity,
     getCatalogCourse,
     getCatalogCareer,
-    getCatalogHeadquarters
+    getCatalogHeadquarters,
+    getCatalogRoles
 }
