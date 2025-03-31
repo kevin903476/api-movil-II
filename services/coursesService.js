@@ -9,7 +9,7 @@ class CoursesService {
         return await CoursesModel.createCourse(curso);
     }
     async insertCourseScheduleProfessor(curso_profesor) {
-        return await CoursesModel.createCourse(curso_profesor);
+        return await CoursesModel.insertCourseScheduleProfessor(curso_profesor);
     }
 
 }
