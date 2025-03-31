@@ -27,7 +27,7 @@ class CatalogModel {
     }
     async catalogCareer() {
         try {
-            const result = await db.query('SELECT * FROM vista_catologo_carreras');
+            const result = await db.query('SELECT * FROM vista_catalogo_carreras');
             const carreras = result;
             console.log('Resultado de la consulta:', carreras);
             return carreras;
