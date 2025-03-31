@@ -16,11 +16,11 @@ class CoursesModel {
     }
 
     async createCourse(curso) {
-        const { universidad_id, carrera_id, nombre, descripcion} = curso;
+        const { universidad_id, carrera_id, clasificacion_id, nombre, descripcion} = curso;
         try {
           const result = await db.query(
-            'CALL sp_insertar_curso(?, ?, ?, ?)',
-            [universidad_id, carrera_id, nombre, descripcion]
+            'CALL sp_insertar_curso(?, ?, ?, ?, ?)',
+            [universidad_id, carrera_id,clasificacion_id, nombre, descripcion]
           );
           return result;
         } catch (error) {

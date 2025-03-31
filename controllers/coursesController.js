@@ -25,16 +25,14 @@ const createCourse = async (req, res) => {
     console.log("Datos recibidos del curso", req.body);
     try {
   
-      const {  universidad_id, carrera_id, nombre, descripcion} = req.body;
+      const {  universidad_id, carrera_id, clasificacion_id, nombre, descripcion} = req.body;
   
       const result = await CoursesService.createCourse({
         universidad_id,
         carrera_id,
+        clasificacion_id,
         nombre,
         descripcion
-        
-        
-        
       });
   
       return res.status(201).json({
