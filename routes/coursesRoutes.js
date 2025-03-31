@@ -4,11 +4,11 @@ const router = express.Router();
 const coursesController = require('../controllers/coursesController');
 
 router.get('/getCourses', coursesController.getCourses );
-router.get('/createCourse', coursesController.createCourse );
+router.post('/createCourse', coursesController.createCourse );
 
 // logica para agregar un profe a un curso
 
-router.get('/insertCourseScheduleProfessor', coursesController.insertCourseScheduleProfessor );
+router.post('/insertCourseScheduleProfessor', coursesController.insertCourseScheduleProfessor );
 
 
 module.exports = router;
