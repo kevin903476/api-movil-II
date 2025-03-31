@@ -1,6 +1,8 @@
 //@ts-check
 const CoursesService = require('../services/coursesService');
 
+const UserService = require('../services/userService');
+
 const getCourses = async (req, res) => {
     try {
         const courses = await CoursesService.getCourses();
@@ -52,7 +54,17 @@ const insertCourseScheduleProfessor = async (req, res) => {
     console.log("Datos recibidos del curso_profesor", req.body);
     try {
   
-      const { profesor_id, curso_id, monto_por_hora, modalidad, horario} = req.body;
+      const {curso_id, monto_por_hora, modalidad, horario} = req.body;
+
+      const profesor = await UserService.getProfesorByUserId(req.user.id);
+        const profesor_id = profesor.profesor_id;
+
+        if (!profesor_id) {
+            return res.status(404).json({
+                success: false,
+                message: 'Profesor no encontrado'
+            });
+        }
   
       const result = await CoursesService.insertCourseScheduleProfessor({
         profesor_id, 
@@ -60,13 +72,11 @@ const insertCourseScheduleProfessor = async (req, res) => {
         monto_por_hora, 
         modalidad, 
         horario
-        
-        
       });
   
       return res.status(201).json({
         success: true,
-        message: 'Curso registrado correctamente',
+        message: 'Curso_profesor registrado correctamente',
         data: result
       });
     } catch (error) {
