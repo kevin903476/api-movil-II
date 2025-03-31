@@ -20,6 +20,23 @@ const getTutorials = async (req, res) => {
         });
     }
 }
+const getScheduledTutorials = async (req, res) => {
+    try {
+        const tutorias = await TutorialsService.getScheduledTutorials();
+        console.log('Tutorias del profesor agendadas obtenidos:', tutorias);
+        return res.status(200).json({
+            success: true,
+            message: 'Tutorias del profesor agendadas obtenidos correctamente',
+            data: tutorias
+        });
+    } catch (error) {
+        console.error('Error al obtener Tutorias del profesor agendadas:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener Tutorias del profesor agendadas'
+        });
+    }
+}
 
 const scheduleTutoring = async (req, res) => {
     console.log("Datos recibidos del tutoria_profesor", req.body);
@@ -63,6 +80,7 @@ const scheduleTutoring = async (req, res) => {
 
 module.exports = {
   getTutorials,
-  scheduleTutoring
+  scheduleTutoring,
+  getScheduledTutorials
     
 }

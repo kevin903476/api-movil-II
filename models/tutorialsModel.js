@@ -11,10 +11,22 @@ class TutorialsModel {
             console.log('Resultado de la consulta:', cursos);
             return cursos;
         } catch (error) {
-            console.error('Error al obtener cursos_profesor:', error);
+            console.error('Error al obtener cursos_profesor disponibles:', error);
             throw error;
         }
     }
+
+    async getScheduledTutorials() {
+      try {
+          const result = await db.query('SELECT * FROM vista_tutorias');
+          const cursos = result;
+          console.log('Resultado de la consulta:', cursos);
+          return cursos;
+      } catch (error) {
+          console.error('Error al obtener cursos_profesor agendadas:', error);
+          throw error;
+      }
+  }
 
     async scheduleTutoring(tutoria) {
         const { profesor_id, estudiante_id, curso_id, fecha, hora_inicio, hora_fin, temas} = tutoria;
