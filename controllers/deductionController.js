@@ -150,7 +150,7 @@ const insertDeductionPaid = async (req, res) => {
             });
         }
 
-        await DeductionService.insertDeductionPaid(numero_tranferencia, comprobante, profesor_id, deduccion_id);
+        await DeductionService.payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id);
 
         return res.status(200).json({
             success: true,
