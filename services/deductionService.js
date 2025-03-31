@@ -11,5 +11,8 @@ class DeductionService {
     async getTotalNetInvoicesTeacher(profesor_id){
         return await DeductionsModel.getTotalNetInvoicesTeacher(profesor_id);
     }
+    async payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id) {
+        return await DeductionsModel.payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id);
+    }
 }
 module.exports = new DeductionService();

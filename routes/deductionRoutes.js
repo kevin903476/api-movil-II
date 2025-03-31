@@ -8,6 +8,7 @@ const checkRole = require('../middleware/checkRole');
 router.get('/getBillsProfessor', auth, checkRole([1, 3]), deductionController.getBillProfessor);
 router.get('/getDetailsBillProfessor', auth, checkRole([1, 3]), deductionController.getDetailsBillProfesssor);
 router.get('/getTotalNetInvoicesTeacher', auth, checkRole([1, 3]), deductionController.getTotalNetInvoicesTeacher);
+router.post('/payDeduction', auth, checkRole([1, 3]), deductionController.payDeduction);
 
 module.exports = router;
 

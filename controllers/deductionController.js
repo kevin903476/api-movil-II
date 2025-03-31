@@ -91,9 +91,47 @@ const getTotalNetInvoicesTeacher = async (req, res) => {
         });
     }
 }
+const payDeduction = async (req, res) => {
+    try {
+        const { numero_tranferencia, comprobante, deduccion_id } = req.body;
+        
+        const profesor = await UserService.getProfesorByUserId(req.user.id);
+        
+        if (!profesor || !profesor.profesor_id) {
+            return res.status(404).json({
+                success: false,
+                message: 'Profesor no encontrado'
+            });
+        }
+        
+        const profesor_id = profesor.profesor_id;
+        
+        if (!numero_tranferencia || !comprobante || !deduccion_id) {
+            return res.status(400).json({
+                success: false,
+                message: 'Faltan datos requeridos'
+            });
+        }
+        
+        await DeductionService.payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id);
+        
+        return res.status(200).json({
+            success: true,
+            message: 'Pago de deducción registrado correctamente'
+        });
+    } catch (error) {
+        console.error('Error al registrar pago de deducción:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al registrar pago de deducción',
+            error: error.message
+        });
+    }
+}
 
 module.exports = {
     getBillProfessor,
     getDetailsBillProfesssor,
-    getTotalNetInvoicesTeacher
+    getTotalNetInvoicesTeacher,
+    payDeduction
 }

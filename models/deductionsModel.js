@@ -36,6 +36,18 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
             throw error;
         }
     }
+
+    async payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id) {
+        try {
+            const result = await db.query('CALL sp_insertar_deduccion_pagada(?, ?, ?, ?)', 
+                [numero_tranferencia, comprobante, profesor_id, deduccion_id]);
+            return result;
+        } catch (error) {
+            console.error('Error en payDeduction:', error);
+            throw error;
+        }
+    }
+    
 }
 
 module.exports = new DeductionsModel();
