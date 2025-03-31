@@ -1,3 +1,4 @@
+//@ts-check
 const DbService = require('../config/database');
 const db = DbService.getDbServiceInstance();
 
@@ -24,7 +25,7 @@ class CatalogModel {
             throw error;
         }
     }
-    async catalogCareer (){
+    async catalogCareer() {
         try {
             const result = await db.query('SELECT * FROM vista_catologo_carreras');
             const carreras = result;
@@ -46,7 +47,7 @@ class CatalogModel {
             throw error;
         }
     }
-    async catalogRoles(){
+    async catalogRoles() {
         try {
             const result = await db.query('SELECT * FROM vista_catalogo_roles');
             const roles = result;
@@ -57,12 +58,23 @@ class CatalogModel {
             throw error;
         }
     }
-    async catalogEnclosure(){
+    async catalogEnclosure() {
         try {
             const result = await db.query('SELECT * FROM vista_catalogo_recintos');
             const recintos = result;
             console.log('Resultado de la consulta:', recintos);
             return recintos;
+        } catch (error) {
+            console.error('Error al obtener catalogo:', error);
+            throw error;
+        }
+    }
+    async catalogCoupons() {
+        try {
+            const result = await db.query('SELECT * FROM vista_catalogo_cupones');
+            const cupones = result;
+            console.log('Resultado de la consulta:', cupones);
+            return cupones;
         } catch (error) {
             console.error('Error al obtener catalogo:', error);
             throw error;

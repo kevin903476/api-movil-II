@@ -104,11 +104,29 @@ const getCatalogEnclosure = async (req, res) => {
         });
     }
 }
+const getCatalogCoupons = async (req, res) => {
+    try {
+        const coupons = await CatalogService.couponCatalog();
+        console.log('Cupones obtenidos:', coupons);
+        return res.status(200).json({
+            success: true,
+            message: 'Cupones obtenidos correctamente',
+            data: coupons
+        });
+    } catch (error) {
+        console.error('Error al obtener cupones:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener cupones'
+        });
+    }
+}
 module.exports = {
     getCatalogUniversity,
     getCatalogCourse,
     getCatalogCareer,
     getCatalogHeadquarters,
     getCatalogRoles,
-    getCatalogEnclosure
+    getCatalogEnclosure,
+    getCatalogCoupons
 }

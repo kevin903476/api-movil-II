@@ -1,3 +1,4 @@
+//@ts-check
 const express = require('express');
 const router = express.Router();
 const catalogController = require('../controllers/catologosController');
@@ -8,5 +9,6 @@ router.get('/headquarters', catalogController.getCatalogHeadquarters);
 router.get('/careers', catalogController.getCatalogCareer);
 router.get('/roles', catalogController.getCatalogRoles);
 router.get('/enclosures', catalogController.getCatalogEnclosure);
+router.get('/coupons', catalogController.getCatalogCoupons);
 
 module.exports = router;

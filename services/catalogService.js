@@ -1,3 +1,4 @@
+//@ts-check
 const CatalogModel = require('../models/catalogosModel');
 
 class CatalogService {
@@ -18,6 +19,9 @@ class CatalogService {
     }
     async enclosureCatalog() {
         return await CatalogModel.catalogEnclosure();
+    }
+    async couponCatalog() {
+        return await CatalogModel.catalogCoupons();
     }
 }
 module.exports = new CatalogService();

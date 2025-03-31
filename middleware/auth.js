@@ -1,5 +1,7 @@
  const jwt = require('jsonwebtoken')
-
+ const dotenv = require('dotenv');
+ const process = require('process');
+ dotenv.config();
  const auth = (req, res, next) => {
     try {
         const authHeader = req.headers['authorization'];
@@ -21,6 +23,7 @@
             next();
         });
     } catch (error) {
+        console.error('Authentication error:', error);
         return res.status(500).json({
             success: false,
             message: 'Server error'
