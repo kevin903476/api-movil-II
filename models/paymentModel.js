@@ -4,11 +4,11 @@ const db = DbService.getDbServiceInstance();
 
 class PaymentModel {
     async insertPaymentofStudent(paymentStudent) {
-        const { tutoria_id, profesor_id, estudiante_id, monto, comprobante, num_transferencia, modalidad, cupo_id} = paymentStudent
+        const { tutoria_id, profesor_id, estudiante_id, monto, comprobante, num_transferencia, tipo_pago, cupo_id} = paymentStudent
         try {
             const result = await db.query(
                 'CALL sp_insertar_pago(?, ?, ?, ?, ?, ?, ?, ?)',
-                [tutoria_id, profesor_id, estudiante_id, monto, comprobante, num_transferencia, modalidad, cupo_id]
+                [tutoria_id, profesor_id, estudiante_id, monto, comprobante, num_transferencia, tipo_pago, cupo_id]
             );
             return result;
         } catch (error) {
