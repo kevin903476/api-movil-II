@@ -36,7 +36,7 @@ exports.validatePaymentOfStudent = [
     body('comprobante').isString().withMessage('El comprobante debe ser una cadena de texto'),
     body('num_transferencia').isString().withMessage('El número de transferencia debe ser una cadena de texto'),
     body('tipo_pago').isString().withMessage('La modalidad debe ser una cadena de texto'),
-    body('cupo_id').isInt().withMessage('El ID del cupo debe ser un número entero'),
+    body('cupon_id').isInt().withMessage('El ID del cupo debe ser un número entero'),
 
     (req, res, next) => {
         const errors = validationResult(req);
