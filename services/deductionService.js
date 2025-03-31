@@ -14,5 +14,11 @@ class DeductionService {
     async payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id) {
         return await DeductionsModel.payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id);
     }
+    async insertDeductionPaid(numero_tranferencia, comprobante, profesor_id, deduccion_id) {
+        return await DeductionsModel.insertDeductionPaid(numero_tranferencia, comprobante, profesor_id, deduccion_id);
+    }
+    async getDeductionProfessor(profesor_id) {
+        return await DeductionsModel.getDeductionProfessor(profesor_id);
+    }
 }
 module.exports = new DeductionService();

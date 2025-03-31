@@ -47,7 +47,26 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
             throw error;
         }
     }
-    
+    async insertDeductionPaid(numero_tranferencia, comprobante, profesor_id, deduccion_id) {
+        try {
+            const result = await db.query('CALL sp_insertar_deduccion_pagada(?, ?, ?, ?)', 
+                [numero_tranferencia, comprobante, profesor_id, deduccion_id]);
+            return result;
+        } catch (error) {
+            console.error('Error en insertDeductionPaid:', error);
+            throw error;
+        }
+    }
+    async getDeductionProfessor(profesor_id) {
+        try {
+            const result = await db.query('SELECT * FROM vista_deducciones_profesor WHERE profesor_id = ?', [profesor_id]);
+            console.log('Resultado de getDeductionProfessor:', result);
+            return result && result.length > 0 ? result : [];
+        } catch (error) {
+            console.error('Error en getDeductionProfessor:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = new DeductionsModel();
