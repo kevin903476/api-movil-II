@@ -172,7 +172,8 @@ const updateProfesor = async (req, res) => {
 
 const updateStudent = async (req, res) => {
   try {
-    const { usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
+    const { nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
+    const usuario_id = req.user.id;
     const result = await UserService.updateStudent({
      usuario_id,
       nombre,

@@ -35,6 +35,19 @@ class UserRegisterModel {
     }
   }
 
+  async getProfesorByUserId(usuario_id) {
+    try {
+      const result = await db.query('CALL sp_obtener_profesor(?)', [usuario_id]);
+      console.log('Resultado de getProfesorByUserId:', result);
+      if (result[0] && result[0].length > 0) {
+        return result[0][0]; // Devuelve el primer registro
+      }
+      return null; 
+    } catch (error) {
+      console.error('Error en getProfesorByUserId:', error);
+      throw error;
+    }
+  }
 
   async getAll() {
     try {

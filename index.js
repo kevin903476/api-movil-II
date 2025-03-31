@@ -8,7 +8,8 @@ const userRoutes = require('./routes/userRoutes');
 const notificationRoutes = require('./routes/notificationsRoutes');
 const catalogRoutes = require('./routes/catalogRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
-
+const deductionRoutes = require('./routes/deductionRoutes');
+const coursesRouter = require('./routes/coursesRoutes');
 dotenv.config();
 
 const app = express();
@@ -27,6 +28,8 @@ app.use('/users', userRoutes);
 app.use('/notifications', notificationRoutes);
 app.use('/catalogs', catalogRoutes);
 app.use('/payments', paymentRoutes);
+app.use('/deductions', deductionRoutes);
+app.use('/courses', coursesRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
