@@ -3,7 +3,8 @@ const PaymentService = require('../services/paymentService');
 
 const insertPaymentOfStudent = async (req, res) => {
     try {
-        const { tutoria_id, profesor_id, estudiante_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id} = req.body;
+        const { tutoria_id, profesor_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id} = req.body;
+        const estudiante_id = req.user.id; 
         const paymentStudent = {
             tutoria_id,
             profesor_id,
