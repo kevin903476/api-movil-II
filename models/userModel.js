@@ -1,3 +1,4 @@
+//@ts-check
 const DbService = require('../config/database');
 const db = DbService.getDbServiceInstance();
 

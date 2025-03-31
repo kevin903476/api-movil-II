@@ -7,6 +7,7 @@ const process = require('process');
 const userRoutes = require('./routes/userRoutes');
 const notificationRoutes = require('./routes/notificationsRoutes');
 const catalogRoutes = require('./routes/catalogRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 app.use('/users', userRoutes);
 app.use('/notifications', notificationRoutes);
 app.use('/catalogs', catalogRoutes);
+app.use('/payments', paymentRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

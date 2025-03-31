@@ -27,3 +27,32 @@ exports.validateRegisterEstudiante = [
         next();
     }
 ];
+
+exports.validatePaymentOfStudent = [
+    body('tutoria_id').isInt().withMessage('El ID de la tutoría debe ser un número entero'),
+    body('profesor_id').isInt().withMessage('El ID del profesor debe ser un número entero'),
+    body('estudiante_id').isInt().withMessage('El ID del estudiante debe ser un número entero'),
+    body('monto').isFloat({ gt: 0 }).withMessage('El monto debe ser un número mayor que 0'),
+    body('comprobante').isString().withMessage('El comprobante debe ser una cadena de texto'),
+    body('num_transferencia').isString().withMessage('El número de transferencia debe ser una cadena de texto'),
+    body('modalidad').isString().withMessage('La modalidad debe ser una cadena de texto'),
+    body('cupo_id').isInt().withMessage('El ID del cupo debe ser un número entero'),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const errorsFormatted = {};
+            
+            errors.array().forEach(error => {
+                errorsFormatted[error.path] = error.msg;
+            });
+            
+            return res.status(400).json({
+                success: false,
+                message: 'Error de validación en los datos enviados',
+                errors: errorsFormatted
+            });
+        }
+        next();
+    }
+];
