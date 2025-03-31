@@ -20,7 +20,7 @@ class TutorialsModel {
         const { profesor_id, estudiante_id, curso_id, fecha, hora_inicio, hora_fin, temas} = tutoria;
         try {
           const result = await db.query(
-            'CALL sp_agendar_tutoria(?, ?, ?, ?, ?)',
+            'CALL sp_agendar_tutoria(?, ?, ?, ?, ?, ?, ?)',
             [ profesor_id, estudiante_id, curso_id, fecha, hora_inicio, hora_fin, temas]
           );
           return result;

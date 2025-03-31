@@ -37,17 +37,17 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
         }
     }
 
-    async payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id) {
+    
+    async payMultipleDeductions(numero_tranferencia, comprobante, profesor_id, deducciones_ids) {
         try {
-            const result = await db.query('CALL sp_insertar_deduccion_pagada(?, ?, ?, ?)', 
-                [numero_tranferencia, comprobante, profesor_id, deduccion_id]);
+            const result = await db.query('CALL sp_insertar_deducciones_pagadas(?, ?, ?, ?)', 
+                [numero_tranferencia, comprobante, profesor_id, deducciones_ids]);
             return result;
         } catch (error) {
-            console.error('Error en payDeduction:', error);
+            console.error('Error en payMultipleDeductions:', error);
             throw error;
         }
     }
-
     
     async getDeductionProfessor(profesor_id) {
         try {

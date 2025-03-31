@@ -11,12 +11,22 @@ class DeductionService {
     async getTotalNetInvoicesTeacher(profesor_id){
         return await DeductionsModel.getTotalNetInvoicesTeacher(profesor_id);
     }
-    async payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id) {
-        return await DeductionsModel.payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id);
-    }
-
+   
     async getDeductionProfessor(profesor_id) {
         return await DeductionsModel.getDeductionProfessor(profesor_id);
+    }
+
+    async payMultipleDeductions(numero_tranferencia, comprobante, profesor_id, deducciones_ids) {
+        const deduccionesIdsString = Array.isArray(deducciones_ids) 
+            ? deducciones_ids.join(',') 
+            : deducciones_ids;
+            
+        return await DeductionsModel.payMultipleDeductions(
+            numero_tranferencia, 
+            comprobante, 
+            profesor_id, 
+            deduccionesIdsString
+        );
     }
 }
 module.exports = new DeductionService();

@@ -91,39 +91,53 @@ const getTotalNetInvoicesTeacher = async (req, res) => {
         });
     }
 }
-const payDeduction = async (req, res) => {
+
+
+const payMultipleDeductions = async (req, res) => {
     try {
-        const { numero_tranferencia, comprobante, deduccion_id } = req.body;
-
+        const { numero_tranferencia, comprobante, deducciones_ids } = req.body;
+        
         const profesor = await UserService.getProfesorByUserId(req.user.id);
-
+        
         if (!profesor || !profesor.profesor_id) {
             return res.status(404).json({
                 success: false,
                 message: 'Profesor no encontrado'
             });
         }
-
+        
         const profesor_id = profesor.profesor_id;
-
-        if (!numero_tranferencia || !comprobante || !deduccion_id) {
+        
+        if (!numero_tranferencia || !comprobante || !deducciones_ids) {
             return res.status(400).json({
                 success: false,
                 message: 'Faltan datos requeridos'
             });
         }
-
-        await DeductionService.payDeduction(numero_tranferencia, comprobante, profesor_id, deduccion_id);
-
+        
+        if (!Array.isArray(deducciones_ids) && typeof deducciones_ids !== 'string') {
+            return res.status(400).json({
+                success: false,
+                message: 'deducciones_ids debe ser un array o un string separado por comas'
+            });
+        }
+        
+        await DeductionService.payMultipleDeductions(
+            numero_tranferencia, 
+            comprobante, 
+            profesor_id, 
+            deducciones_ids
+        );
+        
         return res.status(200).json({
             success: true,
-            message: 'Pago de deducción registrado correctamente'
+            message: 'Pagos de deducciones registrados correctamente'
         });
     } catch (error) {
-        console.error('Error al registrar pago de deducción:', error);
+        console.error('Error al registrar pagos de deducciones:', error);
         return res.status(500).json({
             success: false,
-            message: 'Error al registrar pago de deducción',
+            message: 'Error al registrar pagos de deducciones',
             error: error.message
         });
     }
@@ -162,6 +176,6 @@ module.exports = {
     getBillProfessor,
     getDetailsBillProfesssor,
     getTotalNetInvoicesTeacher,
-    payDeduction,
+    payMultipleDeductions,
     getDeductionProfessor
 }
