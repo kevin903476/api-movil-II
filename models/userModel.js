@@ -21,6 +21,19 @@ class UserRegisterModel {
       throw error;
     }
   }
+  async getStudentByUserId(usuario_id) {
+    try {
+      const result = await db.query('CALL sp_obtener_estudiante(?)', [usuario_id]);
+      console.log('Resultado de getStudentByUserId:', result);
+      if (result[0] && result[0].length > 0) {
+        return result[0][0]; // Devuelve el primer registro
+      }
+      return null; 
+    } catch (error) {
+      console.error('Error en getStudentByUserId:', error);
+      throw error;
+    }
+  }
 
 
   async getAll() {

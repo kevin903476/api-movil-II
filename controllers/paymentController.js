@@ -1,10 +1,12 @@
 //@ts-check
 const PaymentService = require('../services/paymentService');
+const UserService = require('../services/userService');
 
 const insertPaymentOfStudent = async (req, res) => {
     try {
         const { tutoria_id, profesor_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id} = req.body;
-        const estudiante_id = req.user.id; 
+        const estudiante = await UserService.getStudentByUserId(req.user.usuario_id);
+        const estudiante_id = estudiante.estudiante_id;
         const paymentStudent = {
             tutoria_id,
             profesor_id,

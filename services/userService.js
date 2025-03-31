@@ -23,5 +23,8 @@ class UserService {
         profesor.password = await bcryptjs.hash(profesor.password, 10);
         return await UserRegisterModel.registerProfesor(profesor);
     }
+    async getStudentByUserId(usuario_id) {
+        return await UserRegisterModel.getStudentByUserId(usuario_id);
+    }
 }
 module.exports = new UserService();
