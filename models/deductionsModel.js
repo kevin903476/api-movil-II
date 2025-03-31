@@ -25,7 +25,7 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
     }
     async getTotalNetInvoicesTeacher(profesor_id) {
         try {
-            const result = await db.query('CALL sp_total_neto_facturas_profesor(?)', [profesor_id]);
+            const result = await db.query('CALL sp_total_deducciones_profesor(?)', [profesor_id]);
             console.log('Resultado de getTotalNetInvoicesTeacher:', result);
             if (result[0] && result[0].length > 0) {
                 return result[0][0]; // Devuelve el primer registro
@@ -47,16 +47,8 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
             throw error;
         }
     }
-    async insertDeductionPaid(numero_tranferencia, comprobante, profesor_id, deduccion_id) {
-        try {
-            const result = await db.query('CALL sp_insertar_deduccion_pagada(?, ?, ?, ?)', 
-                [numero_tranferencia, comprobante, profesor_id, deduccion_id]);
-            return result;
-        } catch (error) {
-            console.error('Error en insertDeductionPaid:', error);
-            throw error;
-        }
-    }
+
+    
     async getDeductionProfessor(profesor_id) {
         try {
             const result = await db.query('SELECT * FROM vista_deducciones_profesor WHERE profesor_id = ?', [profesor_id]);

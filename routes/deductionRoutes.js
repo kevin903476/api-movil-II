@@ -10,6 +10,5 @@ router.get('/getDetailsBillProfessor', auth, checkRole([1, 3]), deductionControl
 router.get('/getTotalNetInvoicesTeacher', auth, checkRole([1, 3]), deductionController.getTotalNetInvoicesTeacher);
 router.post('/payDeduction', auth, checkRole([1, 3]), deductionController.payDeduction);
 router.get('/getDeductionProfessor', auth, checkRole([1, 3]), deductionController.getDeductionProfessor);
-router.post('/insertDeductionPaid', auth, checkRole([1, 3]), deductionController.insertDeductionPaid);
 module.exports = router;
 

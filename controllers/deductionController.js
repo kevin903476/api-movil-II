@@ -49,14 +49,14 @@ const getDetailsBillProfesssor = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: 'Detalles de la factura obtenidos correctamente',
+            message: 'Total deducción a pagar obtenida correctamente',
             data: detailsBillProfessor
         });
     } catch (error) {
-        console.error('Error al obtener detalles de la factura del profesor:', error);
+        console.error('Error al obtener total deducción a pagar:', error);
         return res.status(500).json({
             success: false,
-            message: 'Error al obtener detalles de la factura del profesor',
+            message: 'Eror al obtener total deducción a pagar',
             error: error.message
         });
     }
