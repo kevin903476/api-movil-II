@@ -18,4 +18,4 @@ class PaymentModel {
     }
 }
 
-module.exports = PaymentModel;
+module.exports = new PaymentModel;
