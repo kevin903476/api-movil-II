@@ -58,9 +58,17 @@ class CatalogModel {
             throw error;
         }
     }
-    async catalogEnclosure() {
+      async catalogEnclosure(sede_id = null) {
         try {
-            const result = await db.query('SELECT * FROM vista_catalogo_recintos');
+            let query = 'SELECT * FROM vista_catalogo_recintos';
+            let params = [];
+            
+            if (sede_id) {
+                query += ' WHERE sede_id = ?';
+                params.push(sede_id);
+            }
+            
+            const result = await db.query(query, params);
             const recintos = result;
             console.log('Resultado de la consulta:', recintos);
             return recintos;

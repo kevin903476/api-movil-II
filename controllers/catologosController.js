@@ -1,4 +1,3 @@
-//@ts-check
 const CatalogService = require('../services/catalogService');
 
 const getCatalogUniversity = async (req, res) => {
@@ -88,22 +87,28 @@ const getCatalogRoles = async (req, res) => {
 }
 
 const getCatalogEnclosure = async (req, res) => {
-    try {
-        const enclosures = await CatalogService.enclosureCatalog();
-        console.log('Recintos obtenidos:', enclosures);
-        return res.status(200).json({
-            success: true,
-            message: 'Recintos obtenidos correctamente',
-            data: enclosures
-        });
-    } catch (error) {
-        console.error('Error al obtener recintos:', error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error al obtener recintos'
-        });
+        try {
+            const { sede_id } = req.query;
+            
+            const enclosures = await CatalogService.catalogEnclosure(
+                sede_id ? parseInt(sede_id) : null
+            );
+            
+            return res.status(200).json({
+                success: true,
+                message: 'Recintos obtenidos correctamente',
+                data: enclosures
+            });
+        } catch (error) {
+            console.error('Error al obtener recintos:', error);
+            return res.status(500).json({
+                success: false,
+                message: 'Error al obtener recintos',
+                error: error.message
+            });
+        }
     }
-}
+
 const getCatalogCoupons = async (req, res) => {
     try {
         const coupons = await CatalogService.couponCatalog();

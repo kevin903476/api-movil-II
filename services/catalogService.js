@@ -17,8 +17,8 @@ class CatalogService {
     async rolesCatalog() {
         return await CatalogModel.catalogRoles();
     }
-    async enclosureCatalog() {
-        return await CatalogModel.catalogEnclosure();
+    async catalogEnclosure(sede_id = null) {
+        return await CatalogModel.catalogEnclosure(sede_id);
     }
     async couponCatalog() {
         return await CatalogModel.catalogCoupons();
