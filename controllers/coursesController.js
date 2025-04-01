@@ -86,8 +86,35 @@ const insertCourseScheduleProfessor = async (req, res) => {
     }
   };
 
+  const searchCourses = async (req, res) => {
+    try {
+        // Obtener parámetros de la consulta
+        const { keyword, clasificacion_id } = req.query;
+        
+        const courses = await CoursesService.searchCoursesByKeywordAndClassification(
+            keyword || '', 
+            clasificacion_id ? parseInt(clasificacion_id) : null
+        );
+        
+        return res.status(200).json({
+            success: true,
+            message: 'Cursos encontrados correctamente',
+            data: courses
+        });
+    } catch (error) {
+        console.error('Error al buscar cursos:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al buscar cursos',
+            error: error.message
+        });
+    }
+};
+
+
 module.exports = {
     getCourses,
     createCourse,
-    insertCourseScheduleProfessor
+    insertCourseScheduleProfessor,
+    searchCourses
 }

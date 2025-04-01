@@ -43,7 +43,29 @@ class CoursesModel {
     
         }
       }
-
-
+      async searchCoursesByKeywordAndClassification(keyword, clasificacion_id) {
+        try {
+            let query = 'SELECT * FROM vista_cursos_filtrados WHERE 1=1';
+            let params = [];
+            
+            if (keyword && keyword.trim() !== '') {
+                query += ' AND nombre_curso LIKE ?';
+                params.push(`%${keyword}%`);
+            }
+            
+            if (clasificacion_id) {
+                query += ' AND clasificacion_id = ?';
+                params.push(clasificacion_id);
+            }
+            
+            const result = await db.query(query, params);
+            console.log('Resultado de la búsqueda de cursos:', result);
+            return result;
+        } catch (error) {
+            console.error('Error al buscar cursos:', error);
+            throw error;
+        }
+    }
 }
+
 module.exports = new CoursesModel();

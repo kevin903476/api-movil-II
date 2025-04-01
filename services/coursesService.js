@@ -1,5 +1,5 @@
 //@ts-check
-const CoursesModel= require('../models/coursesModel');
+const CoursesModel = require('../models/coursesModel');
 
 class CoursesService {
     async getCourses() {
@@ -10,6 +10,9 @@ class CoursesService {
     }
     async insertCourseScheduleProfessor(curso_profesor) {
         return await CoursesModel.insertCourseScheduleProfessor(curso_profesor);
+    }
+    async searchCoursesByKeywordAndClassification(keyword, clasificacion_id) {
+        return await CoursesModel.searchCoursesByKeywordAndClassification(keyword, clasificacion_id);
     }
 
 }

@@ -11,6 +11,6 @@ router.post('/createCourse', auth, checkRole([1, 3]), coursesController.createCo
 // logica para agregar un profe a un curso
 
 router.post('/insertCourseScheduleProfessor', auth, checkRole([1, 3]), coursesController.insertCourseScheduleProfessor );
-
+router.get('/searchCourses', auth, checkRole([1, 2, 3]), coursesController.searchCourses);
 
 module.exports = router;
