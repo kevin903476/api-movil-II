@@ -18,6 +18,24 @@ const getAllCoupons = async (req, res) => {
     }
 }
 
+const getRanking = async (req, res) => {
+    try {
+        const coupons = await CouponService.getRanking();
+        return res.status(200).json({
+            success: true,
+            message: 'Ranking obtenido correctamente',
+            data: coupons
+        });
+    } catch (error) {
+        console.error('Error retrieving ranking:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error retrieving ranking',
+            error: error.message
+        });
+    }
+}
+
 const createCoupon = async (req, res) => {
     try {
         const { nombre_cupon, descuento, fecha_incio, fecha_expiracion, puntos_requeridos } = req.body;
@@ -45,5 +63,6 @@ const createCoupon = async (req, res) => {
 }
 module.exports = {
     getAllCoupons,
-    createCoupon
+    createCoupon,
+    getRanking
 }

@@ -14,6 +14,17 @@ class CouponModel {
             throw error;
         }
     }
+    async getRanking() {
+        try {
+            const result = await db.query('SELECT * FROM vista_ranking');
+            const coupons = result;
+            console.log('Resultado de la consulta:', coupons);
+            return coupons;
+        } catch (error) {
+            console.error('Error al obtener cupones:', error);
+            throw error;
+        }
+    }
     async createCoupon(coupon) {
         try {
             const { nombre_cupon, descuento, fecha_incio, fecha_expiracion, puntos_requeridos, id_cupon } = coupon;
