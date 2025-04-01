@@ -1,0 +1,49 @@
+const CouponService = require('../services/couponService');
+
+const getAllCoupons = async (req, res) => {
+    try {
+        const coupons = await CouponService.getAllCoupons();
+        return res.status(200).json({
+            success: true,
+            message: 'Cupones obtenidos correctamente',
+            data: coupons
+        });
+    } catch (error) {
+        console.error('Error retrieving coupons:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error retrieving coupons',
+            error: error.message
+        });
+    }
+}
+
+const createCoupon = async (req, res) => {
+    try {
+        const { nombre_cupon, descuento, fecha_incio, fecha_expiracion, puntos_requeridos } = req.body;
+        const coupon = {
+            nombre_cupon,
+            descuento,
+            fecha_incio,
+            fecha_expiracion,
+            puntos_requeridos
+        };
+        const result = await CouponService.createCoupon(coupon);
+        return res.status(201).json({
+            success: true,
+            message: 'Cupón creado correctamente',
+            data: result
+        });
+    } catch (error) {
+        console.error('Error creating coupon:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error creating coupon',
+            error: error.message
+        });
+    }
+}
+module.exports = {
+    getAllCoupons,
+    createCoupon
+}
