@@ -38,11 +38,11 @@ const getRanking = async (req, res) => {
 
 const createCoupon = async (req, res) => {
     try {
-        const { nombre_cupon, descuento, fecha_incio, fecha_expiracion, puntos_requeridos } = req.body;
+        const { nombre_cupon, descuento, fecha_inicio, fecha_expiracion, puntos_requeridos } = req.body;
         const coupon = {
             nombre_cupon,
             descuento,
-            fecha_incio,
+            fecha_inicio,
             fecha_expiracion,
             puntos_requeridos
         };
