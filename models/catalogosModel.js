@@ -81,5 +81,16 @@ class CatalogModel {
         }
     }
 
+    async universitiesWithAllInformation() {
+        try {
+            const result = await db.query('SELECT * FROM vista_universidades_completa');
+            const universidades = result;
+            console.log('Resultado de la consulta:', universidades);
+            return universidades;
+        } catch (error) {
+            console.error('Error al obtener catalogo:', error);
+            throw error;
+        }
+    }
 }
 module.exports = new CatalogModel();

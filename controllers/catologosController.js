@@ -121,6 +121,23 @@ const getCatalogCoupons = async (req, res) => {
         });
     }
 }
+const getUniversitiesWithAllInfo = async (req, res) => {
+    try {
+        const universities = await CatalogService.getUniversitiesWithAllInfo();
+        console.log('Universidades con toda la información:', universities);
+        return res.status(200).json({
+            success: true,
+            message: 'Universidades con toda la información obtenidas correctamente',
+            data: universities
+        });
+    } catch (error) {
+        console.error('Error al obtener universidades con toda la información:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener universidades con toda la información'
+        });
+    }
+}
 module.exports = {
     getCatalogUniversity,
     getCatalogCourse,
@@ -128,5 +145,6 @@ module.exports = {
     getCatalogHeadquarters,
     getCatalogRoles,
     getCatalogEnclosure,
-    getCatalogCoupons
+    getCatalogCoupons,
+    getUniversitiesWithAllInfo
 }

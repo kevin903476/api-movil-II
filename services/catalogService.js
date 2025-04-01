@@ -23,5 +23,8 @@ class CatalogService {
     async couponCatalog() {
         return await CatalogModel.catalogCoupons();
     }
+    async getUniversitiesWithAllInfo() {
+        return await CatalogModel.universitiesWithAllInformation();
+    }
 }
 module.exports = new CatalogService();
