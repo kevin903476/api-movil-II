@@ -41,7 +41,27 @@ const insertPaymentOfStudent = async (req, res) => {
         });
     }
 }
+const confirmPaymentOfStudent = async (req, res) => {
+    try {
+        const { payment_id, estado } = req.body;
+        const paymentOfStudent = await PaymentService.confirmPaymentOfStudent(payment_id, estado);
+        return res.status(200).json({
+            success: true,
+            message: 'Pago confirmado correctamente',
+            data: paymentOfStudent
+        });
+
+    } catch (error) {
+        console.error('Error al confirmar pago:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al confirmar pago',
+            error: error.message
+        });
+    }
+}
 
 module.exports = {
     insertPaymentOfStudent,
+    confirmPaymentOfStudent
 }

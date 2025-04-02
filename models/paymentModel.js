@@ -16,6 +16,18 @@ class PaymentModel {
             throw error;
         }
     }
+    async confirmPayment(pago_id, estado){
+        try{
+            const result = await db.query(
+                'CALL sp_procesar_factura_deduccion(?, ?)',
+                [pago_id, estado]
+            );
+            return result;
+        }catch(error){
+            console.error('Error in confirmPayment:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = new PaymentModel();
