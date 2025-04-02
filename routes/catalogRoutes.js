@@ -5,6 +5,7 @@ const catalogController = require('../controllers/catologosController');
 
 //rutas publicas para el frontend con autenticacion
 router.get('/universities', catalogController.getCatalogUniversity);
+router.get('/headquarters', catalogController.getCatalogHeadquarters);
 router.get('/courses', catalogController.getCatalogCourse);
 router.get('/careers', catalogController.getCatalogCareer);
 router.get('/roles',  catalogController.getCatalogRoles);
