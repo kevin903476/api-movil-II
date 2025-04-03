@@ -14,5 +14,16 @@ class ReviewModel {
             throw error;
         }
     }
+    async insertReview(review){
+        try {
+            const { tutoria_id, estudiante_id, profesor_id, estrellas, comentario } = review;
+            const result = await db.query('CALL sp_insertar_resena(?, ?, ?, ?, ?)',     
+            [tutoria_id, estudiante_id, profesor_id, estrellas, comentario]);
+            return result;
+        } catch (error) {
+            console.error('Error al insertar reseña:', error);
+            throw error;
+        }
+    }
 }
 module.exports = new ReviewModel();

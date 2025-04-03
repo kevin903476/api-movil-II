@@ -31,6 +31,45 @@ const getTutorialFinishedReview = async (req, res) => {
     }
 };
 
+const insertReview = async (req, res) => {
+    try {
+        const { tutoria_id, profesor_id, estrellas, comentario } = req.body;
+        const estudiante = await UserService.getStudentByUserId(req.user.id);
+        
+        if (!estudiante || !estudiante.estudiante_id) {
+            return res.status(404).json({
+                success: false,
+                message: 'Estudiante no encontrado'
+            });
+        }
+        
+        const estudiante_id = estudiante.estudiante_id;
+        const review = {
+            tutoria_id,
+            estudiante_id,
+            profesor_id,
+            estrellas,
+            comentario
+        };
+        
+        const result = await ReviewService.insertReview(review);
+        
+        return res.status(201).json({
+            success: true,
+            message: 'Reseña registrada correctamente',
+            data: result
+        });
+    } catch (error) {
+        console.error('Error al insertar reseña:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al insertar reseña',
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
-    getTutorialFinishedReview
+    getTutorialFinishedReview,
+    insertReview
 }
