@@ -143,6 +143,25 @@ const getUniversitiesWithAllInfo = async (req, res) => {
         });
     }
 }
+
+const getClassificationCourses = async (req, res) => {
+    try {
+        const clasifiacion = await CatalogService.classificationCourses();
+        console.log('Clasificaciones con toda la información:', clasifiacion);
+        return res.status(200).json({
+            success: true,
+            message: 'Clasificaciones con toda la información obtenidas correctamente',
+            data: clasifiacion
+        });
+    } catch (error) {
+        console.error('Error al obtener clasificaciones con toda la información:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener clasificaciones con toda la información'
+        });
+    }
+}
+
 module.exports = {
     getCatalogUniversity,
     getCatalogCourse,
@@ -151,5 +170,6 @@ module.exports = {
     getCatalogRoles,
     getCatalogEnclosure,
     getCatalogCoupons,
-    getUniversitiesWithAllInfo
+    getUniversitiesWithAllInfo,
+    getClassificationCourses
 }
