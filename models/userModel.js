@@ -4,7 +4,7 @@ const db = DbService.getDbServiceInstance();
 
 class UserRegisterModel {
   async findByEmail(email) {
-    const [rows] = await db.query(
+    const rows = await db.query(
       `SELECT 
     u.*, 
     e.carnet, 
@@ -26,8 +26,7 @@ WHERE u.email = ?;
 `,
       [email]
     );
-    if (!rows || rows.length === 0) return null;
-    return rows[0];
+    return rows;
   }
 
   async getStudentByUserId(usuario_id) {
