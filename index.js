@@ -12,6 +12,8 @@ const deductionRoutes = require('./routes/deductionRoutes');
 const coursesRouter = require('./routes/coursesRoutes');
 const tutorialsRoutes = require('./routes/tutorialsRoutes');
 const couponRoutes = require('./routes/couponRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
+
 dotenv.config();
 
 const app = express();
@@ -34,6 +36,8 @@ app.use('/deductions', deductionRoutes);
 app.use('/courses', coursesRouter);
 app.use('/tutorials', tutorialsRoutes);
 app.use('/coupons', couponRoutes);
+app.use('/reviews', reviewRoutes);
+
 
 
 const PORT = process.env.PORT || 3000;
