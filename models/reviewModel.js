@@ -5,7 +5,6 @@ const db = DbService.getDbServiceInstance();
 class ReviewModel {
     async getTutorialFinishedReview(estudianteId) {
         try {
-            // Corregido: usar ? en lugar de $1 como marcador de posición
             const result = await db.query('SELECT * FROM vista_tutoriales_finalizados WHERE estudiante_id = ?', [estudianteId]);
             const tutorialesFinalizados = result;
             console.log('Resultado de la consulta:', tutorialesFinalizados);

@@ -5,7 +5,7 @@ const reviewController = require('../controllers/reviewController');
 const auth = require('../middleware/auth');
 const checkRole = require('../middleware/checkRole');
 
-router.get('/reviewTutorialFinished', auth, checkRole(['estudiante']), reviewController.getTutorialFinishedReview);
+router.get('/reviewTutorialFinished', auth, checkRole([2]), reviewController.getTutorialFinishedReview);
 
 
 
