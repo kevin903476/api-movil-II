@@ -106,12 +106,16 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // Generar token JWT
+    // Generar token JWT con datos adicionales
     const token = jwt.sign(
       {
         id: user.usuario_id,
         email: user.email,
-        rol_id: user.rol_id
+        rol_id: user.rol_id,
+        universidad_id: user.universidad_id || null,
+        sede_id: user.sede_id || null,
+        recinto_id: user.recinto_id || null,
+        carrera_id: user.carrera_id || null
       },
       process.env.SECRET_KEY,
       { expiresIn: '24h' }
@@ -125,7 +129,11 @@ const loginUser = async (req, res) => {
         nombre: user.nombre,
         apellido: user.apellido,
         email: user.email,
-        rol_id: user.rol_id
+        rol_id: user.rol_id,
+        universidad_id: user.universidad_id || null,
+        sede_id: user.sede_id || null,
+        recinto_id: user.recinto_id || null,
+        carrera_id: user.carrera_id || null
       },
       token: token
     });
@@ -137,7 +145,6 @@ const loginUser = async (req, res) => {
     });
   }
 };
-
 
 const updateProfesor = async (req, res) => {
   try {
