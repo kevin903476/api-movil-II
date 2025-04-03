@@ -13,6 +13,7 @@ const coursesRouter = require('./routes/coursesRoutes');
 const tutorialsRoutes = require('./routes/tutorialsRoutes');
 const couponRoutes = require('./routes/couponRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const path = require('path');
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use('/courses', coursesRouter);
 app.use('/tutorials', tutorialsRoutes);
 app.use('/coupons', couponRoutes);
 app.use('/reviews', reviewRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 
 
