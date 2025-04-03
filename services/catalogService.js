@@ -26,5 +26,8 @@ class CatalogService {
     async getUniversitiesWithAllInfo() {
         return await CatalogModel.universitiesWithAllInformation();
     }
+    async classificationCourses() {
+        return await CatalogModel.classificationCourses();
+    }
 }
 module.exports = new CatalogService();

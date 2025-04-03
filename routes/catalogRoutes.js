@@ -13,5 +13,6 @@ router.get('/roles',  catalogController.getCatalogRoles);
 router.get('/enclosures',  catalogController.getCatalogEnclosure);
 router.get('/coupons', catalogController.getCatalogCoupons);
 router.get('/universitiesWithAllInfo', catalogController.getUniversitiesWithAllInfo);
+router.get('/classificationCourses', catalogController.getClassificationCourses);
 
 module.exports = router;

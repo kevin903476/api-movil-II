@@ -100,5 +100,17 @@ class CatalogModel {
             throw error;
         }
     }
+
+    async classificationCourses() {
+        try {
+            const result = await db.query('SELECT * FROM vista_clasificaciones');
+            const clasifiaciones = result;
+            console.log('Resultado de la consulta:', clasifiaciones);
+            return clasifiaciones;
+        } catch (error) {
+            console.error('Error al obtener catalogo:', error);
+            throw error;
+        }
+    }
 }
 module.exports = new CatalogModel();
