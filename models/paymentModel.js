@@ -31,10 +31,8 @@ class PaymentModel {
         try {
             const result = await db.query('SELECT * FROM vista_pagos_pendientes_estudiante WHERE estudiante_id = ?', [estudiante_id]);
             console.log('Resultado de pendingPaymentsStudent:', result);
-            if (result[0] && result[0].length > 0) {
-                return result[0][0]; // Devuelve el primer registro
-            }
-            return null;
+
+            return result;
         } catch (error) {
             console.error('Error en pendingPaymentsStudent:', error);
             throw error;
