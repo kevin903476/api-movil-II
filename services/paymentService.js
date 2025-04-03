@@ -8,6 +8,34 @@ class PaymentService {
             throw error;
         }
     }
+
+    async pendingPaymentsProfessor(profesor_id) {
+        try {
+            return await PaymentModel.pendingPaymentsProfessor(profesor_id);
+        } catch (error) {
+            console.error('Error in pendingPaymentsProfessor:', error);
+            throw error;
+        }
+    }
+
+    async pendingPaymentsStudent(estudiante_id) {
+        try {
+            return await PaymentModel.pendingPaymentsStudent(estudiante_id);
+        } catch (error) {
+            console.error('Error in pendingPaymentsStudent:', error);
+            throw error;
+        }
+    }
+
+    async getPaymentsProfessor() {
+        try {
+            return await PaymentModel.getPaymentsProfessor();
+        } catch (error) {
+            console.error('Error in pendingPaymentsStudent:', error);
+            throw error;
+        }
+    }
+
     async confirmPaymentOfStudent(payment_id, estado) {
         try {
             return await PaymentModel.confirmPayment(payment_id, estado);

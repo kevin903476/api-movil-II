@@ -41,6 +41,85 @@ const insertPaymentOfStudent = async (req, res) => {
         });
     }
 }
+
+const pendingPaymentsProfessor = async (req, res) => {
+    try {
+        const profesor = await UserService.getProfesorByUserId(req.user.id);
+        const profesor_id= profesor.profesor_id
+
+        if (!profesor_id) {
+            return res.status(404).json({
+                success: false,
+                message: 'Estudiante no encontrado'
+            });
+        }
+
+        const pendingPayments = await PaymentService.pendingPaymentsProfessor(profesor_id);
+        return res.status(201).json({
+            success: true,
+            message: 'Pagos pendientes del profesor correctamente obtenidos',
+            data: pendingPayments
+        });
+
+    } catch (error) {
+        console.error('Error al obtener pendientes del profesor:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener pendientes del profesor',
+            error: error.message
+        });
+    }
+}
+
+const pendingPaymentsStudent = async (req, res) => {
+    try {
+        const estudiante = await UserService.getStudentByUserId(req.user.id);
+        const estudiante_id = estudiante.estudiante_id;
+  
+        if (!estudiante_id) {
+            return res.status(404).json({
+                success: false,
+                message: 'Estudiante no encontrado'
+            });
+        }
+
+        const pendingPayments = await PaymentService.pendingPaymentsStudent(estudiante_id);
+        return res.status(201).json({
+            success: true,
+            message: 'Pagos pendientes del estudiante correctamente obtenidos',
+            data: pendingPayments
+        });
+
+    } catch (error) {
+        console.error('Error al obtener pendientes del estudiante:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener pendientes del estudiante',
+            error: error.message
+        });
+    }
+}
+
+const getPaymentsProfessor = async (req, res) => {
+    try {
+      const payments = await PaymentService.getPaymentsProfessor();
+      console.log('Pagos obtenidos:', payments);
+
+      return res.status(200).json({
+        success: true,
+        message: 'Pagos obtenidos correctamente',
+        data: payments
+      });
+    } catch (error) {
+      console.error('Error al obtener los Pagos:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'Error al obtener los Pagos'
+      });
+    }
+  };
+
+
 const confirmPaymentOfStudent = async (req, res) => {
     try {
         const { payment_id, estado } = req.body;
@@ -63,5 +142,8 @@ const confirmPaymentOfStudent = async (req, res) => {
 
 module.exports = {
     insertPaymentOfStudent,
-    confirmPaymentOfStudent
+    confirmPaymentOfStudent,
+    pendingPaymentsProfessor,
+    pendingPaymentsStudent,
+    getPaymentsProfessor
 }
