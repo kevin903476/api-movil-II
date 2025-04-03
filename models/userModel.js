@@ -6,7 +6,10 @@ class UserRegisterModel {
 
   async findByEmail(email) {
     try {
-      const result = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
+      const result = await db.query(
+        'SELECT u.*, e.carnetFROM usuarios u LEFT JOIN estudiantes e ON u.usuario_id = e.usuario_id WHERE u.email = ?;',
+        [email]
+      );
 
       console.log('Resultado de la consulta:', result);
 
@@ -28,7 +31,7 @@ class UserRegisterModel {
       if (result[0] && result[0].length > 0) {
         return result[0][0]; // Devuelve el primer registro
       }
-      return null; 
+      return null;
     } catch (error) {
       console.error('Error en getStudentByUserId:', error);
       throw error;
@@ -42,7 +45,7 @@ class UserRegisterModel {
       if (result[0] && result[0].length > 0) {
         return result[0][0]; // Devuelve el primer registro
       }
-      return null; 
+      return null;
     } catch (error) {
       console.error('Error en getProfesorByUserId:', error);
       throw error;
@@ -65,7 +68,7 @@ class UserRegisterModel {
   }
 
   async registerEstudiante(estudiante) {
-    const { nombre, apellido, email, password, universidad_id,carrera_id, pais_id } = estudiante;
+    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id } = estudiante;
     try {
       const result = await db.query(
         'CALL sp_insertar_estudiante(?, ?, ?, ?, ?, ?, ?)',
@@ -109,11 +112,11 @@ class UserRegisterModel {
   }
 
   async updateEstudiante(estudiante) {
-    const { usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id} = estudiante;
+    const { usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id } = estudiante;
     try {
       const result = await db.query(
         'CALL sp_actualizar_estudiante(?, ?, ?, ?, ?, ?, ?, ?)',
-        [ usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id]
+        [usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id]
       );
       return result;
 
