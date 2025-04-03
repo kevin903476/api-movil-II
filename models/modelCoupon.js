@@ -27,9 +27,9 @@ class CouponModel {
     }
     async createCoupon(coupon) {
         try {
-            const { nombre_cupon, descuento, fecha_inicio, fecha_expiracion, puntos_requeridos } = coupon;
+            const { nombre_cupon, descuento, fecha_inicio, fecha_expiracion, puntos_requeridos, codigo } = coupon;
             const result = await db.query('CALL sp_insertar_cupon_descuento(?, ?, ?, ?, ?)',
-                [nombre_cupon, descuento, fecha_inicio, fecha_expiracion, puntos_requeridos]);
+                [nombre_cupon, descuento, fecha_inicio, fecha_expiracion, puntos_requeridos, codigo]);
             console.log('Resultado de la creación del cupón:', result);
             return result;
         } catch (error) {
