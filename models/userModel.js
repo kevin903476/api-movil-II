@@ -4,21 +4,20 @@ const db = DbService.getDbServiceInstance();
 
 class UserRegisterModel {
 
-  async findByEmail(email) {
+    async findByEmail(email) {
     try {
       const result = await db.query(
-        'SELECT u.*, e.carnetFROM usuarios u LEFT JOIN estudiantes e ON u.usuario_id = e.usuario_id WHERE u.email = ?;',
+        'SELECT u.*, e.carnet, e.universidad_id, e.sede_id, e.recinto_id, e.carrera_id, u.universidad_nombre, s.sede_nombre, r.recinto_nombre, c.carrera_nombre FROM usuarios u LEFT JOIN estudiantes e ON u.usuario_id = e.usuario_id LEFT JOIN universidades u ON e.universidad_id = u.universidad_id LEFT JOIN sedes s ON e.sede_id = s.sede_id LEFT JOIN recintos r ON e.recinto_id = r.recinto_id LEFT JOIN carreras c ON e.carrera_id = c.carrera_id WHERE u.email = ?', 
         [email]
       );
-
+  
       console.log('Resultado de la consulta:', result);
-
+  
       const rows = result[0];
       if (!rows || rows.length === 0) {
         return null;
       }
-      console.log('retorno:', rows);
-      return rows;
+      return rows[0];
     } catch (error) {
       console.error('Error en findByEmail:', error);
       throw error;
