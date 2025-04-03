@@ -6,27 +6,27 @@ class UserRegisterModel {
   async findByEmail(email) {
     const rows = await db.query(
       `SELECT 
-    u.*, 
-    e.carnet, 
-    u.universidad_id, 
-    u.sede_id, 
-    u.recinto_id, 
-    u.carrera_id, 
-    uni.nombre AS universidad_nombre, 
-    s.nombre AS sede_nombre, 
-    r.nombre AS recinto_nombre, 
-    c.nombre AS carrera_nombre 
-FROM usuarios u
-LEFT JOIN estudiantes e ON u.usuario_id = e.usuario_id
-LEFT JOIN universidades uni ON u.universidad_id = uni.universidad_id
-LEFT JOIN sedes s ON u.sede_id = s.sede_id
-LEFT JOIN recintos r ON u.recinto_id = r.recinto_id
-LEFT JOIN carreras c ON u.carrera_id = c.carrera_id
-WHERE u.email = ?;
-`,
+      u.*, 
+      e.carnet, 
+      u.universidad_id, 
+      u.sede_id, 
+      u.recinto_id, 
+      u.carrera_id, 
+      uni.nombre AS universidad_nombre, 
+      s.nombre AS sede_nombre, 
+      r.nombre AS recinto_nombre, 
+      c.nombre AS carrera_nombre 
+  FROM usuarios u
+  LEFT JOIN estudiantes e ON u.usuario_id = e.usuario_id
+  LEFT JOIN universidades uni ON u.universidad_id = uni.universidad_id
+  LEFT JOIN sedes s ON u.sede_id = s.sede_id
+  LEFT JOIN recintos r ON u.recinto_id = r.recinto_id
+  LEFT JOIN carreras c ON u.carrera_id = c.carrera_id
+  WHERE u.email = ?;
+  `,
       [email]
     );
-    return rows;
+    return rows.length > 0 ? rows[0] : null;
   }
 
   async getStudentByUserId(usuario_id) {
