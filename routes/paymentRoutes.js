@@ -8,4 +8,5 @@ const { validatePaymentOfStudent } = require('../middleware/validator');
 
 router.post('/insertPaymentOfStudent', auth, checkRole([1, 2]), validatePaymentOfStudent, paymentController.insertPaymentOfStudent);
 
+
 module.exports = router;

@@ -5,7 +5,7 @@ const db = DbService.getDbServiceInstance();
 class ReviewModel {
     async getTutorialFinishedReview(estudianteId) {
         try {
-            const result = await db.query('SELECT * FROM vista_tutoriales_finalizados WHERE estudiante_id = ?', [estudianteId]);
+            const result = await db.query('SELECT * FROM vista_tutorias_finalizadas_estudiante WHERE estudiante_id = ?', [estudianteId]);
             const tutorialesFinalizados = result;
             console.log('Resultado de la consulta:', tutorialesFinalizados);
             return tutorialesFinalizados;
