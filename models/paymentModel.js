@@ -65,6 +65,19 @@ class PaymentModel {
             throw error;
         }
     }
+    //esta ruta es para Detalles de Pago de Tutoría:
+    async getPaymentDetails(profesor_id) {
+        try {
+            const result = await db.query(
+                'SELECT * FROM vista_detalle_tutorias_profesorWHERE profesor_id = ?',
+                [profesor_id]
+            );
+            return result;
+        } catch (error) {
+            console.error('Error in getPaymentDetails:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = new PaymentModel();
