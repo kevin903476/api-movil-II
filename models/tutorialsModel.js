@@ -15,6 +15,17 @@ class TutorialsModel {
             throw error;
         }
     }
+    async getTutorialsProfessorCourse(profesor_id, curso_id) {
+      try {
+          const result = await db.query('SELECT * FROM vista_cursos_profesor WHERE profesor_id = ? AND curso_id = ?', [profesor_id, curso_id]);
+          const cursos = result;
+          console.log('Resultado de la consulta:', cursos);
+          return cursos;
+      } catch (error) {
+          console.error('Error al obtener cursos_profesor disponibles:', error);
+          throw error;
+      }
+  }
 
     async getScheduledTutorials() {
       try {

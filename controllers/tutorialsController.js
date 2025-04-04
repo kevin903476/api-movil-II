@@ -78,9 +78,44 @@ const scheduleTutoring = async (req, res) => {
     }
   };
 
+  const getTutorialsProfessorCourse = async (req, res) => {
+    console.log("Datos recibidos del tutoria_profesor", req.body);
+    try {
+  
+      const {curso_id} = req.body;
+
+      const profesor = await UserService.getProfesorByUserId(req.user.id);
+      const profesor_id = profesor.profesor_id;
+
+      if (!profesor_id) {
+          return res.status(404).json({
+              success: false,
+              message: 'Profesor no encontrado'
+          });
+      }
+
+      const result = await TutorialsService.getTutorialsProfessorCourse({
+        profesor_id,
+        curso_id
+      });
+  
+      return res.status(201).json({
+        success: true,
+        message: 'Curso del profesor obtenidos correctamente',
+        data: result
+      });
+    } catch (error) {
+      console.error('Error al registrar tutoria_profesor:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'Error al registrar tutoria_profesor'
+      });
+    }
+  };  
 module.exports = {
   getTutorials,
   scheduleTutoring,
-  getScheduledTutorials
+  getScheduledTutorials,
+  getTutorialsProfessorCourse
     
 }
