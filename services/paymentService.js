@@ -63,6 +63,9 @@ class PaymentService {
     async getPendingPayments(profesor_id) {
         return await PaymentModel.getPaymentDetails(profesor_id);
     }
+    async getPendingPaymentsStudentsTeacher(profesor_id) {
+        return await PaymentModel.getPendingPaymentsStudentsTeacher(profesor_id);
+    }
 
 }
 module.exports = new PaymentService();

@@ -159,12 +159,35 @@ const getPaymentDetails = async (req, res) => {
         });
     }
 
+};
+
+const getPendingPaymentsStudentsTeacher = async (req, res) => {
+    try {
+        const profesorId = await UserService.getProfesorByUserId(req.user.id);
+        const pendingPayments = await PaymentService.getPendingPaymentsStudentsTeacher(profesorId.profesor_id); 
+        console.log('Pagos pendientes:', pendingPayments);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Pagos pendientes obtenidos correctamente',
+            data: pendingPayments
+        });
+    } catch (error) {
+        console.error('Error al obtener pagos pendientes:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener pagos pendientes',
+            error: error.message
+        });
+    }
 }
+
 module.exports = {
     insertPaymentOfStudent,
     confirmPaymentOfStudent,
     pendingPaymentsProfessor,
     pendingPaymentsStudent,
     getPaymentsProfessor,
-    getPaymentDetails
+    getPaymentDetails,
+    getPendingPaymentsStudentsTeacher
 }

@@ -78,6 +78,18 @@ class PaymentModel {
             throw error;
         }
     }
+    async getPendingPaymentsStudentsTeacher(profesor_id) {
+        try {
+            const result = await db.query(
+                'SELECT * FROM vista_pagos_pendientes_estudiantes_profesor WHERE profesor_id = ?',
+                [profesor_id]
+            );
+            return result;
+        } catch (error) {
+            console.error('Error in getPendingPaymentsStudentsTeacher:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = new PaymentModel();

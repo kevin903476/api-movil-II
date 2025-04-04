@@ -15,4 +15,5 @@ router.post('/getPaymentsProfessor', auth, checkRole([1, 3]), paymentController.
 
 router.post('/pendingPaymentsStudent', auth, checkRole([1, 2]), paymentController.pendingPaymentsStudent);
 router.get('/getPaymentDetails', auth, checkRole([1, 3]), paymentController.getPaymentDetails);
+router.get('/getPendingPaymentsStudentsTeacher', auth, checkRole([1, 3]), paymentController.getPendingPaymentsStudentsTeacher);
 module.exports = router;
