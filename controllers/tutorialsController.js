@@ -105,10 +105,10 @@ const scheduleTutoring = async (req, res) => {
         data: result
       });
     } catch (error) {
-      console.error('Error al registrar tutoria_profesor:', error);
+      console.error('Error al obtener curso del profesor:', error);
       return res.status(500).json({
         success: false,
-        message: 'Error al registrar tutoria_profesor'
+        message: 'Error al obtener curso del profesor'
       });
     }
   };  
