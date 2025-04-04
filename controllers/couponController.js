@@ -35,17 +35,16 @@ const getRanking = async (req, res) => {
         });
     }
 }
-
 const createCoupon = async (req, res) => {
     try {
-        const { nombre_cupon, descuento, fecha_inicio, fecha_expiracion, puntos_requeridos, cupon } = req.body;
+        const { nombre_cupon, descuento, fecha_inicio, fecha_expiracion, puntos_requeridos, codigo } = req.body;
         const coupon = {
             nombre_cupon,
             descuento,
             fecha_inicio,
             fecha_expiracion,
             puntos_requeridos,
-            cupon
+            codigo  // Cambiado de 'cupon' a 'codigo' para coincidir con el modelo
         };
         const result = await CouponService.createCoupon(coupon);
         return res.status(201).json({
