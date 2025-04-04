@@ -27,17 +27,19 @@ class TutorialsModel {
       }
   }
 
-    async getScheduledTutorials() {
+    async getScheduledTutorials(estudiante_id) {
       try {
-          const result = await db.query('SELECT * FROM vista_tutorias');
-          const cursos = result;
-          console.log('Resultado de la consulta:', cursos);
-          return cursos;
+      const result = await db.query(
+        'SELECT * FROM vista_tutorias WHERE estudiante_id = ?;',
+        [estudiante_id]
+      );
+      console.log('Resultado de la consulta:', result);
+      return result;
       } catch (error) {
-          console.error('Error al obtener cursos_profesor agendadas:', error);
-          throw error;
+      console.error('Error al obtener tutorías agendadas:', error);
+      throw error;
       }
-  }
+    }
 
     async scheduleTutoring(tutoria) {
         const { profesor_id, estudiante_id, curso_id, fecha, hora_inicio, hora_fin, temas} = tutoria;

@@ -46,7 +46,15 @@ const getTutorials = async (req, res) => {
 }
 const getScheduledTutorials = async (req, res) => {
   try {
-    const tutorias = await TutorialsService.getScheduledTutorials();
+    const estudiante = await UserService.getStudentByUserId(req.user.id);
+    const estudiante_id = estudiante.estudiante_id;
+    if (!estudiante_id) {
+      return res.status(404).json({
+        success: false,
+        message: 'Estudiante no encontrado'
+      });
+    }
+    const tutorias = await TutorialsService.getScheduledTutorials(estudiante_id);
     console.log('Tutorias del profesor agendadas obtenidos:', tutorias);
     return res.status(200).json({
       success: true,
