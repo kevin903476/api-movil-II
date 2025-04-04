@@ -139,6 +139,7 @@ const confirmPaymentOfStudent = async (req, res) => {
         });
     }
 }
+
 const getPaymentDetails = async (req, res) => {
     try {
         const profesorId = await UserService.getProfesorByUserId(req.user.id);
