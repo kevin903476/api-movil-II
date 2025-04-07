@@ -1,23 +1,9 @@
 const PaymentModel = require('../models/paymentModel');
-const ImageService = require('./imageService'); // Asegúrate de importar el servicio de imágenes
+
 class PaymentService {
-   // ...existing code...
-    
+
    async insertPaymentofStudent(paymentStudent) {
     try {
-        // Comprobar si el comprobante es una imagen en base64
-        if (paymentStudent.comprobante && paymentStudent.comprobante.startsWith('data:image')) {
-            // Guardar la imagen y obtener la ruta
-            const imagePath = await ImageService.saveBase64Image(
-                paymentStudent.comprobante, 
-                'comprobantes'
-            );
-            
-            // Actualizar el objeto con la ruta de la imagen
-            paymentStudent.comprobante = imagePath;
-        }
-        
-        // Continuar con el proceso normal
         return await PaymentModel.insertPaymentofStudent(paymentStudent);
     } catch (error) {
         console.error('Error in insertPaymentofStudent service:', error);
