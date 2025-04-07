@@ -22,7 +22,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: 'http://192.168.101.7:5500',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
