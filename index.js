@@ -20,7 +20,12 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+
+app.use(cors({
+  origin: 'http://192.168.101.7:5500',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
