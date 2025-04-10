@@ -6,6 +6,7 @@ const auth = require('../middleware/auth');
 const checkRole = require('../middleware/checkRole');
 const { validateRegisterEstudiante } = require('../middleware/validator');
 router.get('/getAllUsers', userController.getAllUsers);
+router.get('/verifyExistingEmail', userController.verifyExistingEmail);
 router.post('/registerStudent', validateRegisterEstudiante, userController.registerEstudiante);
 router.post('/registerProfesor', userController.registerProfesor);
 router.put('/updateProfesor', userController.updateProfesor);

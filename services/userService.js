@@ -6,6 +6,9 @@ class UserService {
     async getAll() {
         return await UserRegisterModel.getAll();
     }
+    async verifyExistingEmail(email) {
+        return await UserRegisterModel.verifyExistingEmail(email);
+    }
     async registerEstudiante(estudiante) {
         estudiante.password = await bcryptjs.hash(estudiante.password, 10);
         return await UserRegisterModel.registerEstudiante(estudiante);

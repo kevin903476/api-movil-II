@@ -24,6 +24,44 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const verifyExistingEmail = async (req, res) => {
+  try {
+    const { email } = req.query;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'El parámetro "email" es requerido'
+      });
+    }
+
+    const mensaje = await UserService.verifyExistingEmail(email);
+
+    if (mensaje.includes('disponible')) {
+      return res.status(200).json({
+        success: true,
+        disponible: true,
+        message: mensaje
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        disponible: false,
+        message: mensaje
+      });
+    }
+
+  } catch (error) {
+    console.error('Error al verificar email:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al verificar el correo',
+      error: error.message
+    });
+  }
+};
+
+
 const registerEstudiante = async (req, res) => {
   console.log("Datos recibidos del estudiante", req.body);
   try {
@@ -274,4 +312,5 @@ module.exports = {
   updateStudent,
   getProfileStudent,
   getProfileProfesor,
+  verifyExistingEmail
 };
