@@ -8,9 +8,12 @@ const checkRole = require('../middleware/checkRole');
 router.get('/getCourses', auth,checkRole([1,2,3]), coursesController.getCourses );
 router.post('/createCourse', auth, checkRole([1, 3]), coursesController.createCourse );
 
+router.get('/getCoursesProfesor', auth,checkRole([1,3]), coursesController.getCoursesProfessor );
+
 // logica para agregar un profe a un curso
 
 router.post('/insertCourseScheduleProfessor', auth, checkRole([1, 3]), coursesController.insertCourseScheduleProfessor );
 router.get('/searchCourses', auth, checkRole([1, 2, 3]), coursesController.searchCourses);
+router.delete('/deletCourse', auth , checkRole([1, 3]), coursesController.logicalDeleteCourse);
 
 module.exports = router;

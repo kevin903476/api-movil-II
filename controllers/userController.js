@@ -51,6 +51,7 @@ const registerEstudiante = async (req, res) => {
       success: false,
       message: 'Error al registrar estudiante'
     });
+    
   }
 };
 const registerProfesor = async (req, res) => {

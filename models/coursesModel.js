@@ -14,6 +14,17 @@ class CoursesModel {
             throw error;
         }
     }
+    async getCoursesProfessor(profesor_id) {
+      try {
+          const result = await db.query('SELECT * FROM railway.vista_cursos_profesor WHERE profesor_id = ?', [profesor_id]);
+          const cursos = result;
+          console.log('Resultado de la consulta:', cursos);
+          return cursos;
+      } catch (error) {
+          console.error('Error al obtener cursos_profesor disponibles:', error);
+          throw error;
+      }
+    }
 
     async createCourse(curso) {
         const { universidad_id, carrera_id, clasificacion_id, nombre, descripcion} = curso;
@@ -63,6 +74,18 @@ class CoursesModel {
             return result;
         } catch (error) {
             console.error('Error al buscar cursos:', error);
+            throw error;
+        }
+    }
+    async logicalDeleteCourse(curso_id) {
+        try {
+            const result = await db.query(
+                'CALL sp_borrado_logico_curso(?)',
+                [curso_id]
+            );
+            return result;
+        } catch (error) {
+            console.error('Error in logicalDeleteCourse:', error);
             throw error;
         }
     }
