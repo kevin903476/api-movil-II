@@ -40,7 +40,7 @@ const registerEstudiante = async (req, res) => {
       pais_id
     });
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       message: 'Estudiante registrado correctamente',
       data: result
@@ -70,7 +70,7 @@ const registerProfesor = async (req, res) => {
       whatsapp
     });
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       message: 'Profesor registrado correctamente',
       data: result
