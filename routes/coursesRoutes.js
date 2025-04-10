@@ -14,6 +14,6 @@ router.get('/getCoursesProfesor', auth,checkRole([1,3]), coursesController.getCo
 
 router.post('/insertCourseScheduleProfessor', auth, checkRole([1, 3]), coursesController.insertCourseScheduleProfessor );
 router.get('/searchCourses', auth, checkRole([1, 2, 3]), coursesController.searchCourses);
-router.delete('/deletCourse', auth , checkRole([1, 3]), coursesController.logicalDeleteCourse);
+router.delete('/deleteCourse', auth , checkRole([1, 3]), coursesController.logicalDeleteCourse);
 
 module.exports = router;
