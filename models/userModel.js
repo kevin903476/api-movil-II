@@ -143,6 +143,19 @@ class UserRegisterModel {
       throw error;
     }
   }
+  async getProfileProfesor(usuario_id) {
+    try {
+      const result = await db.query('CALL sp_obtener_perfil_profesor(?)', [usuario_id]);
+      console.log('Resultado de getProfileProfesor(Model):', result);
+      if (result[0] && result[0].length > 0) {
+        return result[0][0];
+      }
+      return null; 
+    } catch (error) {
+      console.error('Error in getProfileProfesor(Model):', error);
+      throw error;
+    }
+  }
 
 }
 

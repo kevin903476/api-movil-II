@@ -222,6 +222,25 @@ const getProfileStudent = async (req, res) => {
       message: 'Error al obtener el perfil del estudiante'
     });
   }
+};
+
+const getProfileProfesor = async (req, res) => {
+  try {
+    const usuario_id = req.user.id;
+    const result = await UserService.getProfileProfesor(usuario_id);
+    console.log('Perfil de profesor obtenido:', result);
+    return res.status(200).json({
+      success: true,
+      message: 'Perfil de profesor obtenido correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al obtener el perfil del profesor:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al obtener el perfil del profesor'
+    });
+  }
 }
 
 module.exports = {
@@ -231,5 +250,6 @@ module.exports = {
   registerProfesor,
   updateProfesor,
   updateStudent,
-  getProfileStudent
+  getProfileStudent,
+  getProfileProfesor,
 };
