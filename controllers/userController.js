@@ -39,14 +39,14 @@ const verifyExistingEmail = async (req, res) => {
 
     if (mensaje.includes('disponible')) {
       return res.status(200).json({
-        success: false,
-        disponible: false,
+        success: true,
+        disponible: true,
         message: mensaje
       });
     } else {
       return res.status(200).json({
-        success: true,
-        disponible: true,
+        success: false,
+        disponible: false,
         message: mensaje
       });
     }
