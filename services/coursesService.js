@@ -74,7 +74,7 @@ class CoursesService {
             if (!curso_id || !usuario_id) {
                 throw new Error('El ID del curso y el ID del usuario son requeridos para eliminar el curso.');
             }
-            const result = await CoursesModel.deleteCourseAdmin(curso_id, usuario_id);
+            const result = await CoursesModel.deleteCourseAdmin(usuario_id, curso_id);
             return result;
         }
         catch (error) {
