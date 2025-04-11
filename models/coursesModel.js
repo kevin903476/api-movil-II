@@ -131,7 +131,7 @@ class CoursesModel {
     async updateCourseAdmin(usuario_id, curso_id, nombre, descripcion) {
         try {
             const result = await db.query(
-                'CALL sp_actualizar_curso(?, ?, ?, ?)',
+                'CALL sp_actualizar_curso_admin(?, ?, ?, ?)',
                 [usuario_id, curso_id, nombre, descripcion]
             );
             return result;
