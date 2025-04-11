@@ -115,9 +115,10 @@ const insertCourseScheduleProfessor = async (req, res) => {
     console.error('Error al registrar curso_profesor:', error);
     return res.status(500).json({
       success: false,
-      message: 'Error al registrar curso_profesor'
+      message: error.sqlMessage || error.message || 'Error al registrar curso_profesor'
     });
   }
+  
 };
 
 const searchCourses = async (req, res) => {
