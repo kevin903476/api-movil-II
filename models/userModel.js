@@ -59,8 +59,8 @@ class UserRegisterModel {
   async verifyExistingEmail(email) {
     try {
       const result = await db.query('CALL sp_verificar_email_existente(?)', [email]);
-
-      return result;
+      const mensaje = result?.[0]?.[0]?.mensaje;
+      return mensaje;
     } catch (error) {
       console.error('Error en verifyExistingEmail:', error);
       throw error;
