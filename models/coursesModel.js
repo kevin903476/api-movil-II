@@ -117,6 +117,7 @@ class CoursesModel {
         }
     };
     async deleteCourseAdmin(usuario_id, curso_id) {
+        console.log("ID del usuario", usuario_id);
         try {
             const result = await db.query(
                 'CALL sp_eliminar_curso_admin(?, ?)',
