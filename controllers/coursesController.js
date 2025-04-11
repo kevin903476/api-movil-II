@@ -260,7 +260,35 @@ const updateCourseAdmin = async (req, res) => {
       error: error.message
     });
   }
-}
+};
+
+const deleteCourseAdmin = async (req, res) => {
+  try {
+    const { curso_id } = req.body;
+    const usuario_id = req.user.id; 
+
+    if (!curso_id) {
+      return res.status(400).json({
+        success: false,
+        message: 'El ID del curso es requerido para eliminarlo.'
+      });
+    }
+
+    const result = await CoursesService.deleteCourseAdmin(curso_id, usuario_id);
+    return res.status(200).json({
+      success: true,
+      message: 'Curso eliminado correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al eliminar el curso:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al eliminar el curso',
+      error: error.message
+    });
+  }
+};
 
 
 module.exports = {
@@ -272,5 +300,6 @@ module.exports = {
   getCoursesProfessor,
   deleteCourseProfessor,
   updateCourseProfessor,
-  updateCourseAdmin
+  updateCourseAdmin,
+  deleteCourseAdmin
 }

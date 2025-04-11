@@ -69,6 +69,20 @@ class CoursesService {
             throw error;
         }
     }
+    async deleteCourseAdmin(curso_id, usuario_id) {
+        try {
+            if (!curso_id || !usuario_id) {
+                throw new Error('El ID del curso y el ID del usuario son requeridos para eliminar el curso.');
+            }
+            const result = await CoursesModel.deleteCourseAdmin(curso_id, usuario_id);
+            return result;
+        }
+        catch (error) {
+            console.error('Error al eliminar el curso:', error);
+            throw error;
+        }
+    }
+
 
 }
 module.exports = new CoursesService();

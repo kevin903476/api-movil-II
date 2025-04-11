@@ -16,4 +16,5 @@ router.delete('/deleteCourse', auth , checkRole([1, 3]), coursesController.logic
 router.delete('/deleteCourseProfessor', auth , checkRole([1, 3]), coursesController.deleteCourseProfessor);
 router.put('/updateCourseProfessor', auth , checkRole([1, 3]), coursesController.updateCourseProfessor);
 router.put('/updateCourseAdmin', auth , checkRole([1, 3]), coursesController.updateCourseAdmin);
+router.delete('/deleteCourseAdmin', auth , checkRole([1, 3]), coursesController.deleteCourseAdmin);
 module.exports = router;
