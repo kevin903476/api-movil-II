@@ -113,17 +113,8 @@ const scheduleTutoring = async (req, res) => {
 const getPendingTutorialProfessor = async (req, res) => {
   try {
 
-    const {curso_id} = req.body;
-
-    const profesor = await UserService.getProfesorByUserId(req.user.id);
-      const profesor_id = profesor.profesor_id;
-
-      if (!profesor_id) {
-          return res.status(404).json({
-              success: false,
-              message: 'Profesor no encontrado'
-          });
-      }
+    const {profesor_id, curso_id} = req.body;
+ 
 
     const result = await TutorialsService.getPendingTutorialProfessor(profesor_id, curso_id);
 
