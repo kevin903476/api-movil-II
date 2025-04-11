@@ -116,6 +116,30 @@ class CoursesModel {
 
         }
     };
+    async deleteCourseAdmin(curso_id) {
+        try {
+            const result = await db.query(
+                'CALL sp_eliminar_curso(?)',
+                [curso_id]
+            );
+            return result;
+        } catch (error) {
+            console.error('Error in deleteCourseAdmin:', error);
+            throw error;
+        }
+    }
+    async updateCourseAdmin(usuario_id, curso_id, nombre, descripcion) {
+        try {
+            const result = await db.query(
+                'CALL sp_actualizar_curso(?, ?, ?, ?)',
+                [usuario_id, curso_id, nombre, descripcion]
+            );
+            return result;
+        } catch (error) {
+            console.error('Error in updateCourseAdmin:', error);
+            throw error;
+        }
+    }
     
 };
 

@@ -231,6 +231,34 @@ const updateCourseProfessor = async (req, res) => {
       error: error.message
     });
   }
+};
+
+const updateCourseAdmin = async (req, res) => {
+  try {
+    const { curso_id, nombre, descripcion } = req.body;
+    const usuario_id = req.user.id; 
+
+    if (!curso_id) {
+      return res.status(400).json({
+        success: false,
+        message: 'El ID del curso es requerido para actualizarlo.'
+      });
+    }
+
+    const result = await CoursesService.updateCourseAdmin(usuario_id, curso_id, nombre, descripcion);
+    return res.status(200).json({
+      success: true,
+      message: 'Curso actualizado correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al actualizar el curso:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al actualizar el curso',
+      error: error.message
+    });
+  }
 }
 
 
@@ -242,5 +270,6 @@ module.exports = {
   logicalDeleteCourse,
   getCoursesProfessor,
   deleteCourseProfessor,
-  updateCourseProfessor
+  updateCourseProfessor,
+  updateCourseAdmin
 }

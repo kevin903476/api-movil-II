@@ -15,4 +15,5 @@ router.get('/searchCourses', auth, checkRole([1, 2, 3]), coursesController.searc
 router.delete('/deleteCourse', auth , checkRole([1, 3]), coursesController.logicalDeleteCourse);
 router.delete('/deleteCourseProfessor', auth , checkRole([1, 3]), coursesController.deleteCourseProfessor);
 router.put('/updateCourseProfessor', auth , checkRole([1, 3]), coursesController.updateCourseProfessor);
+router.put('/updateCourseAdmin', auth , checkRole([1, 3]), coursesController.updateCourseAdmin);
 module.exports = router;
