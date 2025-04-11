@@ -105,9 +105,10 @@ const scheduleTutoring = async (req, res) => {
     console.error('Error al registrar tutoria_profesor:', error);
     return res.status(500).json({
       success: false,
-      message: 'Error al registrar tutoria_profesor'
+      message: error.sqlMessage || error.message || 'Error al registrar tutoria_profesor'
     });
   }
+  
 };
 
 const getPendingTutorialProfessor = async (req, res) => {
