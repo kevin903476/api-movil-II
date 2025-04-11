@@ -266,7 +266,7 @@ const deleteCourseAdmin = async (req, res) => {
   try {
     const { curso_id } = req.body;
     const usuario_id = req.user.id; 
-
+    console.log("ID del usuario", usuario_id);
     if (!curso_id) {
       return res.status(400).json({
         success: false,
