@@ -274,7 +274,7 @@ const deleteCourseAdmin = async (req, res) => {
       });
     }
 
-    const result = await CoursesService.deleteCourseAdmin(curso_id, usuario_id);
+    const result = await CoursesService.deleteCourseAdmin(usuario_id, curso_id);
     return res.status(200).json({
       success: true,
       message: 'Curso eliminado correctamente',

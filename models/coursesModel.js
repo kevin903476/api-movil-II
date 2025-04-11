@@ -116,11 +116,11 @@ class CoursesModel {
 
         }
     };
-    async deleteCourseAdmin(curso_id, usuario_id) {
+    async deleteCourseAdmin(usuario_id, curso_id) {
         try {
             const result = await db.query(
                 'CALL sp_eliminar_curso_admin(?, ?)',
-                [curso_id, usuario_id]
+                [usuario_id, curso_id]
             );
             return result;
         } catch (error) {

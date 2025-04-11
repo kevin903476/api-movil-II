@@ -69,7 +69,7 @@ class CoursesService {
             throw error;
         }
     }
-    async deleteCourseAdmin(curso_id, usuario_id) {
+    async deleteCourseAdmin(usuario_id, curso_id) {
         try {
             if (!curso_id || !usuario_id) {
                 throw new Error('El ID del curso y el ID del usuario son requeridos para eliminar el curso.');
