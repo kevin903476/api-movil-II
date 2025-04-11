@@ -10,10 +10,8 @@ router.post('/createCourse', auth, checkRole([1, 3]), coursesController.createCo
 
 router.get('/getCoursesProfesor', auth,checkRole([1,3]), coursesController.getCoursesProfessor );
 
-// logica para agregar un profe a un curso
-
 router.post('/insertCourseScheduleProfessor', auth, checkRole([1, 3]), coursesController.insertCourseScheduleProfessor );
 router.get('/searchCourses', auth, checkRole([1, 2, 3]), coursesController.searchCourses);
 router.delete('/deleteCourse', auth , checkRole([1, 3]), coursesController.logicalDeleteCourse);
-
+router.delete('/deleteCourseProfessor', auth , checkRole([1, 3]), coursesController.deleteCourseProfessor);
 module.exports = router;

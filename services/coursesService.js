@@ -30,6 +30,19 @@ class CoursesService {
             throw error;
         }
     }
+    async deleteCourseProfessor(curso_profesor_id, profesor_id) {
+        try {
+            if (!curso_profesor_id || !profesor_id) {
+                throw new Error('El ID del curso y el ID del profesor son requeridos para eliminar la relación.');
+            }
+            const result = await CoursesModel.deleteCourseProfessor(curso_profesor_id, profesor_id);
+            return result;
+        }
+        catch (error) {
+            console.error('Error al eliminar la relación curso-profesor:', error);
+            throw error;
+        }
+    }
 
 }
 module.exports = new CoursesService();

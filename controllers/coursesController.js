@@ -23,7 +23,7 @@ const getCourses = async (req, res) => {
 
 const getCoursesProfessor = async (req, res) => {
   try {
- 
+
 
     const profesor = await UserService.getProfesorByUserId(req.user.id);
 
@@ -47,9 +47,9 @@ const getCoursesProfessor = async (req, res) => {
   } catch (error) {
     console.error('Error al obtener cursos:', error);
     return res.status(500).json({
-        success: false,
-        message: 'Error al obtener cursos:',
-        error: error.message
+      success: false,
+      message: 'Error al obtener cursos:',
+      error: error.message
     });
   }
 }
@@ -169,6 +169,34 @@ const logicalDeleteCourse = async (req, res) => {
     });
   }
 }
+const deleteCourseProfessor = async (req, res) => {
+  try {
+    const profesor = await UserService.getProfesorByUserId(req.user.id);
+    const profesor_id = profesor.profesor_id;
+    const { curso_profesor_id } = req.body;
+
+    if (!curso_profesor_id || !profesor_id) {
+      return res.status(400).json({
+        success: false,
+        message: 'El ID del curso y el ID del profesor son requeridos para eliminar la relación.'
+      });
+    }
+    
+    const result = await CoursesService.deleteCourseProfessor(curso_profesor_id, profesor_id);
+    return res.status(200).json({
+      success: true,
+      message: 'Curso_profesor eliminado correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al eliminar la relación curso-profesor:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al eliminar la relación curso-profesor',
+      error: error.message
+    });
+  }
+}
 
 
 module.exports = {
@@ -177,5 +205,6 @@ module.exports = {
   insertCourseScheduleProfessor,
   searchCourses,
   logicalDeleteCourse,
-  getCoursesProfessor
+  getCoursesProfessor,
+  deleteCourseProfessor
 }

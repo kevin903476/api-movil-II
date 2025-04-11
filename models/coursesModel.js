@@ -89,6 +89,18 @@ class CoursesModel {
             throw error;
         }
     }
-}
+    async deleteCourseProfessor(curso_profesor_id, profesor_id) {
+        try {
+            const result = await db.query(
+                'CALL sp_eliminar_curso_profesor(?, ?)',
+                [curso_profesor_id, profesor_id]
+            );
+            return result;
+        } catch (error) {
+            console.error('Error in deleteCourseProfessor:', error);
+            throw error;
+        }
+    }
+};
 
 module.exports = new CoursesModel();
