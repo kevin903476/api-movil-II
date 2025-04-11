@@ -211,20 +211,6 @@ const updateCourseProfessor = async (req, res) => {
       });
     }
 
-    if (monto_por_hora <= 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'El monto por hora debe ser mayor que cero.'
-      });
-    }
-
-    if (!modalidad || !horario) {
-      return res.status(400).json({
-        success: false,
-        message: 'La modalidad y el horario son campos requeridos.'
-      });
-    }
-
     const result = await CoursesService.updateCourseProfessor(curso_profesor_id, {
       profesor_id,
       monto_por_hora,
