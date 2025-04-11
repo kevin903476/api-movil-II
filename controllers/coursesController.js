@@ -196,6 +196,55 @@ const deleteCourseProfessor = async (req, res) => {
       error: error.message
     });
   }
+};
+
+const updateCourseProfessor = async (req, res) => {
+  try {
+    const profesor = await UserService.getProfesorByUserId(req.user.id);
+    const profesor_id = profesor.profesor_id;
+    const { curso_profesor_id, monto_por_hora, modalidad, horario } = req.body;
+    
+    if (!curso_profesor_id || !profesor_id) {
+      return res.status(400).json({
+        success: false,
+        message: 'El ID del curso_profesor y el ID del profesor son requeridos para actualizar la relación.'
+      });
+    }
+
+    if (monto_por_hora <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'El monto por hora debe ser mayor que cero.'
+      });
+    }
+
+    if (!modalidad || !horario) {
+      return res.status(400).json({
+        success: false,
+        message: 'La modalidad y el horario son campos requeridos.'
+      });
+    }
+
+    const result = await CoursesService.updateCourseProfessor(curso_profesor_id, {
+      profesor_id,
+      monto_por_hora,
+      modalidad,
+      horario
+    });
+    
+    return res.status(200).json({
+      success: true,
+      message: 'Curso_profesor actualizado correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al actualizar la relación curso-profesor:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al actualizar la relación curso-profesor',
+      error: error.message
+    });
+  }
 }
 
 
@@ -206,5 +255,6 @@ module.exports = {
   searchCourses,
   logicalDeleteCourse,
   getCoursesProfessor,
-  deleteCourseProfessor
+  deleteCourseProfessor,
+  updateCourseProfessor
 }

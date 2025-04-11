@@ -43,6 +43,22 @@ class CoursesService {
             throw error;
         }
     }
+    async updateCourseProfessor(curso_profesor_id, curso_profesor) {
+        try {
+            if (!curso_profesor_id || !curso_profesor) {
+                throw new Error('El ID del curso_profesor y los datos actualizados son requeridos.');
+            }
+            
+            curso_profesor.curso_profesor_id = curso_profesor_id;
+            
+            const result = await CoursesModel.updateCourseProfessor(curso_profesor);
+            return result;
+        }
+        catch (error) {
+            console.error('Error al actualizar la relación curso-profesor:', error);
+            throw error;
+        }
+    }
 
 }
 module.exports = new CoursesService();
