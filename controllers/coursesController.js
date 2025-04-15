@@ -183,7 +183,7 @@ const deleteCourseProfessor = async (req, res) => {
       });
     }
     
-    const result = await CoursesService.deleteCourseProfessor(curso_profesor_id, profesor_id);
+    const result = await CoursesService.deleteCourseProfessor(profesor_id, curso_profesor_id);
     return res.status(200).json({
       success: true,
       message: 'Curso_profesor eliminado correctamente',

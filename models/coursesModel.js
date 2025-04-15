@@ -89,11 +89,11 @@ class CoursesModel {
             throw error;
         }
     }
-    async deleteCourseProfessor(curso_profesor_id, profesor_id) {
+    async deleteCourseProfessor(profesor_id, curso_profesor_id) {
         try {
             const result = await db.query(
                 'CALL sp_eliminar_curso_profesor(?, ?)',
-                [curso_profesor_id, profesor_id]
+                [profesor_id, curso_profesor_id]
             );
             return result;
         } catch (error) {
