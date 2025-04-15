@@ -15,9 +15,9 @@ class TutorialsModel {
             throw error;
         }
     }
-    async getPendingTutorialProfessor(profesor_id, curso_id) {
+    async getPendingTutorialProfessor(profesor_id, curso_id, fecha) {
         try {
-            const result = await db.query('SELECT * FROM vista_tutorias_pendientes_profesor WHERE profesor_id = ? AND curso_id = ? AND DATE(fecha) = ?', [profesor_id, curso_id]);
+            const result = await db.query('SELECT * FROM vista_tutorias_pendientes_profesor WHERE profesor_id = ? AND curso_id = ? AND DATE(fecha) = ?', [profesor_id, curso_id, fecha]);
             const cursos = result;
             console.log('Resultado de la consulta:', cursos);
             return cursos;

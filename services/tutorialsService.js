@@ -5,8 +5,8 @@ class TutorialsService {
     async getTutorials() {
         return await TutorialsModel.getTutorials();
     }
-    async getPendingTutorialProfessor(profesor_id, curso_id) {
-        return await TutorialsModel.getPendingTutorialProfessor(profesor_id, curso_id);
+    async getPendingTutorialProfessor(profesor_id, curso_id, fecha) {
+        return await TutorialsModel.getPendingTutorialProfessor(profesor_id, curso_id, fecha);
     }
     async getScheduledTutorials(estudiante_id) {
         return await TutorialsModel.getScheduledTutorials(estudiante_id);

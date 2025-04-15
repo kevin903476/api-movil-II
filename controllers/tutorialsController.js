@@ -114,10 +114,10 @@ const scheduleTutoring = async (req, res) => {
 const getPendingTutorialProfessor = async (req, res) => {
   try {
 
-    const {profesor_id, curso_id} = req.body;
+    const {profesor_id, curso_id, fecha } = req.body;
  
 
-    const result = await TutorialsService.getPendingTutorialProfessor(profesor_id, curso_id);
+    const result = await TutorialsService.getPendingTutorialProfessor(profesor_id, curso_id, fecha);
 
     return res.status(201).json({
       success: true,
