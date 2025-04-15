@@ -172,10 +172,9 @@ const logicalDeleteCourse = async (req, res) => {
 }
 const deleteCourseProfessor = async (req, res) => {
   try {
-    const profesor = await UserService.getProfesorByUserId(req.user.id);
-    const profesor_id = profesor.profesor_id;
+    //declarar constante con nombre profesor_id y que obtenga el id del usuario
+    const profesor_id = await UserService.getProfesorByUserId(req.user.id);
     const { curso_profesor_id } = req.body;
-
     if (!curso_profesor_id || !profesor_id) {
       return res.status(400).json({
         success: false,
