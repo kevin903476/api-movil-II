@@ -5,7 +5,9 @@ const UserService = require('../services/userService');
 const insertPaymentOfStudent = async (req, res) => {
     try {
         let comprobante = null;
-        
+        console.log("req.file:", req.file);
+        console.log("req.body:", req.body);
+
         if (req.file && req.file.path) {
             comprobante = req.file.path;
         }
@@ -50,7 +52,7 @@ const insertPaymentOfStudent = async (req, res) => {
 const pendingPaymentsProfessor = async (req, res) => {
     try {
         const profesor = await UserService.getProfesorByUserId(req.user.id);
-        const profesor_id= profesor.profesor_id
+        const profesor_id = profesor.profesor_id
 
         if (!profesor_id) {
             return res.status(404).json({
@@ -80,7 +82,7 @@ const pendingPaymentsStudent = async (req, res) => {
     try {
         const estudiante = await UserService.getStudentByUserId(req.user.id);
         const estudiante_id = estudiante.estudiante_id;
-  
+
         if (!estudiante_id) {
             return res.status(404).json({
                 success: false,
@@ -107,22 +109,22 @@ const pendingPaymentsStudent = async (req, res) => {
 
 const getPaymentsProfessor = async (req, res) => {
     try {
-      const payments = await PaymentService.getPaymentsProfessor();
-      console.log('Pagos obtenidos:', payments);
+        const payments = await PaymentService.getPaymentsProfessor();
+        console.log('Pagos obtenidos:', payments);
 
-      return res.status(200).json({
-        success: true,
-        message: 'Pagos obtenidos correctamente',
-        data: payments
-      });
+        return res.status(200).json({
+            success: true,
+            message: 'Pagos obtenidos correctamente',
+            data: payments
+        });
     } catch (error) {
-      console.error('Error al obtener los Pagos:', error);
-      return res.status(500).json({
-        success: false,
-        message: 'Error al obtener los Pagos'
-      });
+        console.error('Error al obtener los Pagos:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener los Pagos'
+        });
     }
-  };
+};
 
 
 const confirmPaymentOfStudent = async (req, res) => {
@@ -148,7 +150,7 @@ const confirmPaymentOfStudent = async (req, res) => {
 const getPaymentDetails = async (req, res) => {
     try {
         const profesorId = await UserService.getProfesorByUserId(req.user.id);
-        const pendingPayments = await PaymentService.pendingPaymentsProfessor(profesorId.profesor_id); 
+        const pendingPayments = await PaymentService.pendingPaymentsProfessor(profesorId.profesor_id);
         console.log('Pagos pendientes:', pendingPayments);
 
         return res.status(200).json({
@@ -170,7 +172,7 @@ const getPaymentDetails = async (req, res) => {
 const getPendingPaymentsStudentsTeacher = async (req, res) => {
     try {
         const profesorId = await UserService.getProfesorByUserId(req.user.id);
-        const pendingPayments = await PaymentService.getPendingPaymentsStudentsTeacher(profesorId.profesor_id); 
+        const pendingPayments = await PaymentService.getPendingPaymentsStudentsTeacher(profesorId.profesor_id);
         console.log('Pagos pendientes:', pendingPayments);
 
         return res.status(200).json({
