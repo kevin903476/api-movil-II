@@ -179,7 +179,7 @@ const loginUser = async (req, res) => {
         carrera_id: user.carrera_id || null
       },
       process.env.SECRET_KEY,
-      { expiresIn: '24h' }
+      { expiresIn: '1h' }
     );
 
     return res.status(200).json({
