@@ -1,22 +1,25 @@
+require('dotenv').config();
+const process = require('process');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 
-const uploadPath = path.join(__dirname, '../public/uploads');
+// Configuración de Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-// Verifica si el directorio existe, de lo contrario lo crea
-if (!fs.existsSync(uploadPath)) {
-    fs.mkdirSync(uploadPath, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadPath);
+// Storage de Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'uploads',
+    allowed_formats: ['jpg', 'jpeg', 'png'],
   },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
 });
 
 const upload = multer({ storage });
+
 module.exports = upload;
