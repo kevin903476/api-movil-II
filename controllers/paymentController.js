@@ -4,7 +4,8 @@ const UserService = require('../services/userService');
 
 const insertPaymentOfStudent = async (req, res) => {
     try {
-        let comprobante = req.body.comprobante;
+        let comprobante = null;
+        
         if (req.file && req.file.path) {
             comprobante = req.file.path;
         }
