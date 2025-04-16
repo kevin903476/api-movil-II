@@ -14,5 +14,7 @@ router.put('/updateProfesor', upload.single('foto'), auth, checkRole([1, 3]), us
 router.put('/updateStudent', auth, checkRole([1, 2]), userController.updateStudent);
 router.get('/getProfileStudent', auth, checkRole([1, 2]), userController.getProfileStudent);
 router.post('/login', userController.loginUser);
+router.get('/getProfilesProfesors', auth, checkRole([1, 2, 3]), userController.getProfilesProfesors);
 router.get('/getProfileProfesor', auth, checkRole([1, 3]), userController.getProfileProfesor);
+router.post('/getProfileProfesor_pv', auth, checkRole([1, 2, 3]), userController.getProfileProfesor_pv);
 module.exports = router;

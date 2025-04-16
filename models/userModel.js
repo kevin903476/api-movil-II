@@ -153,6 +153,17 @@ class UserRegisterModel {
       throw error;
     }
   }
+  async getProfilesProfesors() {
+    try {
+        const result = await db.query('SELECT * FROM vista_obtener_perfiles_profesores');
+        const perfiles = result;
+        console.log('Resultado de la consulta:', perfiles);
+        return perfiles;
+    } catch (error) {
+        console.error('Error en vista_obtener_perfiles_profesores:', error);
+        throw error;
+    }
+}
   async getProfileProfesor(usuario_id) {
     try {
       const result = await db.query('CALL sp_obtener_perfil_profesor(?)', [usuario_id]);
