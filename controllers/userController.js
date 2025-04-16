@@ -209,7 +209,12 @@ const loginUser = async (req, res) => {
 
 const updateProfesor = async (req, res) => {
   try {
-    const { usuario_id, whatsapp, foto, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
+    let foto = req.body.foto;
+
+    if (req.file && req.file.path) {
+      foto = req.file.path; // Actualiza la ruta de la foto si se ha subido una nueva
+    }
+    const { usuario_id, whatsapp, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
 
     const result = await UserService.updateProfesor({
       usuario_id,
