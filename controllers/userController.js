@@ -6,6 +6,51 @@ const dotenv = require('dotenv');
 const process = require('process');
 dotenv.config();
 
+const requestPasswordReset = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'El correo es requerido'
+      });
+    }
+    await UserService.requestPasswordReset(email);
+    return res.status(200).json({
+      success: true,
+      message: 'Si el correo existe, se ha enviado un enlace para restablecer la contraseña'
+    });
+  } catch (error) {
+    console.error('Error al solicitar reseteo de contraseña:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al solicitar reseteo de contraseña'
+    });
+  }
+};
+const resetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    if (!token || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Token y nueva contraseña son requeridos'
+      });
+    }
+    await UserService.resetPassword(token, newPassword);
+    return res.status(200).json({
+      success: true,
+      message: 'Contraseña restablecida correctamente'
+    });
+  } catch (error) {
+    console.error('Error al restablecer la contraseña:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al restablecer la contraseña'
+    });
+  }
+};
+
 const getAllUsers = async (req, res) => {
   try {
     const users = await UserService.getAll();
@@ -45,7 +90,7 @@ const verifyExistingEmail = async (req, res) => {
       });
     } else {
       return res.status(200).json({
-        success: true, 
+        success: true,
         disponible: false,
         message: mensaje
       });
@@ -248,7 +293,7 @@ const updateStudent = async (req, res) => {
     const { nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
     const usuario_id = req.user.id;
     const result = await UserService.updateStudent({
-     usuario_id,
+      usuario_id,
       nombre,
       apellido,
       carnet,
@@ -355,5 +400,7 @@ module.exports = {
   getProfileProfesor,
   verifyExistingEmail,
   getProfilesProfesors,
-  getProfileProfesor_pv
+  getProfileProfesor_pv,
+  requestPasswordReset,
+  resetPassword
 };

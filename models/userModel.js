@@ -28,6 +28,35 @@ class UserRegisterModel {
     );
     return rows.length > 0 ? rows[0] : null;
   }
+  // Guardar token de reseteo (hasheado) usando stored procedure
+  async savePasswordResetToken(usuario_id, token, expiresAt) {
+    await db.query(
+      'CALL sp_save_password_reset(?, ?, ?)',
+      [usuario_id, token, new Date(expiresAt)]
+    );
+  }
+
+  async findByResetToken(token) {
+    const result = await db.query(
+      'CALL sp_get_user_by_token(?)',
+      [token]
+    );
+    if (result[0] && result[0].length > 0) {
+      return result[0][0];
+    }
+    return null;
+  }
+
+  async deletePasswordResetToken(usuario_id) {
+    await db.query(
+      'CALL sp_delete_password_reset(?)',
+      [usuario_id]
+    );
+  }
+
+async updatePassword(usuario_id, hashedPassword) {
+  return db.query('CALL sp_update_password(?, ?)', [usuario_id, hashedPassword]);
+}
 
   async getStudentByUserId(usuario_id) {
     try {
@@ -155,15 +184,15 @@ class UserRegisterModel {
   }
   async getProfilesProfesors() {
     try {
-        const result = await db.query('SELECT * FROM vista_obtener_perfiles_profesores');
-        const perfiles = result;
-        console.log('Resultado de la consulta:', perfiles);
-        return perfiles;
+      const result = await db.query('SELECT * FROM vista_obtener_perfiles_profesores');
+      const perfiles = result;
+      console.log('Resultado de la consulta:', perfiles);
+      return perfiles;
     } catch (error) {
-        console.error('Error en vista_obtener_perfiles_profesores:', error);
-        throw error;
+      console.error('Error en vista_obtener_perfiles_profesores:', error);
+      throw error;
     }
-}
+  }
   async getProfileProfesor(usuario_id) {
     try {
       const result = await db.query('CALL sp_obtener_perfil_profesor(?)', [usuario_id]);
@@ -171,7 +200,7 @@ class UserRegisterModel {
       if (result[0] && result[0].length > 0) {
         return result[0][0];
       }
-      return null; 
+      return null;
     } catch (error) {
       console.error('Error in getProfileProfesor(Model):', error);
       throw error;
