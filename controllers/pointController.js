@@ -1,8 +1,12 @@
 const PointService = require('../services/pointService');
+const UserService = require('../services/userService');
 
 const getPoints = async (req, res) => {
     try {
-        const estudiante_id = req.params.estudiante_id;
+        const usuario_id = req.user.id;
+        const result = await UserService.getProfileStudent(usuario_id);
+        const estudiante_id = result.estudiante_id; 
+
         const puntos = await PointService.getPoints(estudiante_id);
         console.log('Puntos obtenidos:', puntos);
         return res.status(200).json({
