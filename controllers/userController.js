@@ -287,7 +287,8 @@ const updateProfesor = async (req, res) => {
     console.error('Error al actualizado profesor:', error);
     return res.status(500).json({
       success: false,
-      message: 'Error al actualizado estudiante'
+      message: 'Error al actualizar profesor',
+      error: error.message
     });
   }
 };
