@@ -14,7 +14,7 @@ const tutorialsRoutes = require('./routes/tutorialsRoutes');
 const couponRoutes = require('./routes/couponRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const testRoutes = require('./routes/testRoutes');
-const pointsRoutes = require('./routes/pointsRoutes');
+const pointsRoutes = require('./routes/pointRoutes');
 const path = require('path');
 
 dotenv.config();
