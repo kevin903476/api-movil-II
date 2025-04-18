@@ -5,7 +5,7 @@ const db = DbService.getDbServiceInstance();
 class PointModel {
     async getPoints(estudiante_id) {
         try {
-            const result = await db.query('CALL sp_obtener_puntos_actaules(?)', [estudiante_id]);
+            const result = await db.query('CALL sp_obtener_puntos_actuales(?)', [estudiante_id]);
             const puntos = result;
             console.log('Resultado de la consulta:', puntos);
             return puntos;
