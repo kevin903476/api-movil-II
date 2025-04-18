@@ -11,7 +11,7 @@ const insertPaymentOfStudent = async (req, res) => {
         if (req.file && req.file.path) {
             comprobante = req.file.path;
         }
-        const { tutoria_id, profesor_id, monto, num_transferencia, tipo_pago, cupon_id } = req.body;
+        const { tutoria_id, profesor_id, monto, num_transferencia, tipo_pago, p_codigo_cupon } = req.body;
         const estudiante = await UserService.getStudentByUserId(req.user.id);
         const estudiante_id = estudiante.estudiante_id;
 
@@ -30,7 +30,7 @@ const insertPaymentOfStudent = async (req, res) => {
             comprobante,
             num_transferencia,
             tipo_pago,
-            cupon_id
+            p_codigo_cupon
         };
         const paymentOfStudent = await PaymentService.insertPaymentofStudent(paymentStudent);
         return res.status(201).json({
