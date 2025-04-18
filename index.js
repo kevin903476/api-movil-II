@@ -14,6 +14,7 @@ const tutorialsRoutes = require('./routes/tutorialsRoutes');
 const couponRoutes = require('./routes/couponRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const testRoutes = require('./routes/testRoutes');
+const pointsRoutes = require('./routes/pointsRoutes');
 const path = require('path');
 
 dotenv.config();
@@ -45,6 +46,7 @@ app.use('/tutorials', tutorialsRoutes);
 app.use('/coupons', couponRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/test', testRoutes);
+app.use('/points', pointsRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 
