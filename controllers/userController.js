@@ -255,6 +255,9 @@ const loginUser = async (req, res) => {
 const updateProfesor = async (req, res) => {
   try {
     let foto = null;
+    // ver qué manda el front:
+    console.log('req.file', req.file);
+    console.log('req.body', req.body);
 
     if (req.file && req.file.path) {
       foto = req.file.path; // Actualiza la ruta de la foto si se ha subido una nueva
