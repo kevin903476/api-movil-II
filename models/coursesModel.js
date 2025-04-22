@@ -5,7 +5,7 @@ const db = DbService.getDbServiceInstance();
 class CoursesModel {
     async getCourses() {
         try {
-            const result = await db.query('SELECT * FROM vista_cursos');
+            const result = await db.query('SELECT * FROM vista_cursos WHERE estado="activo";');
             const cursos = result;
             console.log('Resultado de la consulta:', cursos);
             return cursos;
