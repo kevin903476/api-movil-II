@@ -63,7 +63,7 @@ const createCoupon = async (req, res) => {
 }
 const deleteCoupon = async (req, res) =>{
     try {
-        const { cupon_id } = req.body;
+        const { cupon_id } = req.params;
         const result = await CouponService.deleteCoupon(cupon_id);
         return res.status(200).json({
             success: true,
