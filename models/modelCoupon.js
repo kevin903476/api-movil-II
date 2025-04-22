@@ -36,6 +36,17 @@ class CouponModel {
             console.error('Error al crear cupon:', error);
             throw error;
         }
+    };
+
+    async deleteCoupon(cupon_id) {
+        try {
+            const result = await db.query('CALL sp_eliminar_cupon(?)', [cupon_id]);
+            console.log('Resultado de la eliminación del cupón:', result);
+            return result;
+        } catch (error) {
+            console.error('Error al eliminar cupon:', error);
+            throw error;
+        }
     }
 }
 

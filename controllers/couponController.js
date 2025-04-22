@@ -61,8 +61,28 @@ const createCoupon = async (req, res) => {
         });
     }
 }
+const deleteCoupon = async (req, res) =>{
+    try {
+        const { cupon_id } = req.params;
+        const result = await CouponService.deleteCoupon(cupon_id);
+        return res.status(200).json({
+            success: true,
+            message: 'Cupón eliminado correctamente',
+            data: result
+        });
+    } catch (error) {
+        console.error('Error deleting coupon:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error deleting coupon',
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     getAllCoupons,
     createCoupon,
-    getRanking
+    getRanking,
+    deleteCoupon
 }
