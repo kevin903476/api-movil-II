@@ -95,7 +95,14 @@ const getTotalNetInvoicesTeacher = async (req, res) => {
 
 const payMultipleDeductions = async (req, res) => {
     try {
-        const { numero_tranferencia, comprobante, deducciones_ids } = req.body;
+        let comprobante = null;
+    console.log('req.file', req.file);
+    console.log('req.body', req.body);
+
+    if (req.file && req.file.path) {
+      comprobante = req.file.path; // Actualiza la ruta de la foto si se ha subido una nueva
+    }
+        const { numero_tranferencia, deducciones_ids } = req.body;
         
         const profesor = await UserService.getProfesorByUserId(req.user.id);
         
@@ -122,12 +129,12 @@ const payMultipleDeductions = async (req, res) => {
             });
         }
         
-        await DeductionService.payMultipleDeductions(
+        await DeductionService.payMultipleDeductions({
             numero_tranferencia, 
             comprobante, 
             profesor_id, 
             deducciones_ids
-        );
+        });
         
         return res.status(200).json({
             success: true,
