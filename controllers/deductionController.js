@@ -115,7 +115,7 @@ const payMultipleDeductions = async (req, res) => {
         
         const profesor_id = profesor.profesor_id;
         
-        if (!numero_tranferencia || !comprobante || !deducciones_ids) {
+        if (!numero_tranferencia || !deducciones_ids) {
             return res.status(400).json({
                 success: false,
                 message: 'Faltan datos requeridos'
