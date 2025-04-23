@@ -60,6 +60,17 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
             throw error;
         }
     }
+    
+    async getAllDeductionsPaid(){
+        try {
+            const result = await db.query('SELECT * FROM deducciones_pagadas;');
+            console.log('Resultado de getAllDeductions:', result);
+            return result && result.length > 0 ? result : [];
+        } catch (error) {
+            console.error('Error en getAllDeductions:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = new DeductionsModel();

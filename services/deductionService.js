@@ -24,5 +24,13 @@ class DeductionService {
             throw error;
         }
     }
+    async getAllDeductionsPaid() {
+        try {
+            return await DeductionsModel.getAllDeductionsPaid();
+        } catch (error) {
+            console.error('Error en getAllDeductionsPaid:', error);
+            throw error;
+        }
+    }
 }
 module.exports = new DeductionService();
