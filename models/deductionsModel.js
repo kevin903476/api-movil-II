@@ -38,8 +38,9 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
     }
 
     
-    async payMultipleDeductions(numero_tranferencia, comprobante, profesor_id, deducciones_ids) {
+    async payMultipleDeductions(deducciones) {
         try {
+            const { numero_tranferencia, comprobante, profesor_id, deducciones_ids } = deducciones;
             const result = await db.query('CALL sp_insertar_deducciones_pagadas(?, ?, ?, ?)', 
                 [numero_tranferencia, comprobante, profesor_id, deducciones_ids]);
             return result;

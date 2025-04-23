@@ -16,17 +16,13 @@ class DeductionService {
         return await DeductionsModel.getDeductionProfessor(profesor_id);
     }
 
-    async payMultipleDeductions(numero_tranferencia, comprobante, profesor_id, deducciones_ids) {
-        const deduccionesIdsString = Array.isArray(deducciones_ids) 
-            ? deducciones_ids.join(',') 
-            : deducciones_ids;
-            
-        return await DeductionsModel.payMultipleDeductions(
-            numero_tranferencia, 
-            comprobante, 
-            profesor_id, 
-            deduccionesIdsString
-        );
+    async payMultipleDeductions(deducciones) {
+        try {
+            return await DeductionsModel.payMultipleDeductions(deducciones);
+        } catch (error) {
+            console.error('Error en payMultipleDeductions:', error);
+            throw error;
+        }
     }
 }
 module.exports = new DeductionService();

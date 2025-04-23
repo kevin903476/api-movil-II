@@ -128,13 +128,14 @@ const payMultipleDeductions = async (req, res) => {
                 message: 'deducciones_ids debe ser un array o un string separado por comas'
             });
         }
+        const deducciones = {
+            profesor_id,
+            numero_tranferencia,
+            deducciones_ids: Array.isArray(deducciones_ids) ? deducciones_ids : deducciones_ids.split(',').map(id => id.trim()),
+            comprobante
+        };
+        const dataFrontend = await DeductionService.payMultipleDeductions(deducciones);
         
-       const dataFrontend =  await DeductionService.payMultipleDeductions(
-            numero_tranferencia, 
-            comprobante, 
-            profesor_id, 
-            deducciones_ids
-        );
         console.log('dataFrontend', dataFrontend);
         return res.status(200).json({
             success: true,
