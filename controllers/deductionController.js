@@ -129,12 +129,12 @@ const payMultipleDeductions = async (req, res) => {
             });
         }
         
-        await DeductionService.payMultipleDeductions({
+        await DeductionService.payMultipleDeductions(
             numero_tranferencia, 
             comprobante, 
             profesor_id, 
             deducciones_ids
-        });
+        );
         
         return res.status(200).json({
             success: true,
