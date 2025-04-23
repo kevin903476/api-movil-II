@@ -129,13 +129,13 @@ const payMultipleDeductions = async (req, res) => {
             });
         }
         
-        await DeductionService.payMultipleDeductions(
+       const dataFrontend =  await DeductionService.payMultipleDeductions(
             numero_tranferencia, 
             comprobante, 
             profesor_id, 
             deducciones_ids
         );
-        
+        console.log('dataFrontend', dataFrontend);
         return res.status(200).json({
             success: true,
             message: 'Pagos de deducciones registrados correctamente'
