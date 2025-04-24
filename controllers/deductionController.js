@@ -95,61 +95,66 @@ const getTotalNetInvoicesTeacher = async (req, res) => {
 
 const payMultipleDeductions = async (req, res) => {
     try {
-        let comprobante = null;
-    console.log('req.file', req.file);
-    console.log('req.body', req.body);
-
-    if (req.file && req.file.path) {
-      comprobante = req.file.path; // Actualiza la ruta de la foto si se ha subido una nueva
-    }
-        const { numero_tranferencia, deducciones_ids } = req.body;
-        
-        const profesor = await UserService.getProfesorByUserId(req.user.id);
-        
-        if (!profesor || !profesor.profesor_id) {
-            return res.status(404).json({
-                success: false,
-                message: 'Profesor no encontrado'
-            });
-        }
-        
-        const profesor_id = profesor.profesor_id;
-        
-        if (!numero_tranferencia || !deducciones_ids) {
-            return res.status(400).json({
-                success: false,
-                message: 'Faltan datos requeridos'
-            });
-        }
-        
-        if (!Array.isArray(deducciones_ids) && typeof deducciones_ids !== 'string') {
-            return res.status(400).json({
-                success: false,
-                message: 'deducciones_ids debe ser un array o un string separado por comas'
-            });
-        }
-        const deducciones = {
-            profesor_id,
-            numero_tranferencia,
-            deducciones_ids: Array.isArray(deducciones_ids) ? deducciones_ids : deducciones_ids.split(',').map(id => id.trim()),
-            comprobante
-        };
-        const dataFrontend = await DeductionService.payMultipleDeductions(deducciones);
-        
-        console.log('dataFrontend', dataFrontend);
-        return res.status(200).json({
-            success: true,
-            message: 'Pagos de deducciones registrados correctamente'
+      let comprobante = null;
+      console.log('req.file', req.file);
+      console.log('req.body', req.body);
+  
+      if (req.file && req.file.path) {
+        comprobante = req.file.path;
+      }
+  
+      const { numero_tranferencia, deducciones_ids } = req.body;
+  
+      const profesor = await UserService.getProfesorByUserId(req.user.id);
+      if (!profesor?.profesor_id) {
+        return res.status(404).json({
+          success: false,
+          message: 'Profesor no encontrado'
         });
+      }
+      const profesor_id = profesor.profesor_id;
+  
+      if (!numero_tranferencia || !deducciones_ids) {
+        return res.status(400).json({
+          success: false,
+          message: 'Faltan datos requeridos'
+        });
+      }
+      if (!Array.isArray(deducciones_ids) && typeof deducciones_ids !== 'string') {
+        return res.status(400).json({
+          success: false,
+          message: 'deducciones_ids debe ser un array o un string separado por comas'
+        });
+      }
+  
+      const idsArray = Array.isArray(deducciones_ids)
+        ? deducciones_ids
+        : deducciones_ids.split(',').map(id => id.trim());
+      const idsString = idsArray.join(',');
+  
+      const deducciones = {
+        profesor_id,
+        numero_tranferencia,
+        deducciones_ids: idsString,
+        comprobante
+      };
+  
+      await DeductionService.payMultipleDeductions(deducciones);
+  
+      return res.status(200).json({
+        success: true,
+        message: 'Pagos de deducciones registrados correctamente'
+      });
     } catch (error) {
-        console.error('Error al registrar pagos de deducciones:', error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error al registrar pagos de deducciones',
-            error: error.message
-        });
+      console.error('Error al registrar pagos de deducciones:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'Error al registrar pagos de deducciones',
+        error: error.message
+      });
     }
-}
+  };
+  
 
 const getDeductionProfessor = async (req, res) => {
     try {
