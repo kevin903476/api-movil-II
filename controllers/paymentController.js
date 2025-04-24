@@ -2,7 +2,7 @@
 const PaymentService = require('../services/paymentService');
 const UserService = require('../services/userService');
 
-const insertPaymentOfStudent = async (req, res) => {
+const updatePaymentOfStudent = async (req, res) => { //Realmente no inserta sino que actualiza el pago del estudiante
     try {
         let comprobante = null;
         console.log("req.file:", req.file);
@@ -32,7 +32,7 @@ const insertPaymentOfStudent = async (req, res) => {
             tipo_pago,
             cupon_id
         };
-        const paymentOfStudent = await PaymentService.insertPaymentofStudent(paymentStudent);
+        const paymentOfStudent = await PaymentService.updatePaymentOfStudent(paymentStudent);
         return res.status(201).json({
             success: true,
             message: 'Pago registrado correctamente',
@@ -191,7 +191,7 @@ const getPendingPaymentsStudentsTeacher = async (req, res) => {
 }
 
 module.exports = {
-    insertPaymentOfStudent,
+    updatePaymentOfStudent,
     confirmPaymentOfStudent,
     pendingPaymentsProfessor,
     pendingPaymentsStudent,

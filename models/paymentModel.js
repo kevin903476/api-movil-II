@@ -40,7 +40,7 @@ class PaymentModel {
     }
 
 
-    async insertPaymentofStudent(paymentStudent) {
+    async updatePaymentOfStudent(paymentStudent) { //Realmente no inserta sino que actualiza el pago del estudiante
         const { tutoria_id, profesor_id, estudiante_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id } = paymentStudent
         try {
             const result = await db.query(

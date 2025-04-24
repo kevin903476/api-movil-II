@@ -2,7 +2,7 @@ const PaymentModel = require('../models/paymentModel');
 
 class PaymentService {
 
-   async insertPaymentofStudent(paymentStudent) {
+   async updatePaymentOfStudent(paymentStudent) {//Realmente no inserta sino que actualiza el pago del estudiante
     try {
         return await PaymentModel.insertPaymentofStudent(paymentStudent);
     } catch (error) {

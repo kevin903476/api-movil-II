@@ -7,7 +7,7 @@ const auth = require('../middleware/auth');
 const checkRole = require('../middleware/checkRole');
 const { validatePaymentOfStudent } = require('../middleware/validator');
 
-router.post('/insertPaymentOfStudent',  auth, checkRole([1, 2]), upload.single('comprobante'), validatePaymentOfStudent, paymentController.insertPaymentOfStudent);
+router.put('/updatePaymentOfStudent',  auth, checkRole([1, 2]), upload.single('comprobante'), validatePaymentOfStudent, paymentController.updatePaymentOfStudent); //Realmente no inserta sino que actualiza el pago del estudiante
 router.post('/confirmPaymentOfStudent', auth, checkRole([1, 3]), paymentController.confirmPaymentOfStudent);
 
 router.get('/pendingPaymentsProfessor', auth, checkRole([1, 3]), paymentController.pendingPaymentsProfessor);
