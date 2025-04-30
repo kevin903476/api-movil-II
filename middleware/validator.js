@@ -29,8 +29,6 @@ exports.validateRegisterEstudiante = [
 ];
 
 exports.validatePaymentOfStudent = [
-    body('tutoria_id').isInt().withMessage('El ID de la tutoría debe ser un número entero'),
-    body('profesor_id').isInt().withMessage('El ID del profesor debe ser un número entero'),
     body('monto').isFloat({ gt: 0 }).withMessage('El monto debe ser un número mayor que 0'),
     body('tipo_pago').isString().withMessage('La modalidad debe ser una cadena de texto'),
 
