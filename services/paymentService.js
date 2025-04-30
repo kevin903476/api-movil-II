@@ -4,7 +4,7 @@ class PaymentService {
 
    async updatePaymentOfStudent(paymentStudent) {//Realmente no inserta sino que actualiza el pago del estudiante
     try {
-        return await PaymentModel.insertPaymentofStudent(paymentStudent);
+        return await PaymentModel.updatePaymentOfStudent(paymentStudent);
     } catch (error) {
         console.error('Error in insertPaymentofStudent service:', error);
         throw error;

@@ -11,7 +11,7 @@ const updatePaymentOfStudent = async (req, res) => { //Realmente no inserta sino
         if (req.file && req.file.path) {
             comprobante = req.file.path;
         }
-        const { tutoria_id, profesor_id, monto, num_transferencia, tipo_pago, cupon_id } = req.body;
+        const { pago_id, monto, num_transferencia, tipo_pago, cupon_id } = req.body;
         const estudiante = await UserService.getStudentByUserId(req.user.id);
         const estudiante_id = estudiante.estudiante_id;
 
@@ -23,9 +23,7 @@ const updatePaymentOfStudent = async (req, res) => { //Realmente no inserta sino
         }
 
         const paymentStudent = {
-            tutoria_id,
-            profesor_id,
-            estudiante_id,
+            pago_id,
             monto,
             comprobante,
             num_transferencia,

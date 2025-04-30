@@ -41,11 +41,11 @@ class PaymentModel {
 
 
     async updatePaymentOfStudent(paymentStudent) { //Realmente no inserta sino que actualiza el pago del estudiante
-        const { tutoria_id, profesor_id, estudiante_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id } = paymentStudent
+        const { pago_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id } = paymentStudent
         try {
             const result = await db.query(
                 'CALL sp_insertar_pago(?, ?, ?, ?, ?, ?, ?, ?)',
-                [tutoria_id, profesor_id, estudiante_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id]
+                [pago_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id]
             );
             return result;
         } catch (error) {
