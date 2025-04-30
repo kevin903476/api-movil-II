@@ -44,7 +44,7 @@ class PaymentModel {
         const { pago_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id } = paymentStudent
         try {
             const result = await db.query(
-                'CALL sp_insertar_pago(?, ?, ?, ?, ?, ?)',
+                'CALL sp_actualizar_pago(?, ?, ?, ?, ?, ?)',
                 [pago_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id]
             );
             return result;
