@@ -162,11 +162,37 @@ const getPendingTutorialProfessor = async (req, res) => {
       });
     }
   }
+
+
+  const cancelTutorial = async (req, res) => { 
+      try {
+          const { tutoria_id } = req.body;
+          const result = await TutorialsService.cancelTutorial(tutoria_id);
+          return res.status(200).json({
+              success: true,
+              message: 'Tutoria cancelada correctamente',
+              data: result
+          });
+  
+      } catch (error) {
+          console.error('Error al cancelar tutoria:', error);
+          return res.status(500).json({
+              success: false,
+              message: 'Error al cancelar tutoria',
+              error: error.message
+          });
+      }
+  }
+  
+
+
+
 module.exports = {
   getTutorials,
   scheduleTutoring,
   getScheduledTutorials,
   getTutorialsProfessorCourse,
-  getPendingTutorialProfessor
+  getPendingTutorialProfessor,
+  cancelTutorial
 
 }

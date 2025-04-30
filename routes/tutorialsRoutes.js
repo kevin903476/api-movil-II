@@ -12,6 +12,8 @@ router.post('/getTutorialsProfessorCourse', auth,checkRole([1,3]), tutorialsCont
 router.get('/getScheduledTutorials', auth,checkRole([1,2,3]), tutorialsController.getScheduledTutorials );
 router.post('/scheduleTutoring', auth, checkRole([1, 2]), tutorialsController.scheduleTutoring );
 
+router.get('/cancelTutorial', auth,checkRole([1,2,3]), tutorialsController.cancelTutorial );
+
 
 
 module.exports = router;

@@ -18,6 +18,9 @@ class TutorialsService {
     async getTutorialsProfessorCourse(porfesor_id, curso_id) {
         return await TutorialsModel.getTutorialsProfessorCourse(porfesor_id, curso_id);
     }
+    async cancelTutorial(tutoria_id) {
+        return await TutorialsModel.cancelTutorial(tutoria_id);
+    }
 
 
 }
