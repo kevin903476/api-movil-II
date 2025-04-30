@@ -174,12 +174,13 @@ const getPendingTutorialProfessor = async (req, res) => {
               data: result
           });
   
-      } catch (error) {
+        } catch (error) {
           console.error('Error al cancelar tutoria:', error);
-          return res.status(500).json({
+          return res.status(400).json({  
               success: false,
-              message: 'Error al cancelar tutoria',
-              error: error.message
+              message: error.message.includes('La tutoría no existe')
+                  ? 'La tutoría especificada no existe'
+                  : error.message
           });
       }
   }
