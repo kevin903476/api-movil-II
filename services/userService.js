@@ -17,7 +17,7 @@ class UserService {
     const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
     await UserRegisterModel.savePasswordResetToken(user.usuario_id, tokenHash, expires);
 
-    const resetUrl = `http://Frontend_de_los_Monos/reset-password?token=${token}`;
+    const resetUrl = `https://tutoflexpassword-production.up.railway.app/reset-password?token=${token}`;
     await sendMail(
       user.email,
       'Restablecer contraseña',
