@@ -59,12 +59,16 @@ class PaymentModel {
                 'CALL sp_procesar_factura_deduccion(?, ?)',
                 [pago_id, estado]
             );
-            return result;
+    
+            const mensaje = result?.[0]?.[0]?.mensaje || 'Sin mensaje devuelto desde SP';
+            return { mensaje };
+    
         } catch (error) {
             console.error('Error in confirmPayment:', error);
             throw error;
         }
     }
+    
     //esta ruta es para Detalles de Pago de Tutoría:
     async getPaymentDetails(profesor_id) {
         try {

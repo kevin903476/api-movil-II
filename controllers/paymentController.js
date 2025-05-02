@@ -125,14 +125,14 @@ const getPaymentsProfessor = async (req, res) => {
 };
 
 
-const confirmPaymentOfStudent = async (req, res) => { //acá el profesor confirma el pago del estudiante
+const confirmPaymentOfStudent = async (req, res) => {
     try {
         const { payment_id, estado } = req.body;
-        const paymentOfStudent = await PaymentService.confirmPaymentOfStudent(payment_id, estado);
+        const { mensaje } = await PaymentService.confirmPaymentOfStudent(payment_id, estado);
+
         return res.status(200).json({
             success: true,
-            message: 'Pago confirmado correctamente',
-            data: paymentOfStudent
+            message: mensaje
         });
 
     } catch (error) {
@@ -143,7 +143,8 @@ const confirmPaymentOfStudent = async (req, res) => { //acá el profesor confirm
             error: error.message
         });
     }
-}
+};
+
 
 const getPaymentDetails = async (req, res) => {
     try {
