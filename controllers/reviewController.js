@@ -69,7 +69,28 @@ const insertReview = async (req, res) => {
     }
 }
 
+const getReviewByProfesorId = async (req, res) => {
+    try {
+        const { profesor_id } = req.body;
+        const reviews = await ReviewService.getReviewByProfesorId(profesor_id);
+        
+        return res.status(200).json({
+            success: true,
+            message: 'Reseñas obtenidas correctamente',
+            data: reviews
+        });
+    } catch (error) {
+        console.error('Error al obtener reseñas:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener reseñas',
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     getTutorialFinishedReview,
-    insertReview
+    insertReview,
+    getReviewByProfesorId
 }
