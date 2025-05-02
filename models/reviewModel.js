@@ -28,8 +28,8 @@ class ReviewModel {
 
     async getReviewByProfesorId(profesorId) {
         try {
-            const result = await db.query('SELECT * FROM vista_resenas_profesor WHERE profesor_id = ?', [profesorId]);
-            const reviews = result;
+            const result = await db.query('CALL sp_obtener_resenas_profesor_json(?)', [profesorId]);
+            const reviews = result[0];
             console.log('Resultado de la consulta:', reviews);
             return reviews;
         } catch (error) {
