@@ -25,5 +25,17 @@ class ReviewModel {
             throw error;
         }
     }
+
+    async getReviewByProfesorId(profesorId) {
+        try {
+            const result = await db.query('SELECT * FROM vista_resenas_profesor WHERE profesor_id = ?', [profesorId]);
+            const reviews = result;
+            console.log('Resultado de la consulta:', reviews);
+            return reviews;
+        } catch (error) {
+            console.error('Error al obtener reseñas del profesor:', error);
+            throw error;
+        }
+    }
 }
 module.exports = new ReviewModel();

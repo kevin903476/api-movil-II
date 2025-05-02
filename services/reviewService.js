@@ -8,6 +8,9 @@ class ReviewService {
     async insertReview(review) {
         return await ReviewModel.insertReview(review);
     }
+    async getReviewByProfesorId(profesorId) {
+        return await ReviewModel.getReviewByProfesorId(profesorId);
+    }
 }
 
 module.exports = new ReviewService();
