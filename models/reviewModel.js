@@ -27,8 +27,6 @@ class ReviewModel {
     }
 
     async getReviewByProfesorId(profesorId) {
-        if (!profesorId) throw new Error('El ID del profesor es requerido');
-
         try {
             const result = await db.query('CALL sp_obtener_resenas_profesor_json(?)', [profesorId]);
             const reviews = result[0];
