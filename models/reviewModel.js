@@ -14,11 +14,11 @@ class ReviewModel {
             throw error;
         }
     }
-    async insertReview(review){
+    async insertReview(review) {
         try {
             const { tutoria_id, estudiante_id, profesor_id, estrellas, comentario } = review;
-            const result = await db.query('CALL sp_insertar_resena(?, ?, ?, ?, ?)',     
-            [tutoria_id, estudiante_id, profesor_id, estrellas, comentario]);
+            const result = await db.query('CALL sp_insertar_resena(?, ?, ?, ?, ?)',
+                [tutoria_id, estudiante_id, profesor_id, estrellas, comentario]);
             return result;
         } catch (error) {
             console.error('Error al insertar reseña:', error);
@@ -27,6 +27,8 @@ class ReviewModel {
     }
 
     async getReviewByProfesorId(profesorId) {
+        if (!profesorId) throw new Error('El ID del profesor es requerido');
+
         try {
             const result = await db.query('CALL sp_obtener_resenas_profesor_json(?)', [profesorId]);
             const reviews = result[0];

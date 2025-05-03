@@ -7,7 +7,7 @@ const checkRole = require('../middleware/checkRole');
 
 router.get('/reviewTutorialFinished', auth, checkRole([2]), reviewController.getTutorialFinishedReview);
 router.post('/insertReview', auth, checkRole([2]), reviewController.insertReview);
-router.get('/getReviewByProfesorId', auth, checkRole([1,2,3]), reviewController.getReviewByProfesorId);
+router.get('/getReviewByProfesorId/:profesorId', auth, checkRole([1, 2, 3]), reviewController.getReviewByProfesorId);
 
 
 module.exports = router;
