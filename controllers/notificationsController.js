@@ -1,6 +1,8 @@
 const NotificationService = require('../services/notificationsService');
 const registerPushToken = async (req, res) => {
   try {
+    console.log('Registering push token...');
+    console.log('Request body Push notifications:', req.body);
     const usuario_id = req.user.id; 
     const {token, plataforma } = req.body;
     
