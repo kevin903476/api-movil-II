@@ -23,7 +23,7 @@ const registerPushToken = async (req, res) => {
     console.error('Error al registrar token:', error);
     return res.status(500).json({
       success: false,
-      message: 'Error al registrar token de notificación'
+      message:error.message
     });
   }
 };
