@@ -1,8 +1,8 @@
 const NotificationService = require('../services/notificationsService');
-
 const registerPushToken = async (req, res) => {
   try {
-    const { usuario_id, token, plataforma } = req.body;
+    const usuario_id = req.user.id; 
+    const {token, plataforma } = req.body;
     
     if (!usuario_id || !token || !plataforma) {
       return res.status(400).json({
@@ -28,7 +28,8 @@ const registerPushToken = async (req, res) => {
 
 const sendNotification = async (req, res) => {
   try {
-    const { usuario_id, titulo, mensaje, datos } = req.body;
+    const usuario_id = req.user.id;
+    const { titulo, mensaje, datos } = req.body;
     
     if (!usuario_id || !titulo || !mensaje) {
       return res.status(400).json({
