@@ -1,5 +1,6 @@
 //@ts-check
 const TutorialsService = require('../services/tutorialsService');
+const NotificationService = require('../services/notificationsService');
 
 const UserService = require('../services/userService');
 
@@ -70,15 +71,15 @@ const getScheduledTutorials = async (req, res) => {
   }
 }
 
-const scheduleTutoring = async (req, res) => {
-  console.log("Datos recibidos del tutoria_profesor", req.body);
-  try {
 
+const scheduleTutoring = async (req, res) => {
+  console.log("Datos recibidos de scheduleTutoring:", req.body);
+  try {
     const { profesor_id, curso_id, fecha, hora_inicio, hora_fin, temas } = req.body;
 
+    // 1) Obtenemos el estudiante a partir del JWT
     const estudiante = await UserService.getStudentByUserId(req.user.id);
-    const estudiante_id = estudiante.estudiante_id;
-
+    const estudiante_id = estudiante?.estudiante_id;
     if (!estudiante_id) {
       return res.status(404).json({
         success: false,
@@ -86,6 +87,8 @@ const scheduleTutoring = async (req, res) => {
       });
     }
 
+    // 2) Creamos la tutoría en la base de datos
+    //    Se asume que devuelve un objeto { mensaje, tutoria_id }
     const result = await TutorialsService.scheduleTutoring({
       profesor_id,
       estudiante_id,
@@ -95,20 +98,34 @@ const scheduleTutoring = async (req, res) => {
       hora_fin,
       temas
     });
+    const { mensaje, tutoria_id } = result;
 
+    // 3) Disparamos la notificación al profesor
+    const titulo = '🎓 Nueva tutoría agendada';
+    const cuerpo = `El estudiante ${estudiante_id} agendó una tutoría para el ${fecha} a las ${hora_inicio}.`;
+    NotificationService
+      .sendNotificationToUser(
+        profesor_id,
+        titulo,
+        cuerpo,
+        { tutoria_id, curso_id }
+      )
+      .catch(err => console.error('Error enviando push al profesor:', err));
+
+    // 4) Respondemos
     return res.status(201).json({
       success: true,
-      message: 'Tutoria_profesor registrado correctamente',
-      data: result
+      message: mensaje,
+      data: { tutoria_id }
     });
+
   } catch (error) {
-    console.error('Error al registrar tutoria_profesor:', error);
+    console.error('Error al registrar tutoría:', error);
     return res.status(500).json({
       success: false,
-      message: error.sqlMessage || error.message || 'Error al registrar tutoria_profesor'
+      message: error.sqlMessage || error.message || 'Error al registrar tutoría'
     });
   }
-  
 };
 
 const getPendingTutorialProfessor = async (req, res) => {
