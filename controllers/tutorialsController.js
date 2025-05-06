@@ -91,33 +91,36 @@ const scheduleTutoring = async (req, res) => {
       fecha,
       hora_inicio,
       hora_fin,
-      temas
+      temas,
     });
 
-    // 3) Obtener el usuario del profesor y enviar notificación
-    const usuarioProfesorId = await UserService.getProfesorByUserId(profesor_id);
+    // 3) Obtener el usuario asociado al profesor
+    const usuarioProfesorId = await UserService.getUserIdByProfesorId(profesor_id);
+    if (!usuarioProfesorId) {
+      console.warn(`No se encontró usuario para profesor_id=${profesor_id}`);
+    } else {
+      // 4) Enviar notificación
+      const titulo = '🎓 Nueva tutoría agendada';
+      const cuerpo = `El estudiante ${estudiante.nombre} ${estudiante.apellido} agendó una tutoría para el ${fecha} a las ${hora_inicio}.`;
+      await NotificationService.sendNotificationToUser(
+        usuarioProfesorId,
+        titulo,
+        cuerpo,
+        { tutoria_id, curso_id }
+      );
+    }
 
-    const titulo = '🎓 Nueva tutoría agendada';
-    const cuerpo = `El estudiante ${estudiante.nombre} ${estudiante.apellido} agendó una tutoría para el ${fecha} a las ${hora_inicio}.`;
-    await NotificationService.sendNotificationToUser(
-      usuarioProfesorId,
-      titulo,
-      cuerpo,
-      { tutoria_id, curso_id }
-    );
-
-    // 4) Responder al cliente
+    // 5) Responder al cliente
     return res.status(201).json({
       success: true,
       message: mensaje,
-      data: { tutoria_id }
+      data: { tutoria_id },
     });
-
   } catch (error) {
     console.error('Error al registrar tutoría:', error);
     return res.status(500).json({
       success: false,
-      message: error.message || 'Error al registrar tutoría'
+      message: error.message || 'Error al registrar tutoría',
     });
   }
 };
@@ -126,8 +129,8 @@ const scheduleTutoring = async (req, res) => {
 const getPendingTutorialProfessor = async (req, res) => {
   try {
 
-    const {profesor_id, curso_id, fecha } = req.body;
- 
+    const { profesor_id, curso_id, fecha } = req.body;
+
 
     const result = await TutorialsService.getPendingTutorialProfessor(profesor_id, curso_id, fecha);
 
@@ -144,59 +147,59 @@ const getPendingTutorialProfessor = async (req, res) => {
     });
   }
 }
-  const getTutorialsProfessorCourse = async (req, res) => {
-    try {
-  
-      const {curso_id} = req.body;
+const getTutorialsProfessorCourse = async (req, res) => {
+  try {
 
-      const profesor = await UserService.getProfesorByUserId(req.user.id);
-        const profesor_id = profesor.profesor_id;
+    const { curso_id } = req.body;
 
-        if (!profesor_id) {
-            return res.status(404).json({
-                success: false,
-                message: 'Profesor no encontrado'
-            });
-        }
+    const profesor = await UserService.getProfesorByUserId(req.user.id);
+    const profesor_id = profesor.profesor_id;
 
-      const result = await TutorialsService.getTutorialsProfessorCourse(profesor_id, curso_id);
-  
-      return res.status(201).json({
-        success: true,
-        message: 'Curso del profesor obtenidos correctamente',
-        data: result
-      });
-    } catch (error) {
-      console.error('Error al obtener curso del profesor:', error);
-      return res.status(500).json({
+    if (!profesor_id) {
+      return res.status(404).json({
         success: false,
-        message: 'Error al obtener curso del profesor'
+        message: 'Profesor no encontrado'
       });
     }
+
+    const result = await TutorialsService.getTutorialsProfessorCourse(profesor_id, curso_id);
+
+    return res.status(201).json({
+      success: true,
+      message: 'Curso del profesor obtenidos correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al obtener curso del profesor:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al obtener curso del profesor'
+    });
   }
+}
 
 
-  const cancelTutorial = async (req, res) => { 
-      try {
-          const { tutoria_id } = req.body;
-          const result = await TutorialsService.cancelTutorial(tutoria_id);
-          return res.status(200).json({
-              success: true,
-              message: 'Tutoria cancelada correctamente',
-              data: result
-          });
-  
-        } catch (error) {
-          console.error('Error al cancelar tutoria:', error);
-          return res.status(400).json({  
-              success: false,
-              message: error.message.includes('La tutoría no existe')
-                  ? 'La tutoría especificada no existe'
-                  : error.message
-          });
-      }
+const cancelTutorial = async (req, res) => {
+  try {
+    const { tutoria_id } = req.body;
+    const result = await TutorialsService.cancelTutorial(tutoria_id);
+    return res.status(200).json({
+      success: true,
+      message: 'Tutoria cancelada correctamente',
+      data: result
+    });
+
+  } catch (error) {
+    console.error('Error al cancelar tutoria:', error);
+    return res.status(400).json({
+      success: false,
+      message: error.message.includes('La tutoría no existe')
+        ? 'La tutoría especificada no existe'
+        : error.message
+    });
   }
-  
+}
+
 
 
 
