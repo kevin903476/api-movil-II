@@ -77,42 +77,34 @@ const scheduleTutoring = async (req, res) => {
   try {
     const { profesor_id, curso_id, fecha, hora_inicio, hora_fin, temas } = req.body;
 
-    // 1) Obtenemos el estudiante a partir del JWT
+    // 1) Estudiante desde el JWT
     const estudiante = await UserService.getStudentByUserId(req.user.id);
-    const estudiante_id = estudiante?.estudiante_id;
-    if (!estudiante_id) {
-      return res.status(404).json({
-        success: false,
-        message: 'Estudiante no encontrado'
-      });
+    if (!estudiante?.estudiante_id) {
+      return res.status(404).json({ success: false, message: 'Estudiante no encontrado' });
     }
 
-    // 2) Creamos la tutoría en la base de datos
-    //    Se asume que devuelve un objeto { mensaje, tutoria_id }
-    const result = await TutorialsService.scheduleTutoring({
+    // 2) Crear tutoría
+    const { mensaje, tutoria_id } = await TutorialsService.scheduleTutoring({
       profesor_id,
-      estudiante_id,
+      estudiante_id: estudiante.estudiante_id,
       curso_id,
       fecha,
       hora_inicio,
       hora_fin,
       temas
     });
-    const { mensaje, tutoria_id } = result;
 
-    // 3) Disparamos la notificación al profesor
+    // 3) Enviar notificación
     const titulo = '🎓 Nueva tutoría agendada';
-    const cuerpo = `El estudiante ${estudiante_id} agendó una tutoría para el ${fecha} a las ${hora_inicio}.`;
-    NotificationService
-      .sendNotificationToUser(
-        profesor_id,
-        titulo,
-        cuerpo,
-        { tutoria_id, curso_id }
-      )
-      .catch(err => console.error('Error enviando push al profesor:', err));
+    const cuerpo = `El estudiante ${estudiante.nombre} ${estudiante.apellido} agendó una tutoría para el ${fecha} a las ${hora_inicio}.`;
+    await NotificationService.sendNotificationToUser(
+      profesor_id,
+      titulo,
+      cuerpo,
+      { tutoria_id, curso_id }
+    );
 
-    // 4) Respondemos
+    // 4) Responder al cliente
     return res.status(201).json({
       success: true,
       message: mensaje,
@@ -127,6 +119,7 @@ const scheduleTutoring = async (req, res) => {
     });
   }
 };
+
 
 const getPendingTutorialProfessor = async (req, res) => {
   try {
