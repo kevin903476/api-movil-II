@@ -206,21 +206,17 @@ class UserRegisterModel {
       throw error;
     }
   }
+5
   async getUserIdByProfesorId(profesor_id) {
     try {
-      // Consulta directa al usuario asociado al profesor
-      const [rows] = await db.query(
-        'SELECT usuario_id FROM profesores WHERE profesor_id = ?',
-        [profesor_id]
-      );
-      console.log('Resultado de getUserIdByProfesorId:', rows);
-      if (rows.length > 0) {
-        // Devolver solo el valor numérico
-        return rows[0].usuario_id;
+      const result = await db.query('CALL ObtenerUsuarioIdPorProfesorId(?)', [profesor_id]);
+      console.log('Resultado de getUserIdByProfesorId:', result);
+      if (result[0] && result[0].length > 0) {
+        return result[0][0]; // Devuelve el primer registro
       }
-      return null; // No se encontró información
+      return null;
     } catch (error) {
-      console.error('Error in getUserIdByProfesorId:', error);
+      console.error('Error en getUserIdByProfesorId:', error);
       throw error;
     }
   }
