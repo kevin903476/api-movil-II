@@ -74,6 +74,7 @@ const getScheduledTutorials = async (req, res) => {
 
 const scheduleTutoring = async (req, res) => {
   try {
+    console.log('Lo que llega al scheduleTutoring:', req.body);
     const { profesor_id, curso_id, fecha, hora_inicio, hora_fin, temas } = req.body;
 
     // 1) Estudiante desde el JWT
