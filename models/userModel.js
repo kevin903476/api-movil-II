@@ -206,13 +206,19 @@ class UserRegisterModel {
       throw error;
     }
   }
-5
+  5
   async getUserIdByProfesorId(profesor_id) {
     try {
-      const result = await db.query('CALL ObtenerUsuarioIdPorProfesorId(?)', [profesor_id]);
-      console.log('Resultado de getUserIdByProfesorId:', result);
-      if (result[0] && result[0].length > 0) {
-        return result[0][0]; // Devuelve el primer registro
+      // Al llamar un SP, mysql2 devuelve un array [rows, fields]
+      const [rows] = await db.query(
+        'CALL ObtenerUsuarioIdPorProfesorId(?)',
+        [profesor_id]
+      );
+      console.log('Resultado de getUserIdByProfesorId:', rows);
+
+      if (rows.length > 0) {
+        // Devuelve el valor numérico directamente
+        return rows[0].usuario_id;
       }
       return null;
     } catch (error) {
