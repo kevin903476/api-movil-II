@@ -73,7 +73,6 @@ const getScheduledTutorials = async (req, res) => {
 
 
 const scheduleTutoring = async (req, res) => {
-  console.log("Datos recibidos de scheduleTutoring:", req.body);
   try {
     const { profesor_id, curso_id, fecha, hora_inicio, hora_fin, temas } = req.body;
 
@@ -94,11 +93,13 @@ const scheduleTutoring = async (req, res) => {
       temas
     });
 
-    // 3) Enviar notificación
+    // 3) Obtener el usuario del profesor y enviar notificación
+    const usuarioProfesorId = await UserService.getProfesorByUserId(profesor_id);
+
     const titulo = '🎓 Nueva tutoría agendada';
     const cuerpo = `El estudiante ${estudiante.nombre} ${estudiante.apellido} agendó una tutoría para el ${fecha} a las ${hora_inicio}.`;
     await NotificationService.sendNotificationToUser(
-      profesor_id,
+      usuarioProfesorId,
       titulo,
       cuerpo,
       { tutoria_id, curso_id }
@@ -115,7 +116,7 @@ const scheduleTutoring = async (req, res) => {
     console.error('Error al registrar tutoría:', error);
     return res.status(500).json({
       success: false,
-      message: error.sqlMessage || error.message || 'Error al registrar tutoría'
+      message: error.message || 'Error al registrar tutoría'
     });
   }
 };

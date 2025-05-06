@@ -86,6 +86,9 @@ class UserService {
   async getProfilesProfesors() {
     return await UserRegisterModel.getProfilesProfesors();
   }
+  async getUserIdByProfesorId(profesor_id) {
+    return await UserRegisterModel.getUserIdByProfesorId(profesor_id);
+  }
 }
 
 module.exports = new UserService();

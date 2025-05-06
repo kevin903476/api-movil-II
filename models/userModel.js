@@ -54,9 +54,9 @@ class UserRegisterModel {
     );
   }
 
-async updatePassword(usuario_id, hashedPassword) {
-  return db.query('CALL sp_update_password(?, ?)', [usuario_id, hashedPassword]);
-}
+  async updatePassword(usuario_id, hashedPassword) {
+    return db.query('CALL sp_update_password(?, ?)', [usuario_id, hashedPassword]);
+  }
 
   async getStudentByUserId(usuario_id) {
     try {
@@ -207,6 +207,23 @@ async updatePassword(usuario_id, hashedPassword) {
     }
   }
 
+  async getUserIdByProfesorId(profesor_id) {
+    try {
+      //hacer consulta directa
+      const result = await db.query('SELECT usuario_id FROM profesores WHERE profesor_id = ?', [profesor_id]);
+      console.log('Resultado de getUserIdByProfesorId:', result);
+      if (result[0] && result[0].length > 0) {
+        return result[0][0].usuario_id; // Devuelve el primer registro
+      }
+      return null; // No se encontró información
+
+    } catch (error) {
+      console.error('Error in getUserIdByProfesorId:', error);
+      throw error;
+    }
+
+
+  }
 }
 
 module.exports = new UserRegisterModel();
