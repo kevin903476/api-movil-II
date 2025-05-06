@@ -213,7 +213,7 @@ class UserRegisterModel {
       const result = await db.query('SELECT usuario_id FROM profesores WHERE profesor_id = ?', [profesor_id]);
       console.log('Resultado de getUserIdByProfesorId:', result);
       if (result[0] && result[0].length > 0) {
-        return result[0][0].usuario_id; // Devuelve el primer registro
+        return result[0][0]
       }
       return null; // No se encontró información
 
