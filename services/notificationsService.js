@@ -23,15 +23,12 @@ class NotificationService {
 
       // Preparar mensajes
       let messages = [];
-      for (let tokenObj of tokens) {
-        const pushToken = tokenObj.token;
-        
+      for (let pushToken of tokens) {
         if (!Expo.isExpoPushToken(pushToken)) {
           console.error(`Token inválido: ${pushToken}`);
           await PushTokenModel.deactivateToken(pushToken);
           continue;
         }
-        
         messages.push({
           to: pushToken,
           sound: 'default',
@@ -40,7 +37,6 @@ class NotificationService {
           data: { ...datos, usuario_id }
         });
       }
-
       if (messages.length === 0) {
         return { success: false, message: 'No hay tokens válidos para enviar notificaciones' };
       }
@@ -48,7 +44,7 @@ class NotificationService {
       // Enviar notificaciones
       let chunks = this.expo.chunkPushNotifications(messages);
       let tickets = [];
-      
+
       for (let chunk of chunks) {
         try {
           let ticketChunk = await this.expo.sendPushNotificationsAsync(chunk);
@@ -57,7 +53,7 @@ class NotificationService {
           console.error('Error al enviar notificaciones:', error);
         }
       }
-      
+
       return { success: true, tickets };
     } catch (error) {
       console.error('Error en sendNotificationToUser:', error);
