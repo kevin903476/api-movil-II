@@ -5,7 +5,10 @@ const UserService = require('../services/userService');
 
 const getCourses = async (req, res) => {
   try {
-    const courses = await CoursesService.getCourses();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+    const courses = await CoursesService.getCourses({limit, offset});
     console.log('Cursos obtenidos:', courses);
     return res.status(200).json({
       success: true,

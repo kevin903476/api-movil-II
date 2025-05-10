@@ -3,9 +3,15 @@ const DbService = require('../config/database');
 const db = DbService.getDbServiceInstance();
 
 class CoursesModel {
-    async getCourses() {
+    async getCourses({ limit, offset }) {
         try {
-            const result = await db.query('SELECT * FROM vista_cursos WHERE estado="activo";');
+            // Consulta con paginación usando LIMIT y OFFSET estos podrían ser 
+            //no tan optimizados en una base de datos grande (revisar en un futuro)
+            // pero para una base de datos pequeña o mediana deberían funcionar bien
+            const result = await db.query(
+                'SELECT * FROM vista_cursos WHERE estado="activo" LIMIT ? OFFSET ?;',
+                [limit, offset]
+            );
             const cursos = result;
             console.log('Resultado de la consulta:', cursos);
             return cursos;
@@ -141,7 +147,7 @@ class CoursesModel {
             throw error;
         }
     }
-    
+
 };
 
 module.exports = new CoursesModel();
