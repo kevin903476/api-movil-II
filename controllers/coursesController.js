@@ -6,7 +6,8 @@ const UserService = require('../services/userService');
 const getCourses = async (req, res) => {
   try {
     const { limit, offset } = req.pagination;
-    const courses = await CoursesService.getCourses({limit, offset});
+    const { keyword, clasificacion_id } = req.query;
+    const courses = await CoursesService.getCourses({limit, offset, keyword, clasificacion_id});
     console.log('Cursos obtenidos:', courses);
     return res.status(200).json({
       success: true,

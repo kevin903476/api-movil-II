@@ -2,8 +2,8 @@
 const CoursesModel = require('../models/coursesModel');
 
 class CoursesService {
-    async getCourses({ limit, offset }) {
-        return await CoursesModel.getCourses({ limit, offset });
+    async getCourses({ limit, offset, keyword, clasificacion_id }) {
+        return await CoursesModel.getCourses({ limit, offset, keyword, clasificacion_id });
     }
     async getCoursesProfessor(profesor_id) {
         return await CoursesModel.getCoursesProfessor(profesor_id);

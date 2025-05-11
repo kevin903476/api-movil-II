@@ -3,23 +3,36 @@ const DbService = require('../config/database');
 const db = DbService.getDbServiceInstance();
 
 class CoursesModel {
-    async getCourses({ limit, offset }) {
+    /* Esta consulta es optima si y solo si la bd es pequeña o mediana,
+    ya que si la bd es grande, se recomienda hacer un WHERE ID > ? ORDER BY ID LIMIT ? OFFSET ?,
+    ya que de lo contrario, la consulta se vuelve lenta y pesada. */
+    async getCourses({ limit, offset, keyword, clasificacion_id }) {
         try {
-            // Consulta con paginación usando LIMIT y OFFSET estos podrían ser 
-            //no tan optimizados en una base de datos grande (revisar en un futuro)
-            // pero para una base de datos pequeña o mediana deberían funcionar bien
-            const result = await db.query(
-                'SELECT * FROM vista_cursos WHERE estado="activo" LIMIT ? OFFSET ?;',
-                [limit, offset]
-            );
-            const cursos = result;
-            console.log('Resultado de la consulta:', cursos);
-            return cursos;
+            let query = 'SELECT * FROM vista_cursos WHERE estado = "activo"';
+            const params = [];
+
+            if (keyword && keyword.trim() !== '') {
+                query += ' AND nombre_curso LIKE ?';
+                params.push(`%${keyword}%`);
+            }
+
+            if (clasificacion_id) {
+                query += ' AND clasificacion_id = ?';
+                params.push(clasificacion_id);
+            }
+
+            query += ' LIMIT ? OFFSET ?';
+            params.push(limit, offset);
+
+            const result = await db.query(query, params);
+            console.log('Resultado de la consulta:', result);
+            return result;
         } catch (error) {
             console.error('Error al obtener cursos:', error);
             throw error;
         }
     }
+
     async getCoursesProfessor(profesor_id) {
         try {
             const result = await db.query('SELECT * FROM railway.vista_cursos_profesor WHERE profesor_id = ?', [profesor_id]);
