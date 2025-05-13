@@ -2,8 +2,8 @@
 const TutorialsModel= require('../models/tutorialsModel');
 
 class TutorialsService {
-    async getTutorials({ limit, offset, keyword, clasificacion }) {
-        return await TutorialsModel.getTutorials({ limit, offset, keyword, clasificacion });
+    async getTutorials({ limit, offset, keyword, clasificacion, modalidad, pais, carrera, universidad }) {
+        return await TutorialsModel.getTutorials({ limit, offset, keyword, clasificacion, modalidad, pais, carrera, universidad });
     }
     async getPendingTutorialProfessor(profesor_id, curso_id, fecha) {
         return await TutorialsModel.getPendingTutorialProfessor(profesor_id, curso_id, fecha);

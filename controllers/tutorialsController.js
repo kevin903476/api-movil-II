@@ -20,9 +20,9 @@ function parseHorariosToArray(horariosString) {
 }
 const getTutorials = async (req, res) => {
   try {
-     const { limit, offset } = req.pagination;
-    const { keyword, clasificacion  } = req.query;
-    const tutorias = await TutorialsService.getTutorials({ limit, offset, keyword, clasificacion });
+    const { limit, offset } = req.pagination;
+    const { keyword, clasificacion, modalidad, pais, carrera, universidad } = req.query;
+    const tutorias = await TutorialsService.getTutorials({ limit, offset, keyword, clasificacion, modalidad, pais, carrera, universidad });
 
     // Convertir los horarios de string a array en cada tutoría
     const tutoriasFormateadas = tutorias.map(tutoria => {
