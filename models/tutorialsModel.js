@@ -16,7 +16,7 @@ class TutorialsModel {
         whereAdded = true;
       }
       if (clasificacion) {
-        query += whereAdded ? ' AND clasificacion = ?' : ' WHERE clasificacion_curso = ?';
+        query += whereAdded ? ' AND clasificacion_curso = ?' : ' WHERE clasificacion_curso = ?';
         params.push(clasificacion);
         whereAdded = true;
       }
