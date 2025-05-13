@@ -22,10 +22,10 @@ const getTutorials = async (req, res) => {
   try {
     const { limit, offset } = req.pagination;
     const { keyword, clasificacion, modalidad, pais, carrera, universidad } = req.query;
-    const tutorias = await TutorialsService.getTutorials({ limit, offset, keyword, clasificacion, modalidad, pais, carrera, universidad });
+    const result = await TutorialsService.getTutorials({ limit, offset, keyword, clasificacion, modalidad, pais, carrera, universidad });
 
-    // Asegura que tutorias sea un array antes de usar map
-    const tutoriasArray = Array.isArray(tutorias) ? tutorias : [];
+    // Asegura que result.rows sea un array antes de usar map
+    const tutoriasArray = Array.isArray(result.rows) ? result.rows : [];
 
     // Convertir los horarios de string a array en cada tutoría
     const tutoriasFormateadas = tutoriasArray.map(tutoria => {
@@ -40,7 +40,8 @@ const getTutorials = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: 'Tutorias del profesor obtenidos correctamente',
-      data: tutoriasFormateadas
+      data: tutoriasFormateadas,
+      total: result.total // <-- Aquí devuelves el total
     });
   } catch (error) {
     console.error('Error al obtener Tutorias del profesor:', error);

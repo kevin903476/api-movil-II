@@ -15,11 +15,10 @@ class TutorialsModel {
     universidad
   }) {
     try {
-      let sql = 'SELECT * FROM vista_cursos_profesor';
+      // 1) Montar dinámicamente WHERE y sus parámetros
+      const whereClauses = [];
       const params = [];
-      const where = [];
 
-      // 1) Búsqueda por keyword en curso, profesor y horarios (usando LIKE)
       if (keyword?.trim()) {
         const terms = keyword
           .split(',')
@@ -27,7 +26,7 @@ class TutorialsModel {
           .filter(Boolean);
 
         terms.forEach(term => {
-          where.push(`(
+          whereClauses.push(`(
           curso    LIKE ?
           OR profesor LIKE ?
           OR horarios LIKE ?
@@ -36,41 +35,47 @@ class TutorialsModel {
           params.push(like, like, like);
         });
       }
-
-      // 2) Filtros exactos
       if (clasificacion) {
-        where.push('clasificacion_curso = ?');
+        whereClauses.push('clasificacion_curso = ?');
         params.push(clasificacion);
       }
       if (modalidad) {
-        where.push('modalidad = ?');
+        whereClauses.push('modalidad = ?');
         params.push(modalidad);
       }
       if (pais) {
-        where.push('pais = ?');
+        whereClauses.push('pais = ?');
         params.push(pais);
       }
       if (carrera) {
-        where.push('carrera = ?');
+        whereClauses.push('carrera = ?');
         params.push(carrera);
       }
       if (universidad) {
-        where.push('universidad = ?');
+        whereClauses.push('universidad = ?');
         params.push(universidad);
       }
 
-      // 3) Construir WHERE si hay condiciones
-      if (where.length) {
-        sql += ' WHERE ' + where.join(' AND ');
-      }
+      const whereSQL = whereClauses.length
+        ? ' WHERE ' + whereClauses.join(' AND ')
+        : '';
 
-      // 4) Ordenar y paginar
-      sql += ' ORDER BY curso_profesor_id DESC LIMIT ? OFFSET ?';
-      params.push(limit, offset);
+      // 2) Consulta de total
+      const countSQL = `SELECT COUNT(*) AS total FROM vista_cursos_profesor${whereSQL}`;
+      const [countRows] = await db.query(countSQL, params);
+      const total = countRows[0].total;
 
-      // 5) Ejecutar consulta
-      const rows = await db.query(sql, params);
-      return rows;
+      // 3) Consulta de datos paginados
+      const dataSQL = `
+      SELECT *
+        FROM vista_cursos_profesor
+        ${whereSQL}
+      ORDER BY curso_profesor_id DESC
+      LIMIT ? OFFSET ?
+    `;
+      const dataParams = [...params, limit, offset];
+      const rows = await db.query(dataSQL, dataParams);
+      return { rows, total };
     } catch (err) {
       console.error('Error en getTutorials:', err);
       throw err;
