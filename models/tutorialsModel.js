@@ -69,7 +69,7 @@ class TutorialsModel {
       params.push(limit, offset);
 
       // 5) Ejecutar consulta
-      const [rows] = await db.query(sql, params);
+      const rows = await db.query(sql, params);
       return rows;
     } catch (err) {
       console.error('Error en getTutorials:', err);
