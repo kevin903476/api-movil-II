@@ -4,12 +4,24 @@ const db = DbService.getDbServiceInstance();
 
 class TutorialsModel {
 
-    async getTutorials() {
+    async getTutorials({ limit, offset, keyword, clasificacion }) {
         try {
-            const result = await db.query('SELECT * FROM vista_cursos_profesor');
-            const cursos = result;
-            console.log('Resultado de la consulta:', cursos);
-            return cursos;
+           let query = 'SELECT * FROM vista_cursos_profesor'
+           const params = [];
+           if (keyword && keyword.trim() !== '') {
+                query += ' AND curso LIKE ?';
+                params.push(`%${keyword}%`);
+            }
+            if (clasificacion){
+                query += ' AND clasificacion = ?';
+                params.push(clasificacion);
+            }
+            query += ' LIMIT ? OFFSET ?';
+            params.push(limit, offset);
+            const result = await db.query(query, params);
+            console.log('Resultado de la consulta:', result);
+            return result;
+            
         } catch (error) {
             console.error('Error al obtener cursos_profesor disponibles:', error);
             throw error;
