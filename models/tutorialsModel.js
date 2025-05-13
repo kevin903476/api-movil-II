@@ -63,7 +63,10 @@ class TutorialsModel {
       // 2) Consulta de total
       const countSQL = `SELECT COUNT(*) AS total FROM vista_cursos_profesor${whereSQL}`;
       const [countRows] = await db.query(countSQL, params);
-      const total = countRows[0].total;
+      // Validar que countRows sea un array y tenga al menos un elemento
+      const total = (Array.isArray(countRows) && countRows.length > 0 && countRows[0].total !== undefined)
+        ? countRows[0].total
+        : 0;
 
       // 3) Consulta de datos paginados
       const dataSQL = `
