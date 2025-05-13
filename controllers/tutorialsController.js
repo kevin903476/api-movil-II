@@ -24,8 +24,11 @@ const getTutorials = async (req, res) => {
     const { keyword, clasificacion, modalidad, pais, carrera, universidad } = req.query;
     const tutorias = await TutorialsService.getTutorials({ limit, offset, keyword, clasificacion, modalidad, pais, carrera, universidad });
 
+    // Asegura que tutorias sea un array antes de usar map
+    const tutoriasArray = Array.isArray(tutorias) ? tutorias : [];
+
     // Convertir los horarios de string a array en cada tutoría
-    const tutoriasFormateadas = tutorias.map(tutoria => {
+    const tutoriasFormateadas = tutoriasArray.map(tutoria => {
       if (tutoria.horarios) {
         tutoria.horarios_array = parseHorariosToArray(tutoria.horarios);
       } else {
