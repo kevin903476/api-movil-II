@@ -189,15 +189,22 @@ const cancelTutorial = async (req, res) => {
   try {
     const { tutoria_id } = req.body;
     const result = await TutorialsService.cancelTutorial(tutoria_id);
-    console.log('Resultado de la cancelación:', result);
-    console.log('Tipo de result.data:', typeof result.data, 'Valor:', result.data);
-    // Prueba diferentes formas de acceder a la info
+    console.log('Resultado de la cancelación (completo):');
+    console.dir(result, { depth: 5 });
+    console.log('Contenido de result.data:');
+    console.dir(result.data, { depth: 5 });
+    // Acceso robusto a la info de la tutoría
     let tutoriaInfo;
     if (Array.isArray(result.data)) {
-      if (Array.isArray(result.data[0]) && result.data[0][0]) {
-        tutoriaInfo = result.data[0][0];
-      } else if (result.data[0]) {
-        tutoriaInfo = result.data[0];
+      // Busca el primer objeto con profesor_id
+      for (const item of result.data) {
+        if (Array.isArray(item) && item[0] && item[0].profesor_id) {
+          tutoriaInfo = item[0];
+          break;
+        } else if (item && item.profesor_id) {
+          tutoriaInfo = item;
+          break;
+        }
       }
     }
     console.log('Datos de la tutoría cancelada extraídos:', tutoriaInfo);
