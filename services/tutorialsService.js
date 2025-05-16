@@ -50,7 +50,7 @@ class TutorialsService {
         const fechaStr = fecha instanceof Date
             ? fecha.toISOString().split('T')[0]
             : String(fecha)
-        const horaStr = hora_inicio === 'string'
+        const horaStr = typeof hora_inicio === 'string'
             ? hora_inicio.substring(0, 5)
             : fecha instanceof Date
                 ? fecha.toTimeString().substring(0, 5)
