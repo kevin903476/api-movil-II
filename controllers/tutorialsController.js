@@ -193,18 +193,26 @@ const cancelTutorial = async (req, res) => {
 
     // Extraer datos de la tutoría cancelada
     const tutoriaInfo = result.data?.[0]?.[0];
+    console.log('Datos de la tutoría cancelada extraídos:', tutoriaInfo);
     if (tutoriaInfo && tutoriaInfo.profesor_id) {
       const usuarioProfesorId = await UserService.getUserIdByProfesorId(tutoriaInfo.profesor_id);
+      console.log('usuarioProfesorId obtenido:', usuarioProfesorId);
       if (usuarioProfesorId) {
         const titulo = '❌ Tutoría cancelada';
         const cuerpo = `Una tutoría programada para el ${tutoriaInfo.fecha?.substring(0, 10)} a las ${tutoriaInfo.hora_inicio?.substring(0,5)} ha sido cancelada.`;
+        console.log('Enviando notificación con:', { usuarioProfesorId, titulo, cuerpo, tutoria_id });
         await NotificationService.sendNotificationToUser(
           usuarioProfesorId,
           titulo,
           cuerpo,
           { tutoria_id }
         );
+        console.log('Notificación enviada correctamente');
+      } else {
+        console.warn('No se encontró usuarioProfesorId para notificar');
       }
+    } else {
+      console.warn('No se pudo extraer información de la tutoría para notificar');
     }
 
     return res.status(200).json({
