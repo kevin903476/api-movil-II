@@ -95,7 +95,9 @@ class UserService {
       await sendMail(
         user.email
         , 'Bienvenido a Tutoflex',
-        `Estimado ${user.nombre}, usted ha iniciado sesión en Tutoflex. Hoy a las ${new Date().toLocaleString()}`
+        `Estimado ${user.nombre}, usted ha iniciado sesión en Tutoflex. Hoy ${new Date().toLocaleString('es-CR', {
+          timeZone: 'America/Costa_Rica',
+        })}`
         + `\n\nSi no ha sido usted, por favor cambie su contraseña inmediatamente.`
         + `\n\n Sino, omita este mensaje.`
       )
