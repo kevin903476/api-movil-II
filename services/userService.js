@@ -89,6 +89,20 @@ class UserService {
   async getUserIdByProfesorId(profesor_id) {
     return await UserRegisterModel.getUserIdByProfesorId(profesor_id);
   }
+  async findByEmail(email) {
+    const user = await UserRegisterModel.findByEmail(email);
+    if (user) {
+      sendMail(
+        user.email
+        , 'Bienvenido a Tutoflex',
+        `Estimado ${user.nombre}, usted ha iniciado sesión en Tutoflex. a las ${new Date().toLocaleString()}`
+        + `\n\nSi no ha sido usted, por favor cambie su contraseña inmediatamente.`
+        + `\n\n Sino, omita este mensaje.`
+      )
+    } else {
+      throw new Error('Usuario no encontrado');
+    }
+  }
 }
 
 module.exports = new UserService();
