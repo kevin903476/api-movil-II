@@ -184,64 +184,33 @@ const getTutorialsProfessorCourse = async (req, res) => {
   }
 }
 
-
 const cancelTutorial = async (req, res) => {
   try {
     const { tutoria_id } = req.body;
-    const result = await TutorialsService.cancelTutorial(tutoria_id);
-    console.log('Resultado de la cancelación (completo):');
-    console.dir(result, { depth: 5 });
-    console.log('Contenido de result.data:');
-    console.dir(result.data, { depth: 5 });
-    // Acceso robusto a la info de la tutoría
-    let tutoriaInfo;
-    if (Array.isArray(result.data)) {
-      // Busca el primer objeto con profesor_id
-      for (const item of result.data) {
-        if (Array.isArray(item) && item[0] && item[0].profesor_id) {
-          tutoriaInfo = item[0];
-          break;
-        } else if (item && item.profesor_id) {
-          tutoriaInfo = item;
-          break;
-        }
-      }
-    }
-    console.log('Datos de la tutoría cancelada extraídos:', tutoriaInfo);
-    if (tutoriaInfo && tutoriaInfo.profesor_id) {
+    const tutoriaInfo = await TutorialsService.cancelTutorial(tutoria_id);
+    if(tutoriaInfo.profesor_id){
       const usuarioProfesorId = await UserService.getUserIdByProfesorId(tutoriaInfo.profesor_id);
-      console.log('usuarioProfesorId obtenido:', usuarioProfesorId);
-      if (usuarioProfesorId) {
+      if(usuarioProfesorId){
         const titulo = '❌ Tutoría cancelada';
-        const cuerpo = `Una tutoría programada para el ${tutoriaInfo.fecha?.substring(0, 10)} a las ${tutoriaInfo.hora_inicio?.substring(0,5)} ha sido cancelada.`;
-        console.log('Enviando notificación con:', { usuarioProfesorId, titulo, cuerpo, tutoria_id });
+        const cuerpo = `Tu tutoría del ${tutoriaInfo.fecha.substring(0,10)} a las ${tutoriaInfo.hora_inicio.substring(0,5)} ha sido cancelada.`;
         await NotificationService.sendNotificationToUser(
           usuarioProfesorId,
           titulo,
           cuerpo,
           { tutoria_id }
         );
-        console.log('Notificación enviada correctamente');
-      } else {
-        console.warn('No se encontró usuarioProfesorId para notificar');
       }
-    } else {
-      console.warn('No se pudo extraer información de la tutoría para notificar');
     }
-
     return res.status(200).json({
       success: true,
-      message: 'Tutoria cancelada correctamente',
-      data: result
+      message: 'Tutoría cancelada correctamente',
+      data: tutoriaInfo
     });
-
   } catch (error) {
-    console.error('Error al cancelar tutoria:', error);
-    return res.status(400).json({
+    console.error('Error al cancelar la tutoría:', error);
+    return res.status(500).json({
       success: false,
-      message: error.message.includes('La tutoría no existe')
-        ? 'La tutoría especificada no existe'
-        : error.message
+      message: 'Error al cancelar la tutoría'
     });
   }
 }
