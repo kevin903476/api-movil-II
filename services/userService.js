@@ -92,7 +92,7 @@ class UserService {
   async findByEmail(email) {
     const user = await UserRegisterModel.findByEmail(email);
     if (user) {
-      sendMail(
+      await sendMail(
         user.email
         , 'Bienvenido a Tutoflex',
         `Estimado ${user.nombre}, usted ha iniciado sesión en Tutoflex. Hoy a las ${new Date().toLocaleString()}`
