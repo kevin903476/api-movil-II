@@ -95,7 +95,7 @@ class UserService {
       sendMail(
         user.email
         , 'Bienvenido a Tutoflex',
-        `Estimado ${user.nombre}, usted ha iniciado sesión en Tutoflex. a las ${new Date().toLocaleString()}`
+        `Estimado ${user.nombre}, usted ha iniciado sesión en Tutoflex. Hoy a las ${new Date().toLocaleString()}`
         + `\n\nSi no ha sido usted, por favor cambie su contraseña inmediatamente.`
         + `\n\n Sino, omita este mensaje.`
       )
