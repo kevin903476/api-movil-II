@@ -91,20 +91,31 @@ class UserService {
   }
   async findByEmail(email) {
     const user = await UserRegisterModel.findByEmail(email);
-    if (user) {
-      await sendMail(
-        user.email
-        , 'Bienvenido a Tutoflex',
-        `Estimado ${user.nombre}, usted ha iniciado sesión en Tutoflex. Hoy ${new Date().toLocaleString('es-CR', {
-          timeZone: 'America/Costa_Rica',
-        })}`
-        + `\n\nSi no ha sido usted, por favor cambie su contraseña inmediatamente.`
-        + `\n\n Sino, omita este mensaje.`
-      )
-    } else {
+    if (!user) {
       throw new Error('Usuario no encontrado');
     }
+
+    const dateCR = new Date().toLocaleString('es-CR', {
+      timeZone: 'America/Costa_Rica',
+    });
+
+    const subject = 'Notificación de inicio de sesión en Tutoflex';
+    const body = `
+Estimado/a ${user.nombre}:
+
+Se registró un inicio de sesión en su cuenta de Tutoflex el ${dateCR} (hora de Costa Rica).
+
+Si NO reconoce esta actividad, cambie su contraseña de inmediato y póngase en contacto con nuestro soporte.
+
+Si fue usted, puede ignorar este mensaje.
+
+Saludos cordiales,
+Equipo Tutoflex
+`;
+
+    await sendMail(user.email, subject, body);
   }
+
 }
 
 module.exports = new UserService();
