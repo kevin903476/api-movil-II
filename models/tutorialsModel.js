@@ -139,11 +139,10 @@ class TutorialsModel {
 
   async cancelTutorial(tutoria_id) {
     try {
-      const result = await db.query(
+      return await db.query(
         'CALL sp_cancelar_tutoria(?)',
         [tutoria_id]
       );
-      return result;
     } catch (error) {
       console.error('Error in cancelTutorial:', error);
       throw error;
