@@ -189,6 +189,7 @@ const cancelTutorial = async (req, res) => {
   try {
     const { tutoria_id } = req.body;
     const result = await TutorialsService.cancelTutorial(tutoria_id);
+    console.log('Resultado de la cancelación:', result);
 
     // Extraer datos de la tutoría cancelada
     const tutoriaInfo = result.data?.[0]?.[0];
