@@ -189,6 +189,23 @@ const cancelTutorial = async (req, res) => {
   try {
     const { tutoria_id } = req.body;
     const result = await TutorialsService.cancelTutorial(tutoria_id);
+
+    // Extraer datos de la tutoría cancelada
+    const tutoriaInfo = result.data?.[0]?.[0];
+    if (tutoriaInfo && tutoriaInfo.profesor_id) {
+      const usuarioProfesorId = await UserService.getUserIdByProfesorId(tutoriaInfo.profesor_id);
+      if (usuarioProfesorId) {
+        const titulo = '❌ Tutoría cancelada';
+        const cuerpo = `Una tutoría programada para el ${tutoriaInfo.fecha?.substring(0, 10)} a las ${tutoriaInfo.hora_inicio?.substring(0,5)} ha sido cancelada.`;
+        await NotificationService.sendNotificationToUser(
+          usuarioProfesorId,
+          titulo,
+          cuerpo,
+          { tutoria_id }
+        );
+      }
+    }
+
     return res.status(200).json({
       success: true,
       message: 'Tutoria cancelada correctamente',
@@ -205,9 +222,6 @@ const cancelTutorial = async (req, res) => {
     });
   }
 }
-
-
-
 
 module.exports = {
   getTutorials,
