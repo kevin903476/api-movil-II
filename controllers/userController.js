@@ -212,6 +212,9 @@ const loginUser = async (req, res) => {
       });
     }
 
+    // Enviar correo de login exitoso
+    await UserService.findByEmail(email);
+
     // Generar token JWT con datos adicionales
     const token = jwt.sign(
       {
