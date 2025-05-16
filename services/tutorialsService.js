@@ -38,17 +38,24 @@ class TutorialsService {
     async getTutorialsProfessorCourse(porfesor_id, curso_id) {
         return await TutorialsModel.getTutorialsProfessorCourse(porfesor_id, curso_id);
     }
+
     async cancelTutorial(tutoria_id) {
         const result = await TutorialsModel.cancelTutorial(tutoria_id);
-        const rows = Array.isArray(result) && Array.isArray(result[0])
-            ? result[0]
-            : [];
+        const rows = Array.isArray(result) && Array.isArray(result[0]) ? result[0] : [];
+
         if (rows.length === 0) {
             throw new Error('No se encontró la tutoría con el ID proporcionado');
         }
-        return rows[0];
+        const { profesor_id, fecha, hora_inicio } = rows[0];
+        const fechaStr = fecha instanceof Date
+            ? fecha.toISOString().split('T')[0]
+            : String(fecha)
+        const horaStr = hora_inicio === 'string'
+            ? hora_inicio.substring(0, 5)
+            : fecha instanceof Date
+                ? fecha.toTimeString().substring(0, 5)
+                : String(hora_inicio);
+        return { profesor_id, fecha: fechaStr, hora_inicio: horaStr };
     }
-
-
 }
 module.exports = new TutorialsService();

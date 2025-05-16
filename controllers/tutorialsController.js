@@ -192,7 +192,7 @@ const cancelTutorial = async (req, res) => {
       const usuarioProfesorId = await UserService.getUserIdByProfesorId(tutoriaInfo.profesor_id);
       if(usuarioProfesorId){
         const titulo = '❌ Tutoría cancelada';
-        const cuerpo = `Tu tutoría del ${tutoriaInfo.fecha.substring(0,10)} a las ${tutoriaInfo.hora_inicio.substring(0,5)} ha sido cancelada.`;
+        const cuerpo = `Tu tutoría del ${tutoriaInfo.fecha} a las ${tutoriaInfo.hora_inicio} ha sido cancelada.`;
         await NotificationService.sendNotificationToUser(
           usuarioProfesorId,
           titulo,
