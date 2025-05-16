@@ -190,9 +190,16 @@ const cancelTutorial = async (req, res) => {
     const { tutoria_id } = req.body;
     const result = await TutorialsService.cancelTutorial(tutoria_id);
     console.log('Resultado de la cancelación:', result);
-
-    // Extraer datos de la tutoría cancelada
-    const tutoriaInfo = result.data?.[0]?.[0];
+    console.log('Tipo de result.data:', typeof result.data, 'Valor:', result.data);
+    // Prueba diferentes formas de acceder a la info
+    let tutoriaInfo;
+    if (Array.isArray(result.data)) {
+      if (Array.isArray(result.data[0]) && result.data[0][0]) {
+        tutoriaInfo = result.data[0][0];
+      } else if (result.data[0]) {
+        tutoriaInfo = result.data[0];
+      }
+    }
     console.log('Datos de la tutoría cancelada extraídos:', tutoriaInfo);
     if (tutoriaInfo && tutoriaInfo.profesor_id) {
       const usuarioProfesorId = await UserService.getUserIdByProfesorId(tutoriaInfo.profesor_id);
