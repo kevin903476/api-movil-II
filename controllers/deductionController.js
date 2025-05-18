@@ -194,6 +194,24 @@ const getAllDeductionsPaid = async (req, res) => {
         });
     }
 }
+const getAllDeductionsByProfessor = async (req, res) => {
+    try {
+         const profesor_id = await UserService.getProfesorByUserId(req.user.id);
+        const deductionsPaid = await DeductionService.getAllDeductionsByProfessor(profesor_id);
+        return res.status(200).json({
+            success: true,
+            message: 'Deducciones pagadas obtenidas correctamente',
+            data: deductionsPaid
+        });
+    } catch (error) {
+        console.error('Error al obtener deducciones pagadas:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener deducciones pagadas',
+            error: error.message
+        });
+    }
+}
 
 module.exports = {
     getBillProfessor,
@@ -201,5 +219,6 @@ module.exports = {
     getTotalNetInvoicesTeacher,
     payMultipleDeductions,
     getDeductionProfessor,
-    getAllDeductionsPaid
+    getAllDeductionsPaid,
+    getAllDeductionsByProfessor
 }

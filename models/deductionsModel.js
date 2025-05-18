@@ -37,11 +37,11 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
         }
     }
 
-    
+
     async payMultipleDeductions(deducciones) {
         try {
             const { numero_tranferencia, comprobante, profesor_id, deducciones_ids } = deducciones;
-            const result = await db.query('CALL sp_insertar_deducciones_pagadas(?, ?, ?, ?)', 
+            const result = await db.query('CALL sp_insertar_deducciones_pagadas(?, ?, ?, ?)',
                 [numero_tranferencia, comprobante, profesor_id, deducciones_ids]);
             return result;
         } catch (error) {
@@ -49,7 +49,7 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
             throw error;
         }
     }
-    
+
     async getDeductionProfessor(profesor_id) {
         try {
             const result = await db.query('SELECT * FROM vista_deducciones_profesor WHERE profesor_id = ?', [profesor_id]);
@@ -60,14 +60,24 @@ class DeductionsModel { //deducciones se relaciona con facturas y pagos
             throw error;
         }
     }
-    
-    async getAllDeductionsPaid(){
+
+    async getAllDeductionsPaid() {
         try {
             const result = await db.query('SELECT * FROM deducciones_pagadas;');
             console.log('Resultado de getAllDeductions:', result);
             return result && result.length > 0 ? result : [];
         } catch (error) {
             console.error('Error en getAllDeductions:', error);
+            throw error;
+        }
+    }
+    async getAllDeductionsByProfessor(profesor_id) {
+        try {
+            const result = await db.query('SELECT * FROM deducciones_pagadas WHERE profesor_id = ?', [profesor_id]);
+            console.log('Resultado de getAllDeductionsByProfessor:', result);
+            return result && result.length > 0 ? result : [];
+        } catch (error) {
+            console.error('Error en getAllDeductionsByProfessor:', error);
             throw error;
         }
     }
