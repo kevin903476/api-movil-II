@@ -57,5 +57,11 @@ class TutorialsService {
                 : String(hora_inicio);
         return { profesor_id, fecha: fechaStr, hora_inicio: horaStr };
     }
+    async getPendingTutorialsProfessor(profesor_id) {
+        if (!profesor_id) {
+            throw new Error('El ID del profesor es requerido');
+        }
+        return await TutorialsModel.getPendingTutorialsProfessor(profesor_id);
+    }
 }
 module.exports = new TutorialsService();

@@ -188,9 +188,9 @@ const cancelTutorial = async (req, res) => {
   try {
     const { tutoria_id } = req.body;
     const tutoriaInfo = await TutorialsService.cancelTutorial(tutoria_id);
-    if(tutoriaInfo.profesor_id){
+    if (tutoriaInfo.profesor_id) {
       const usuarioProfesorId = await UserService.getUserIdByProfesorId(tutoriaInfo.profesor_id);
-      if(usuarioProfesorId){
+      if (usuarioProfesorId) {
         const titulo = '❌ Tutoría cancelada';
         const cuerpo = `Tu tutoría del ${tutoriaInfo.fecha} a las ${tutoriaInfo.hora_inicio} ha sido cancelada.`;
         await NotificationService.sendNotificationToUser(
@@ -215,12 +215,40 @@ const cancelTutorial = async (req, res) => {
   }
 }
 
+const getPendingTutorialsProfessor = async (req, res) => {
+  try {
+    const profesor = await UserService.getProfesorByUserId(req.user.id);
+    const profesor_id = profesor.profesor_id;
+
+    if (!profesor_id) {
+      return res.status(404).json({
+        success: false,
+        message: 'Profesor no encontrado'
+      });
+    }
+
+    const result = await TutorialsService.getPendingTutorialsProfessor(profesor_id);
+
+    return res.status(201).json({
+      success: true,
+      message: 'Tutorías pendientes del profesor obtenidos correctamente',
+      data: result
+    });
+  } catch (error) {
+    console.error('Error al obtener tutorías pendientes del profesor:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al obtener tutorías pendientes del profesor'
+    });
+  }
+}
 module.exports = {
   getTutorials,
   scheduleTutoring,
   getScheduledTutorials,
   getTutorialsProfessorCourse,
   getPendingTutorialProfessor,
-  cancelTutorial
+  cancelTutorial,
+  getPendingTutorialsProfessor
 
 }
