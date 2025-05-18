@@ -1,6 +1,6 @@
 // @ts-check
 const crypto = require('crypto');
-const bcryptjs = require('bcryptjs');
+const bcryptjs = require('bcrypt');
 const UserRegisterModel = require('../models/userModel');
 const sendMail = require('../utils/sendMail');
 

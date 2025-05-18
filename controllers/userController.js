@@ -1,6 +1,6 @@
 const UserRegisterModel = require('../models/userModel');
 const UserService = require('../services/userService');
-const bcryptjs = require('bcryptjs');
+const bcryptjs = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const process = require('process');
