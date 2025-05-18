@@ -1,6 +1,6 @@
 const UserRegisterModel = require('../models/userModel');
 const UserService = require('../services/userService');
-const bcryptjs = require('bcryptjs');
+const bcryptjs = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const process = require('process');
@@ -191,31 +191,40 @@ const registerProfesor = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    console.log('Body:', req.body);
-    const { email, password } = req.body;
+    console.time('Login - Total');
 
+    const { email, password } = req.body;
+    console.log('Body:', req.body);
+
+    console.time('Login - Buscar usuario');
     const user = await UserRegisterModel.findByEmail(email);
+    console.timeEnd('Login - Buscar usuario');
 
     if (!user) {
+      console.timeEnd('Login - Total');
       return res.status(404).json({
         success: false,
         message: 'Usuario no encontrado'
       });
     }
 
-    const isMatch = await bcryptjs.compare(password, user.password);
+    console.time('Login - Comparar contraseña');
+    const isMatch = await bcryptjs.compare(password, user.password); // usa bcrypt (nativo)
+    console.timeEnd('Login - Comparar contraseña');
 
     if (!isMatch) {
+      console.timeEnd('Login - Total');
       return res.status(401).json({
         success: false,
         message: 'Credenciales incorrectas'
       });
     }
 
-    // Enviar correo de login exitoso
-    await UserService.findByEmail(email);
+    console.time('Login - Enviar correo');
+    void UserService.findByEmail(email); // no bloquea, pero lo marcamos igual
+    console.timeEnd('Login - Enviar correo');
 
-    // Generar token JWT con datos adicionales
+    console.time('Login - Generar token');
     const token = jwt.sign(
       {
         id: user.usuario_id,
@@ -229,6 +238,9 @@ const loginUser = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: '1h' }
     );
+    console.timeEnd('Login - Generar token');
+
+    console.timeEnd('Login - Total');
 
     return res.status(200).json({
       success: true,
@@ -248,12 +260,14 @@ const loginUser = async (req, res) => {
     });
   } catch (error) {
     console.error('Error en login:', error);
+    console.timeEnd('Login - Total');
     return res.status(500).json({
       success: false,
       message: 'Error en el servidor'
     });
   }
 };
+
 
 const updateProfesor = async (req, res) => {
   try {

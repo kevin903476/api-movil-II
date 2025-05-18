@@ -150,11 +150,12 @@ class TutorialsModel {
     }
   }
 
+  //Acá se hace el [0] porque es un array de arrays pero aparte es de un SP
+  // no de una view o consulta normal
   async getPendingTutorialsProfessor(profesor_id) {
     try {
       const result = await db.query('CALL sp_obtener_tutorias_pendientes(?)', [profesor_id]);
-      return result;
-
+      return result[0];
     } catch (error) {
       console.error('Error in getPendingTutorialsProfesor:', error);
       throw error;
