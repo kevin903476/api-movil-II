@@ -153,8 +153,7 @@ class TutorialsModel {
   async getPendingTutorialsProfessor(profesor_id) {
     try {
       const result = await db.query('CALL sp_obtener_tutorias_pendientes(?)', [profesor_id]);
-      return result;
-
+      return result[0];
     } catch (error) {
       console.error('Error in getPendingTutorialsProfesor:', error);
       throw error;
