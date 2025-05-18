@@ -196,7 +196,8 @@ const getAllDeductionsPaid = async (req, res) => {
 }
 const getAllDeductionsByProfessor = async (req, res) => {
     try {
-         const profesor_id = await UserService.getProfesorByUserId(req.user.id);
+         const profesor = await UserService.getProfesorByUserId(req.user.id);
+         const profesor_id = profesor.profesor_id;
         const deductionsPaid = await DeductionService.getAllDeductionsByProfessor(profesor_id);
         return res.status(200).json({
             success: true,
