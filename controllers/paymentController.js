@@ -36,7 +36,7 @@ const updatePaymentOfStudent = async (req, res) => { //Realmente no inserta sino
         if (paymentOfStudent && paymentOfStudent.usuario_id_profesor) {
             const usuarioProfesorId = paymentOfStudent.usuario_id_profesor;
             const titulo = '💸 Pago enviado por estudiante';
-            const cuerpo = `El estudiante ${estudiante.nombre} ${estudiante.apellido} ha enviado el pago para el curso ${paymentOfStudent.curso}.`;
+            const cuerpo = `El estudiante ${estudiante.nombre} ${estudiante.apellido} ha enviado el pago para el curso ${paymentOfStudent.curso} por favor verifique la veracidad del pago.`;
             await NotificationService.sendNotificationToUser(
                 usuarioProfesorId,
                 titulo,
