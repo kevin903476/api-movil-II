@@ -2,14 +2,24 @@ const PaymentModel = require('../models/paymentModel');
 
 class PaymentService {
 
-   async updatePaymentOfStudent(paymentStudent) {//Realmente no inserta sino que actualiza el pago del estudiante
-    try {
-        return await PaymentModel.updatePaymentOfStudent(paymentStudent);
-    } catch (error) {
-        console.error('Error in insertPaymentofStudent service:', error);
-        throw error;
+    async updatePaymentOfStudent(paymentStudent) {//Realmente no inserta sino que actualiza el pago del estudiante
+        try {
+            const result = await PaymentModel.updatePaymentOfStudent(paymentStudent);
+            const rows = Array.isArray(result) && Array.isArray(result[0]) ? result[0] : [];
+            if (rows.length === 0) {
+                throw new Error('No se encontró el pago con el ID proporcionado');
+            }
+            const {
+                usuario_id_profesor,
+                curso,
+                estudiante
+            } = rows[0];
+            return { usuario_id_profesor, curso, estudiante };
+        } catch (error) {
+            console.error('Error in insertPaymentofStudent service:', error);
+            throw error;
+        }
     }
-}
 
     async pendingPaymentsProfessor(profesor_id) {
         try {

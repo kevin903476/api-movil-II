@@ -1,6 +1,7 @@
 //@ts-check
 const PaymentService = require('../services/paymentService');
 const UserService = require('../services/userService');
+const NotificationService = require('../services/notificationsService');
 
 const updatePaymentOfStudent = async (req, res) => { //Realmente no inserta sino que actualiza el pago del estudiante
     try {
@@ -31,6 +32,18 @@ const updatePaymentOfStudent = async (req, res) => { //Realmente no inserta sino
             cupon_id
         };
         const paymentOfStudent = await PaymentService.updatePaymentOfStudent(paymentStudent);
+        // Notificar al profesor que se ha enviado el pago
+        if (paymentOfStudent && paymentOfStudent.usuario_id_profesor) {
+            const usuarioProfesorId = paymentOfStudent.usuario_id_profesor;
+            const titulo = '💸 Pago enviado por estudiante';
+            const cuerpo = `El estudiante ${estudiante.nombre} ${estudiante.apellido} ha enviado el pago para el curso ${paymentOfStudent.curso}.`;
+            await NotificationService.sendNotificationToUser(
+                usuarioProfesorId,
+                titulo,
+                cuerpo,
+                { pago_id }
+            );
+        }
         return res.status(201).json({
             success: true,
             message: 'Pago registrado correctamente',

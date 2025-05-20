@@ -43,11 +43,10 @@ class PaymentModel {
     async updatePaymentOfStudent(paymentStudent) { //Realmente no inserta sino que actualiza el pago del estudiante
         const { pago_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id } = paymentStudent
         try {
-            const result = await db.query(
+            return await db.query(
                 'CALL sp_actualizar_pago(?, ?, ?, ?, ?, ?)',
                 [pago_id, monto, comprobante, num_transferencia, tipo_pago, cupon_id]
             );
-            return result;
         } catch (error) {
             console.error('Error in insertPaymentofStudent:', error);
             throw error;
@@ -59,16 +58,16 @@ class PaymentModel {
                 'CALL sp_procesar_factura_deduccion(?, ?)',
                 [pago_id, estado]
             );
-    
+
             const mensaje = result?.[0]?.[0]?.mensaje || 'Sin mensaje devuelto desde SP';
             return { mensaje };
-    
+
         } catch (error) {
             console.error('Error in confirmPayment:', error);
             throw error;
         }
     }
-    
+
     //esta ruta es para Detalles de Pago de Tutoría:
     async getPaymentDetails(profesor_id) {
         try {
