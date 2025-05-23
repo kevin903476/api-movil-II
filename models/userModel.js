@@ -112,11 +112,11 @@ class UserRegisterModel {
   }
 
   async registerEstudiante(estudiante) {
-    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id } = estudiante;
+    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id, telefono } = estudiante;
     try {
       const result = await db.query(
-        'CALL sp_insertar_estudiante(?, ?, ?, ?, ?, ?, ?)',
-        [nombre, apellido, email, password, universidad_id, carrera_id, pais_id]
+        'CALL sp_insertar_estudiante(?, ?, ?, ?, ?, ?, ?, ?)',
+        [nombre, apellido, email, password, universidad_id, carrera_id, pais_id, telefono]
       );
       return result;
     } catch (error) {
@@ -126,11 +126,11 @@ class UserRegisterModel {
     }
   }
   async registerProfesor(profesor) {
-    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id, whatsapp } = profesor;
+    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id, telefono } = profesor;
     try {
       const result = await db.query(
         'CALL sp_insertar_profesor(?, ?, ?, ?, ?, ?, ?, ?)',
-        [nombre, apellido, email, password, universidad_id, carrera_id, pais_id, whatsapp]
+        [nombre, apellido, email, password, universidad_id, carrera_id, pais_id, telefono]
       );
       return result;
     } catch (error) {
@@ -141,11 +141,11 @@ class UserRegisterModel {
   }
   //Actualizar stored procedure para que acepte reseñas
   async updateProfesor(profesor) {
-    const { usuario_id, whatsapp, foto, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id } = profesor;
+    const { usuario_id, telefono, foto, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id } = profesor;
     try {
       const result = await db.query(
         'CALL sp_actualizar_profesor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [usuario_id, whatsapp, foto, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id]
+        [usuario_id, telefono, foto, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id]
       );
       return result;
     } catch (error) {
