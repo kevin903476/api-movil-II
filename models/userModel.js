@@ -156,11 +156,11 @@ class UserRegisterModel {
   }
 
   async updateEstudiante(estudiante) {
-    const { usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id } = estudiante;
+    const { usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id, telefono } = estudiante;
     try {
       const result = await db.query(
-        'CALL sp_actualizar_estudiante(?, ?, ?, ?, ?, ?, ?, ?)',
-        [usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id]
+        'CALL sp_actualizar_estudiante(?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [usuario_id, nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id, telefono]
       );
       return result;
 

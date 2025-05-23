@@ -110,7 +110,7 @@ const verifyExistingEmail = async (req, res) => {
 const registerEstudiante = async (req, res) => {
   console.log("Datos recibidos del estudiante", req.body);
   try {
-    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id } = req.body;
+    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id, telefono} = req.body;
 
     const result = await UserService.registerEstudiante({
       nombre,
@@ -119,7 +119,8 @@ const registerEstudiante = async (req, res) => {
       password,
       universidad_id,
       carrera_id,
-      pais_id
+      pais_id,
+      telefono
     });
 
     // Extraer el mensaje desde el resultado del procedimiento
@@ -149,7 +150,7 @@ const registerEstudiante = async (req, res) => {
 
 const registerProfesor = async (req, res) => {
   try {
-    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id, whatsapp } = req.body;
+    const { nombre, apellido, email, password, universidad_id, carrera_id, pais_id, telefono } = req.body;
 
     const result = await UserService.registerProfesor({
       nombre,
@@ -159,7 +160,7 @@ const registerProfesor = async (req, res) => {
       universidad_id,
       carrera_id,
       pais_id,
-      whatsapp
+      telefono
     });
 
     // El procedimiento devuelve algo como: [[{ mensaje: "..." }], metadata]
@@ -280,11 +281,11 @@ const updateProfesor = async (req, res) => {
       foto = req.file.path; // Actualiza la ruta de la foto si se ha subido una nueva
     }
     const usuario_id = req.user.id;
-    const { whatsapp, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
+    const { telefono, descripcion, nombre, apellido, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
 
     const result = await UserService.updateProfesor({
       usuario_id,
-      whatsapp,
+      telefono,
       foto,
       descripcion,
       nombre,
@@ -312,7 +313,7 @@ const updateProfesor = async (req, res) => {
 
 const updateStudent = async (req, res) => {
   try {
-    const { nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id } = req.body;
+    const { nombre, apellido, carnet, universidad_id, sede_id, recinto_id, carrera_id, telefono } = req.body;
     const usuario_id = req.user.id;
     const result = await UserService.updateStudent({
       usuario_id,
@@ -322,7 +323,8 @@ const updateStudent = async (req, res) => {
       universidad_id,
       sede_id,
       recinto_id,
-      carrera_id
+      carrera_id,
+      telefono
     });
     return res.status(201).json({
       success: true,
